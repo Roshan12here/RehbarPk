@@ -14,7 +14,6 @@ interface Product {
   headline: string;
   description: string;
   logo: string;
-  releaseDate: string;
   website: string;
   twitter: string;
   discord: string;
