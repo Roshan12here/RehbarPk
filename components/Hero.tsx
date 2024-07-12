@@ -14,21 +14,6 @@ const Hero = () => {
           Explore Pakistan's vibrant destinations and thriving businesses. Discover, review, and connect with the best spots and services across the country, all in one place.
         </h3>
         <div className='mt-6 flex flex-col sm:flex-row items-center'>
-          <Link href="/businesses" passHref>
-            <Button className='bg-green-600 text-white hover:text-green-600 hover:bg-white mb-2 sm:mb-0 sm:mr-2'>
-              Browse Businesses
-            </Button>
-          </Link>
-          <Link href="/products" passHref>
-            <Button className='bg-green-600 text-white hover:text-green-600 hover:bg-white mb-2 sm:mb-0 sm:mx-2'>
-              Browse Destinations
-            </Button>
-          </Link>
-          <Link href="/" passHref>
-            <Button variant={'secondary'} className='border-[1px] border-green-600'>
-              Get Started
-            </Button>
-          </Link>
         </div>
       </div>
     </div>
