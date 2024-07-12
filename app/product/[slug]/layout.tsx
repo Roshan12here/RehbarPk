@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import Navbar from "@/components/navbar/navbar";
 import { getNotifications, getProductsByUserId } from "@/lib/server-actions";
+import ClientOnly from "@/components/ClientOnly";
 
 const ProductPageLayout = async ({
     children
@@ -17,17 +18,19 @@ const ProductPageLayout = async ({
     const products = await getProductsByUserId(authenticatedUser?.user?.id || "");
 
     return ( 
+            <ClientOnly>
         <html lang="en">
-            <body>
-                <Navbar 
-                authenticatedUser={authenticatedUser}
-                products={products}
-                notifications={notifications}
-                 />
+                        <Navbar 
+                            authenticatedUser={authenticatedUser}
+                            products={products}
+                            notifications={notifications}
+                            />
+            <main>
                 {children}
-            </body>
+            </main>
 
         </html>
+                </ClientOnly>
     )
 }
 

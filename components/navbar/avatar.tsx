@@ -45,7 +45,16 @@ const Avatar: React.FC<AvatarProps> = ({ authenticatedUser }) => {
               className="flex gap-x-2 rounded-sm w-full cursor-pointer"
             >
               <PiPackage className="text-xl" />
-              My Products
+              My Destinations 
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link
+              href="/my-businesses"
+              className="flex gap-x-2 rounded-sm w-full cursor-pointer"
+            >
+              <PiPackage className="text-xl" />
+              My Businesses 
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>

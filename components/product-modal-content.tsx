@@ -121,35 +121,30 @@ const ProductModalContent: React.FC<ProductModalContentProps> = ({
             </p>
 
             <div className="flex items-center gap-2 pt-4">
-              <button
-                onClick={() => window.open(currentProduct.website, "_blank")}
-                className="border rounded-md flex justify-center 
-                        items-center p-5 cursor-pointer"
-              >
-                Visit
-              </button>
-
+              
               <button
                 className={`rounded-md flex justify-center items-center p-5 
-                gap-x-3 cursor-pointer bg-gradient-to-r w-full xl:w-56 ${
-                  hasUpvoted
+                  gap-x-3 cursor-pointer bg-gradient-to-r w-full xl:w-56 ${
+                    hasUpvoted
                     ? "from-[#ff6154] to-[#ff4582] border-[#ff6154] text-white"
                     : "text-black border"
-                }`}
-                onClick={handleUpvoteClick}
-        
-              
-        
-              >
+                  }`}
+                  onClick={handleUpvoteClick}
+                  
+                  
+                  
+                  >
                 <PiCaretUpFill
                   className={`text-xl ${
                     hasUpvoted ? "text-white" : "text-black"
                   }`}
-                />
+                  />
                 {totalUpvotes}
               </button>
             </div>
-          </div>
+          </div>  
+                  <h3>{currentProduct.website},{currentProduct.twitter},{currentProduct.discord}</h3>
+        
           <h2 className="text-gray-600 py-6">{currentProduct.description}</h2>
 
           <div className="md:flex justify-between items-center">
@@ -211,7 +206,7 @@ const ProductModalContent: React.FC<ProductModalContentProps> = ({
             <div className="flex justify-end mt-4">
               <button
                 onClick={handleCommentSubmit}
-                className="bg-[#ff6154] text-white p-2 rounded-md"
+                className="bg-green-600 text-white p-2 rounded-md"
               >
                 Comment
               </button>

@@ -113,22 +113,22 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product }) => {
     <div className="h-full">
       <div className="flex items-center gap-4 mx-auto">
         <PiPencilLine className="text-3xl text-emerald-500" />
-        <h1 className="text-3xl font-bold">Edit Product</h1>
+        <h1 className="text-3xl font-bold">Edit Destination</h1>
       </div>
 
       <div className="w-full rounded-md p-10 bg-emerald-100 mt-10 md:flex items-center gap-x-4">
         <PiFlag className="text-5xl text-emerald-500 mb-4 md:mb-0" />
         <div className="text-gray-600">
-          This is the product form. You can update the product details here. If
-          your product is currently live, and you make changes to the product
-          details. It will delist the product from the marketplace until it is
+          This is the Destination form. You can update the Destination details here. If
+          your Destination is currently live, and you make changes to the Destination
+          details. It will delist the Destination from the marketplace until it is
           reviewed and approved by the admin.
         </div>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
         <div>
-          <h1 className="font-medium">Logo</h1>
+          <h1 className="font-medium">Front Image</h1>
           {isEditingLogo ? (
             <div>
               <LogoUploader
@@ -155,14 +155,14 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product }) => {
                 onClick={() => setIsEditingLogo(true)}
                 className="text-sm text-blue-500 cursor-pointer hover:underline mt-2"
               >
-                Change Logo
+                Change Front Image
               </button>
             </div>
           )}
         </div>
 
         <div>
-          <h1 className="font-medium">Product Name</h1>
+          <h1 className="font-medium">Destination Name</h1>
           <input
             type="text"
             className="w-full p-4 border rounded-xl focus:outline-none mt-6"
@@ -172,7 +172,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product }) => {
         </div>
 
         <div>
-          <div className="font-medium">Website</div>
+          <div className="font-medium">State</div>
           <input
             type="text"
             className="border w-full focus:outline-none mt-6 p-4 rounded-xl"
@@ -181,15 +181,6 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product }) => {
           />
         </div>
 
-        <div>
-          <div className="font-medium">Release Date</div>
-          <input
-            type="text"
-            className="border w-full focus:outline-none mt-6 p-4 rounded-xl"
-            value={releaseDate}
-            onChange={(e) => setReleaseDate(e.target.value)}
-          />
-        </div>
 
         <div>
           <div className="font-medium">Headline</div>
@@ -203,14 +194,14 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product }) => {
         <div>
           <div className="font-medium">Short Description</div>
           <textarea
-            className="border w-full focus:outline-none mt-6 p-4 rounded-xl"
+            className="border w-full focus:outline-none mt-6 p-4 h-[26vh] rounded-xl"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
 
         <div>
-          <div className="font-medium">Twitter</div>
+          <div className="font-medium">City</div>
           <input
             type="text"
             className="border w-full focus:outline-none mt-6 p-4 rounded-xl"
@@ -220,7 +211,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product }) => {
         </div>
 
         <div>
-          <div className="font-medium">Discord</div>
+          <div className="font-medium">Address</div>
           <input
             type="text"
             className="border w-full focus:outline-none mt-6 p-4 rounded-xl"
@@ -246,7 +237,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product }) => {
         </div>
 
         <div className="col-span-2">
-          <div className="font-medium mb-2">Product Images</div>
+          <div className="font-medium mb-2">Destination Images</div>
           {isEditingProductImages ? null : (
             <div className="grid grid-cols-5 gap-4">
               {uploadedProductImages.length > 0 &&

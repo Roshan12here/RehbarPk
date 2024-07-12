@@ -4,6 +4,7 @@ import { ImagesUploader } from "@/components/images-uploader";
 import { LogoUploader } from "@/components/logo-uploader";
 import Image from "next/image";
 import React, { useCallback, useState } from "react";
+import { FcIdea } from "react-icons/fc";
 
 import {
   Popover,
@@ -28,33 +29,29 @@ import { motion } from "framer-motion";
 import { toast } from "sonner";
 
 const categories = [
-  "Media",
-  "Blockchain",
-  "Cloud",
-  "Commerce",
-  "Cybersecurity",
-  "Data",
-  "Design",
-  "Photography",
-  "E-commerce",
-  "Education",
-  "Entertainment",
-  "Video",
-  "Finance",
-  "Social",
-  "Health",
-  "Fitness",
-  "Marketing",
-  "Music",
-  "Productivity",
-  "Engineering",
-  "Sales",
-  "Sports",
-  "Travel",
-  "Bootstrapped",
-  "Art",
-  "Analytics",
+  "Town",
+  "Villege",
+  "Parks",
+  "Zoo",
+  "Forests",
+  "Mountains",
+  "Beaches",
+  "Waterfalls",
+  "Historical sites",
+  "Forts",
+  "Museums",
+  "Art galleries",
+  "Monuments",
+  "Shopping Centres",
+  "Hiking",
+  "Trekking",
+  "Skiing",
+  "Rafting",
+  "Churches",
+  "Mosques",
+  "Shrines",
 ];
+
 
 const NewProduct = () => {
   const [loading, setLoading] = useState(false);
@@ -77,7 +74,7 @@ const NewProduct = () => {
   );
 
   const handleHeadlineChange = (e: any) => {
-    const headlineText = e.target.value.slice(0, 70);
+    const headlineText = e.target.value.slice(0, 200);
     setHeadline(headlineText);
   };
 
@@ -94,7 +91,7 @@ const NewProduct = () => {
   };
 
   const handleShortDescriptionChange = (e: any) => {
-    setShortDescription(e.target.value.slice(0, 300));
+    setShortDescription(e.target.value.slice(0, 2000));
   };
 
   const handleNameChange = (e: any) => {
@@ -148,22 +145,6 @@ const NewProduct = () => {
       return;
     }
 
-    if (step === 2 && selectedCategories.length < 3) {
-      toast(
-        <>
-          <div className="flex items-center gap-4  mx-auto">
-            <PiXCircleFill className="text-red-500 text-3xl" />
-            <div className="text-md font-semibold">
-              Please select at least 3 categories for the product.
-            </div>
-          </div>
-        </>,
-        {
-          position: "top-center",
-        }
-      );
-      return;
-    }
 
     if (step === 3 && headline.length < 10) {
       toast(
@@ -232,30 +213,13 @@ const NewProduct = () => {
       return;
     }
 
-    if (step === 5 && !date) {
-      toast(
-        <>
-          <div className="flex items-center gap-4  mx-auto">
-            <PiXCircleFill className="text-red-500 text-3xl" />
-            <div className="text-md font-semibold">
-              Please select a release date or choose the Coming soon option.
-            </div>
-          </div>
-        </>,
-        {
-          position: "top-center",
-        }
-      );
-      return;
-    }
-
     if (step == 6 && !website && !twitter && !discord) {
       toast(
         <>
           <div className="flex items-center gap-4  mx-auto">
             <PiXCircleFill className="text-red-500 text-3xl" />
             <div className="text-md font-semibold">
-              Please enter at least one link for the product.
+              Please enter correct address of this Destination
             </div>
           </div>
         </>,
@@ -325,7 +289,7 @@ const NewProduct = () => {
         images: uploadedProductImages,
         category: selectedCategories,
       });
-      setStep(8);
+      setStep(7);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -345,19 +309,20 @@ const NewProduct = () => {
 
           
           className="space-y-10">
-            <h1 className="text-4xl font-semibold"> 📦 New product</h1>
+            <h1 className="text-4xl font-semibold"> New Destinaton</h1>
             <p className="text-xl font-light mt-4 leading-8">
-              Ready to showcase your product to the world? You came to the right
+              Ready to showcase your Destination to the world? You came to the right
               place. Follow the steps below to get started.
             </p>
 
             <div className="mt-10">
-              <h2 className="font-medium">Name of the product</h2>
+              <h2 className="font-medium">Name of the Destination</h2>
               <input
                 type="text"
                 value={name}
                 maxLength={30}
-                className="border rounded-md p-2 w-full mt-2 focus:outline-none"
+                placeholder="Head Marala"
+                className="p-2 w-full rounded-xl mt-2 focus:outline-none border-[#0E793C] border-[1px]"
                 onChange={handleNameChange}
               />
               <div className="text-sm text-gray-500 mt-1">
@@ -368,16 +333,24 @@ const NewProduct = () => {
             <div className="mt-10">
               <h2 className="font-medium">
                 Slug (URL) - This will be used to create a unique URL for
-                yourproduct
+                your destination
               </h2>
 
               <input
                 type="text"
+                
                 value={slug}
-                className="border rounded-md p-2 w-full mt-2 focus:outline-none"
+                className="rounded-xl p-2 w-full mt-2 focus:outline-none border-[#0E793C] border-[1px]"
                 readOnly
               />
             </div>
+            <div className="w-full rounded-md p-6 bg-[#0E793C] mt-4 md:flex items-center gap-x-4">
+        <FcIdea className="text-5xl text-[#ffffff] mb-4 md:mb-0" />
+        <div className="text-[#ffffffff]">
+Simply enter the name of your Destination. This will be used to create a unique URL for your Destination.
+        </div>
+      </div>
+
           </motion.div>
         )}
 
@@ -391,11 +364,11 @@ const NewProduct = () => {
           className="space-y-10">
             <h1 className="text-4xl font-semibold">
               {" "}
-              📊 What category does your product belong to ?{" "}
+              📊 What category does your Destination belong to ?{" "}
             </h1>
             <p className="text-xl font-light mt-4 leading-8">
-              Choose at least 3 categories that best fits your product. This
-              will people discover your product
+              Choose a category that best fits your Destination. This
+              will people discover your Destination
             </p>
 
             <div className="mt-10">
@@ -412,7 +385,7 @@ const NewProduct = () => {
                       className={`text-xs md:text-sm p-2 cursor-pointer w-full text-center
                      ${
                        selectedCategories.includes(category)
-                         ? "bg-[#ff6154] text-white rounded-full"
+                         ? "bg-green-600 text-white rounded-full"
                          : "text-black"
                      }`}
                     >
@@ -421,6 +394,12 @@ const NewProduct = () => {
                   </motion.div>
                 ))}
               </div>
+                      <div className="w-full rounded-md p-3 bg-[#0E793C] mt-4 md:flex items-center gap-x-4">
+        <FcIdea className="text-5xl text-[#ffffff] mb-4 md:mb-0" />
+        <div className="text-[#ffffffff]">
+          Note: Select Categories that are relevant to your Destination
+        </div>
+      </div>
             </div>
           </motion.div>
         )}
@@ -433,9 +412,9 @@ const NewProduct = () => {
           transition={{ duration: 0.3 }}
           
           className="space-y-10">
-            <div className="text-4xl font-semibold">📝 Product Details</div>
+            <div className="text-4xl font-semibold">📝 Destination Details</div>
             <p className="text-xl font-light mt-4 leading-8">
-              Keep it simple and clear. Describe your product in a way that
+              Keep it simple and clear. Describe your Destination in a way that
               makes it easy for people to understand what it does.
             </p>
 
@@ -444,28 +423,42 @@ const NewProduct = () => {
               <input
                 type="text"
                 value={headline}
-                className="border rounded-md p-2 w-full mt-2 focus:outline-none"
+                placeholder=" Faisal Mosque | The Biggest Mosque in Pakistan"
+                className=" p-2 w-full mt-2 focus:outline-none border-[#0E793C]  rounded-xl  border-[0.5px]"
                 onChange={handleHeadlineChange}
               />
 
               <div className="text-sm text-gray-500 mt-1">
-                {headline.length} / 70
+                {headline.length} / 200
               </div>
+      </div>
+              <div className="w-full rounded-md p-3 bg-[#0E793C] mt-2 md:flex items-center gap-x-4">
+        <FcIdea className="text-5xl text-[#ffffff] mb-4 md:mb-0" />
+        <div className="text-[#ffffffff]">
+Note: Define your Destination in one Line Try to make Eye-catchinh
+        </div>
             </div>
 
             <div className="mt-10">
-              <h2 className="font-medium">Short Description</h2>
+              <h2 className="font-medium">Brief Description</h2>
               <textarea
-                className="border rounded-md p-2 w-full mt-2 focus:outline-none"
+                className=" rounded-xl p-2 w-full mt-2 focus:outline-none border-[#0E793C]  border-[0.5px]"
                 rows={8}
-                maxLength={300}
+                maxLength={2000}
+                placeholder="Faisal Mosque, an architectural marvel in Islamabad, Pakistan, stands as one of the largest mosques in the world. Named after the late King Faisal bin Abdul-Aziz of Saudi Arabia, who generously funded its construction, the mosque is a symbol of the strong ties between Pakistan and Saudi Arabia. Designed by the Turkish architect Vedat Dalokay, its unique design eschews traditional domes in favor of a contemporary, angular structure inspired by a Bedouin tent."
                 value={shortDescription}
                 onChange={handleShortDescriptionChange}
               />
 
               <div className="text-sm text-gray-500 mt-1">
-                {shortDescription.length} / 300
+                {shortDescription.length} / 2000
               </div>
+              <div className="w-full rounded-md p-3 bg-[#0E793C] mt-4 md:flex items-center gap-x-4">
+        <FcIdea className="text-5xl text-[#ffffff] mb-4 md:mb-0" />
+        <div className="text-[#ffffffff]">
+        Note: Write a Detailed note on your Destination 
+        </div>
+      </div>
             </div>
           </motion.div>
         )}
@@ -479,15 +472,21 @@ const NewProduct = () => {
           
           className="space-y-10">
             <h1 className="text-4xl font-semibold">
-              🖼️ Add images to showcase your product
+              🖼️ Add images to showcase your Destination
             </h1>
             <p className="text-xl font-light mt-4 leading-8">
-              Include images that best represent your product. This will help
-              people understand what your product looks like.
+              Include images that best represent your Destination. This will help
+              people understand what your Destination looks like.
             </p>
 
             <div className="mt-10">
-              <h2 className="font-medium">Logo</h2>
+              <h2 className="font-medium">Front Image</h2>
+            <div className="w-full rounded-md p-4 bg-[#0E793C] mt-4 md:flex items-center gap-x-4">
+        <FcIdea className="text-5xl text-[#ffffff] mb-4 md:mb-0" />
+        <div className="text-[#ffffffff]">
+          Note: This image will be used as the main image of your Destination
+        </div>
+      </div>
               {uploadedLogoUrl ? (
                 <div className="mt-2">
                   <Image
@@ -507,8 +506,14 @@ const NewProduct = () => {
             </div>
             <div className="mt-4">
               <div className="font-medium">
-                Product Images ( upload atleast 3 images )
+                Destination Images 
               </div>
+              <div className="w-full rounded-md p-4 bg-[#0E793C] mt-4 md:flex items-center gap-x-4">
+        <FcIdea className="text-5xl text-[#ffffff] mb-4 md:mb-0" />
+        <div className="text-[#ffffffff]">
+          Note: Please Upload atleast 3 images These Images will Further Showcase your Destination
+        </div>
+      </div>
               {uploadedProductImages.length > 0 ? (
                 <div className="mt-2 md:flex gap-2 space-y-4 md:space-y-0">
                   {uploadedProductImages.map((url, index) => (
@@ -534,114 +539,77 @@ const NewProduct = () => {
           </motion.div>
         )}
 
-        {step === 5 && (
-          <motion.div
-          initial={{ opacity: 0, x: "100%" }} // Slide in from the right
-          animate={{ opacity: 1, x: 0 }} // Slide to the center
-          exit={{ opacity: 0, x: "-100%" }} // Slide out to the left
-          transition={{ duration: 0.3 }}
-          
-          className="space-y-10">
-            <h1 className="text-4xl font-semibold"> 🗓️ Release Date</h1>
-            <p className="text-xl font-light mt-4 leading-8">
-              When will your product be available to the public? Select a date
-              to continue.
-            </p>
+{step === 5 && (
+  <motion.div
+    initial={{ opacity: 0, x: "100%" }} // Slide in from the right
+    animate={{ opacity: 1, x: 0 }} // Slide to the center
+    exit={{ opacity: 0, x: "-100%" }} // Slide out to the left
+    transition={{ duration: 0.3 }}
+    className="space-y-10"
+  >
+    <h1 className="text-4xl font-semibold">Address</h1>
+    <p className="text-2xl font-bold mt-2 text-[#0E793C]">Add Address of your Destination</p>
 
-            <div className="mt-10">
-              <div className="font-medium pb-3">Release date</div>
-              <>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-[300px] pl-3 text-left font-normal",
-                        !date && "text-muted-foreground"
-                      )}
-                    >
-                      {date ? format(date, "PPP") : <span>Pick a date</span>}
+    <div className="mt-10">
+      <div className="font-medium flex items-center gap-x-2">
+        <span>State</span>
+      </div>
+      <input
+        type="text"
+        value={website}
+        className="p-2 w-full mt-2 focus:outline-none border-[#0E793C] rounded-xl border-[0.5px]"
+        placeholder="Punjab"
+        onChange={handleWebsiteChange}
+      />
+      <div className="w-full rounded-md p-3 bg-[#0E793C] mt-4 md:flex items-center gap-x-4">
+        <FcIdea className="text-5xl text-[#ffffff] mb-4 md:mb-0" />
+        <div className="text-[#ffffffff]">
+          Note: Make sure to enter the correct state. This will help users locate your destination easily.
+        </div>
+      </div>
+    </div>
 
-                      <PiCalendar className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={date}
-                      onSelect={(date) => setDate(date)}
-                      initialFocus
-                      disabled={(date) => date < new Date()}
-                    />
-                  </PopoverContent>
-                </Popover>
-              </>
-            </div>
-          </motion.div>
-        )}
+    <div className="mt-10">
+      <div className="font-medium flex items-center gap-x-2">
+        <div>City</div>
+      </div>
+      <input
+        placeholder="Lahore"
+        type="text"
+        className="p-2 w-full mt-2 focus:outline-none border-[#0E793C] rounded-xl border-[0.5px]"
+        value={twitter}
+        onChange={handleTwitterChange}
+      />
+      <div className="w-full rounded-md p-3 bg-[#0E793C] mt-4 md:flex items-center gap-x-4">
+        <FcIdea className="text-5xl text-[#ffffff] mb-4 md:mb-0" />
+        <div className="text-[#ffffffff]">
+          Note: Providing the correct city name ensures users can find your destination without confusion.
+        </div>
+      </div>
+    </div>
+
+    <div className="mt-10">
+      <div className="font-medium flex items-center gap-x-2">
+        <div>Address</div>
+      </div>
+      <input
+        placeholder="Main GT road Near Rehman Bakery"
+        type="text"
+        className="border-[1px] border-[#0E793C] rounded-xl p-2 w-full mt-2 focus:outline-none"
+        value={discord}
+        onChange={handleDiscordChange}
+      />
+      <div className="w-full rounded-md p-3 bg-[#0E793C] mt-4 md:flex items-center gap-x-4">
+        <FcIdea className="text-5xl text-[#ffffff] mb-4 md:mb-0" />
+        <div className="text-[#ffffffff]">
+          Note: A precise address helps users navigate to your destination easily and accurately.
+        </div>
+      </div>
+    </div>
+  </motion.div>
+)}
 
         {step === 6 && (
-          <motion.div
-          initial={{ opacity: 0, x: "100%" }} // Slide in from the right
-          animate={{ opacity: 1, x: 0 }} // Slide to the center
-          exit={{ opacity: 0, x: "-100%" }} // Slide out to the left
-          transition={{ duration: 0.3 }}
-          
-          className="space-y-10">
-            <h1 className="text-4xl font-semibold">Additional Links </h1>
-            <p className="text-xl font-light mt-4 leading-8">
-              Add links to your product&apos;s website, social media, and other
-              platforms
-            </p>
-
-            <div className="mt-10">
-              <div className="font-medium flex items-center gap-x-2">
-                <PiPlanet className="text-2xl text-gray-600" />
-                <span>Website</span>
-              </div>
-
-              <input
-                type="text"
-                value={website}
-                className="border rounded-md p-2 w-full mt-2 focus:outline-none"
-                placeholder="https://www.yourdomain.com"
-                onChange={handleWebsiteChange}
-              />
-            </div>
-
-            <div className="mt-10">
-              <div className="font-medium flex items-center gap-x-2">
-                <PiTwitterLogoFill className="text-2xl text-sky-400" />
-                <div>Twitter</div>
-              </div>
-
-              <input
-                placeholder="https://www.twitter.com"
-                type="text"
-                className="border rounded-md p-2 w-full mt-2 focus:outline-none "
-                value={twitter}
-                onChange={handleTwitterChange}
-              />
-            </div>
-
-            <div className="mt-10">
-              <div className="font-medium flex items-center gap-x-2">
-                <PiDiscordLogoFill className="text-2xl text-indigo-500" />
-                <div>Discord</div>
-              </div>
-
-              <input
-                placeholder="https://www.discord.com"
-                type="text"
-                className="border rounded-md p-2 w-full mt-2 focus:outline-none "
-                value={discord}
-                onChange={handleDiscordChange}
-              />
-            </div>
-          </motion.div>
-        )}
-
-        {step === 7 && (
           <motion.div 
           initial={{ opacity: 0, x: "100%" }} // Slide in from the right
           animate={{ opacity: 1, x: 0 }} // Slide to the center
@@ -652,13 +620,13 @@ const NewProduct = () => {
           className="space-y-10">
             <h1 className="text-4xl font-semibold"> 🔍 Review and submit</h1>
             <p className="text-xl font-light mt-4 leading-8">
-              Review the details of your product and submit it to the world.
-              Your product will be reviewed by our team before it goes live.
+              Review the details of your Destination and submit it to the world.
+              Your Destination will be reviewed by our team before it goes live.
             </p>
 
             <div className="mt-10 grid grid-cols-2 gap-8">
               <div className="">
-                <div className="font-semibold">Name of the product</div>
+                <div className="font-semibold">Name of the Destination</div>
                 <div className=" mt-2 text-gray-600">{name}</div>
               </div>
 
@@ -674,10 +642,6 @@ const NewProduct = () => {
                 </div>
               </div>
 
-              <div>
-                <div className="font-semibold">Website URL</div>
-                <div className=" mt-2 text-gray-600">{website}</div>
-              </div>
 
               <div className="">
                 <div className="font-semibold">Headline</div>
@@ -688,13 +652,19 @@ const NewProduct = () => {
                 <div className=" mt-2 text-gray-600 ">{shortDescription}</div>
               </div>
 
+              
               <div>
-                <div className="font-semibold">Twitter</div>
+                <div className="font-semibold">State URL</div>
+                <div className=" mt-2 text-gray-600">{website}</div>
+              </div>
+
+              <div>
+                <div className="font-semibold">City</div>
                 <div className=" mt-2 text-gray-600">{twitter}</div>
               </div>
 
               <div>
-                <div className="font-semibold">Discord</div>
+                <div className="font-semibold">Address</div>
                 <div className=" mt-2 text-gray-600">{discord}</div>
               </div>
 
@@ -708,7 +678,7 @@ const NewProduct = () => {
               </div>
 
               <div className="cols-span-2">
-                <div className="font-semibold">Product Images</div>
+                <div className="font-semibold">Destination Images</div>
                 <div className="mt-2 md:flex gap-2 w-full">
                   {uploadedProductImages.map((url, index) => (
                     <div key={index} className="relative w-28 h-28">
@@ -728,37 +698,37 @@ const NewProduct = () => {
           </motion.div>
         )}
 
-        {step === 8 && (
+        {step === 7 && (
           <div className="space-y-10">
             <div className="text-4xl font-semibold"> Congratulations 🎉 </div>
             <div className="text-xl font-light mt-4 leading-8 ">
-              Your product has been successfully submitted. Our team will review
+              Your Destination has been successfully submitted. Our team will review
               it and get back to you soon.
             </div>
 
             <div className="flex flex-col  gap-4">
               <div
                 onClick={handleGoToProducts}
-                className="bg-[#ff6154] text-white py-2 px-4
+                className="bg-green-600 text-white py-2 px-4
                  rounded mt-4 flex w-60 justify-center items-center cursor-pointer"
               >
-                Go to your products
+                Go to your Destination
               </div>
 
               <Separator />
 
               <div
                 onClick={submitAnotherProduct}
-                className="text-[#ff6154] py-2 px-4 rounded mt-4 
+                className="text-green-600 py-2 px-4 rounded mt-4 
                 flex w-60 justify-center items-center cursor-pointer"
               >
-                Submit another product
+                Submit another Destination
               </div>
             </div>
           </div>
         )}
 
-        {step !== 8 && (
+        {step !== 7 && (
           <>
             <div className="flex justify-between items-center mt-10">
               {step !== 1 && (
@@ -768,19 +738,19 @@ const NewProduct = () => {
               )}
 
               <div className="flex items-center">
-                {step === 7 ? (
+                {step === 6 ? (
                   <button
                     onClick={submitProduct}
-                    className="bg-[#ff6154] text-white py-2 px-4 rounded-md mt-4 items-end"
+                    className="bg-[#0E793C] text-white py-2 px-4 rounded-md mt-4 items-end"
                   >
                     Submit
                   </button>
                 ) : (
                   <button
                     onClick={nextStep}
-                    className="bg-[#ff6154] text-white py-2 px-4 rounded-md mt-4 items-end"
+                    className="bg-[#0E793C] text-white py-2 px-4 rounded-md mt-4 items-end"
                   >
-                    {step === 7 ? "Submit" : "Continue"}
+                    {step === 6 ? "Submit" : "Continue"}
                   </button>
                 )}
               </div>

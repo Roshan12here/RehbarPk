@@ -35,7 +35,6 @@ const PendingProducts: React.FC<PendingProductsProps> = ({
       headline,
       description,
       logo,
-      releaseDate,
       website,
       twitter,
       discord,
@@ -57,7 +56,6 @@ const PendingProducts: React.FC<PendingProductsProps> = ({
       headline,
       description,
       logo,
-      releaseDate,
       website,
       twitter,
       discord,
@@ -113,7 +111,6 @@ const PendingProducts: React.FC<PendingProductsProps> = ({
                   {product.description}
                 </p>
                 <div className="hidden md:flex text-gray-500 font-semibold">
-                  Release Date : {product.releaseDate}
                 </div>
               </div>
             </div>

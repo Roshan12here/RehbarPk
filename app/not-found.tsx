@@ -8,11 +8,11 @@ const NotFound = () => {
         <Link href="/">
           <Image
             priority
-            src="/logo/logo.png"
+            src="/logo/Rehbar-logo.png"
             alt="404"
             width={500}
             height={500}
-            className="w-40  border-gray-200 rounded-md  hover:cursor-pointer"
+            className="w-40 bg-green-400  border-gray-200 rounded-md  hover:cursor-pointer"
           />
         </Link>
 

@@ -1,13 +1,11 @@
 const SignUpButton = () => {
     return ( 
     <div className="
-    bg-[#ff6154]
-     text-white
+    bg-[#fff]
+     text-green-950
      text-center
       p-2 
-      rounded-sm
-      hover:bg-[#d45347]
-      
+      rounded-sm      
       ">
         Sign up 
     </div> );

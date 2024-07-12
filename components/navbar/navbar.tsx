@@ -2,15 +2,12 @@
 
 import { useState } from "react";
 import Logo from "./logo";
-import Menu from "./menu";
-import Search from "./search";
-import SignInButton from "./sign-in-button";
-import SignUpButton from "./sign-up-button";
-import Modal from "../ui/modals/modal";
 import AuthContent from "./auth-content";
 import Avatar from "./avatar";
 import NotificationIcon from "./notification-icon";
 import Submit from "./submit";
+import Modal from "../ui/modals/authModal";
+import { Button } from "../ui/button";
 
 interface NavbarProps {
   authenticatedUser?: any;
@@ -30,23 +27,18 @@ const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <div className="border-b py-2 md:py-0 px-4 md:px-6">
+    <div className="border-b py-2 md:py-0 px-4 md:px-6 bg-[#0E793C] ">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          <Logo />
-          <h1 className="hidden lg:block text-xl font-semibold ml-2">ProductMe</h1>
-          <Search />
+          <Logo  />
         </div>
 
-        <div className="absolute right-1/2 translate-x-1/2 transform z-10">
-          <Menu />
-        </div>
 
         <div className="flex items-center text-sm space-x-6 cursor-pointer">
           {authenticatedUser ? (
             <>
               <Submit products={products} authenticatedUser={authenticatedUser} />
-              <NotificationIcon notifications={notifications} />
+              <NotificationIcon  notifications={notifications} />
               <Avatar authenticatedUser={authenticatedUser} />
             </>
           ) : (
@@ -54,8 +46,7 @@ const Navbar: React.FC<NavbarProps> = ({
               onClick={handleButtonClick}
               className="flex items-center space-x-6 cursor-pointer text-sm"
             >
-              <SignInButton />
-              <SignUpButton />
+              <Button className="bg-[#D1F4E0] text-[#0E793C] hover:bg-[#0E793C] hover:text-[#D1F4E0] ">Sign Into Rehar</Button>
             </div>
           )}
         </div>

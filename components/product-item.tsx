@@ -9,11 +9,11 @@ import {
 } from "react-icons/pi";
 import ProductModal from "./ui/modals/product-modal";
 import ProductModalContent from "./product-modal-content";
-import Modal from "./ui/modals/modal";
 import AuthContent from "./navbar/auth-content";
 import Link from "next/link";
 import { upvoteProduct } from "@/lib/server-actions";
 import { motion } from "framer-motion";
+import Modal from "./ui/modals/authModal";
 
 
 interface ProductItemProps {
@@ -35,14 +35,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
 
   const [totalUpvotes, setTotalUpvotes] = useState(product.upvotes || 0);
 
-  const handleProductItemClick = () => {
-    if (!authenticatedUser) {
-      setShowLoginModal(true);
-    } else {
-      setCurrentProduct(product);
-      setShowProductModal(true);
-    }
-  };
+  
 
   const handleArrowClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -77,18 +70,6 @@ const ProductItem: React.FC<ProductItemProps> = ({
 
 
 
-  const releaseDate = product.releaseDate && new Date(product.releaseDate);
-
-  const currentDate = new Date();
-
-  let displayReleaseDate;
-
-  if (releaseDate > currentDate) {
-    displayReleaseDate = releaseDate.toDateString();
-  } else {
-    displayReleaseDate = "Available Now";
-  }
-
   const variants = {
     initital : { scale: 1 },
     upvoted: { scale: [1, 1.2, 1], transition: { duration: 0.3 } },
@@ -97,15 +78,15 @@ const ProductItem: React.FC<ProductItemProps> = ({
 
 
   return (
+    <Link href={`/Destination/${product.slug}`}>
     <div
-      onClick={handleProductItemClick}
       className="
     py-4 w-full cursor-pointer p-2   
     rounded-md
      hover:bg-gradient-to-bl
-    from-[#ffe6d3]
-    via-[#fdfdfd]
-    to-white
+    from-[#16a34a]
+    via-[#86efac]
+    to-[#16a34a]
     "
     >
       <div className="flex items-center justify-between">
@@ -122,7 +103,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
             <div className="md:flex items-center gap-x-2">
               <h1 className="text-sm font-semibold">{product.name}</h1>
               <p className="hidden md:flex text-xs">-</p>
-              <p className="text-gray-500 text-xs md:text-sm pr-2">
+              <p className="text-gray-600 font-extrabold text-xs md:text-sm pr-2">
                 {product.headline}
               </p>
               <div
@@ -133,31 +114,21 @@ const ProductItem: React.FC<ProductItemProps> = ({
               </div>
             </div>
             <div className="hidden md:flex gap-x-2 items-center">
-              <div className="text-xs text-gray-500 flex gap-x-1 items-center">
+              <div className="text-xs text-gray-600 font-extrabold flex gap-x-1 items-center">
                 {product.commentsLength}
                 <PiChatCircle />
               </div>
 
               {product.categories.map((category: string) => (
-                <div key={category} className="text-xs text-gray-500">
+                <div key={category} className="text-xs text-gray-600 font-extrabold">
                   <div className="flex gap-x-1 items-center">
                     <div className="mr-1">•</div>
-                    <Link
-                      href={`/category/${category.toLowerCase()}`}
-                      className="hover:underline"
-                      onClick={handleCategoryClick}
-                    >
                       {category}
-                    </Link>
                   </div>
                 </div>
               ))}
 
-              <div className="text-xs text-gray-500">
-                <div className="flex gap-x-1 items-center">
-                  <div className="mr-1">•</div>
-                  {displayReleaseDate}
-                </div>
+              <div className="text-xs text-gray-600 font-extrabold">
               </div>
             </div>
           </div>
@@ -198,13 +169,14 @@ const ProductItem: React.FC<ProductItemProps> = ({
           totalUpvotes={totalUpvotes}
           hasUpvoted={hasUpvoted}
           setHasUpvoted={setHasUpvoted}
-        />
+          />
       </ProductModal>
 
       <Modal visible={showLoginModal} setVisible={setShowLoginModal}>
         <AuthContent />
       </Modal>
     </div>
+          </Link>
   );
 };
 

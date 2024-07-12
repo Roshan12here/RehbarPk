@@ -70,7 +70,7 @@ const DeleteProduct: React.FC<DeleteProductProps> = ({ productId }) => {
 
           <p className="text-sm">
             We&apos;re sorry to see you go. Once your product is deleted, all of
-            your content will be permanently gone, including your products and
+            your content will be permanently gone, including your Destinations and
             product settings.
           </p>
 

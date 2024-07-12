@@ -61,7 +61,7 @@ const NotificationIcon: React.FC<NotificationIconProps> = ({
   };
 
   return (
-    <div>
+    <div  className="bg-white rounded-xl  hover:bg-green-300">
       <Sheet>
         <SheetTrigger>
           <div className="flex items-center">

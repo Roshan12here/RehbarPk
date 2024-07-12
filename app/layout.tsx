@@ -3,13 +3,14 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from '@vercel/analytics/react';
+import ClientOnly from "@/components/ClientOnly";
 
 
 const font = DM_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Product Hunt Clone",
-  description: "A clone of Product Hunt built with Next.js",
+  title: "Rehbar.PK",
+  description: "A Advisor for Pakistanis ",
 };
 
 export default function RootLayout({
@@ -18,18 +19,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html 
-    suppressHydrationWarning={true}
-    
-    lang="en">
-      <body className={font.className}>
-  
-
-        
+    <html   lang="en">
+      <body className={font.className}>      
+      <ClientOnly>
         {children}
+    </ClientOnly>
         <Toaster />
         <Analytics />
-        
+
         </body>
     </html>
   );

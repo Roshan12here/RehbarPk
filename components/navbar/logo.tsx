@@ -7,20 +7,21 @@ const Logo = () => {
     <div>
      <Link href={"/"} className="md:hidden">
         <Image 
-        src={'/logo/small-logo.png'} 
+        src={'/logo/Rehbar-logo.png'} 
         alt="logo"
-        width={33}
-        height={33}
+        width={44}
+        height={44}
         className="p-1"
         />
      </Link>
 
      <Link href={"/"} className="hidden md:block">
         <Image 
-        src={'/logo/logo.png'} 
+        src={'/logo/Rehbar-logo.png'} 
         alt="logo"
-        width={44}
-        height={44}
+        width={64}
+        height={64}
+        className="  border-gray-200 bg-[#17C964] rounded-md  hover:cursor-pointer"
         />
      </Link>
 

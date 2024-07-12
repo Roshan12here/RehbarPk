@@ -1,5 +1,8 @@
 import { auth } from "@/auth";
 import ProductItem from "./product-item";
+import Search from "./navbar/search";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 interface ActiveProductsProps {
   activeProducts: any;
@@ -18,7 +21,6 @@ const ActiveProducts: React.FC<ActiveProductsProps> = async ({
       headline,
       description,
       logo,
-      releaseDate,
       website,
       twitter,
       discord,
@@ -60,7 +62,6 @@ const ActiveProducts: React.FC<ActiveProductsProps> = async ({
       headline,
       description,
       logo,
-      releaseDate,
       website,
       twitter,
       discord,
@@ -81,23 +82,39 @@ const ActiveProducts: React.FC<ActiveProductsProps> = async ({
 
 
   return (
-    <div className="w-full">
-      <div className="flex items-center border-b pb-3">
-        <h1 className="text-xl font-medium">All Products</h1>
+    <div className="w-full h-[100vh] flex flex-col">
+      {/* Header */}
+      <div className="mt-[6vh] flex flex-col justify-center items-center border-b pb-3 px-4">
+        <h1 className="text-4xl sm:2xl md:3xl lg:4xl xl:4xl font-extrabold text-green-600 ">Destinations</h1>
+        <h3 className="text-2xl sm:xl md:2xl lg:2xl xl:2xl font-extrabold text-gray-600 mt-2">Discover the amazing Destinations of Pakistan</h3>
+        <Search  />
+        <div className="flex justify-center">
+        <Button className="mt-2 bg-green-600 text-white">
+          <Link href="/categories">
+          Browse By Categories
+          </Link>
+          </Button>
+        <Button className="mt-2 bg-green-600 text-white ml-[1vw] sm:flex sm:flex-col">
+          <Link href="/new-product">
+          Create new Destination
+          </Link>
+          </Button>
+        </div>
       </div>
 
-      <div className="space-y-2 py-6 flex flex-col">
+      {/* Content */}
+      <div className="space-y-2 py-6 px-4 overflow-y-auto flex-1">
         {formattedActiveProducts?.map((product: any) => (
-            <ProductItem 
+          <ProductItem
             key={product.id}
             product={product}
             authenticatedUser={authenticatedUser}
-            />
+          />
         ))}
-
       </div>
     </div>
   );
 };
+
 
 export default ActiveProducts;

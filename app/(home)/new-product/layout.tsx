@@ -6,6 +6,7 @@ import {
   isUserPremium,
 } from "@/lib/server-actions";
 import { redirect } from "next/navigation";
+import ClientOnly from "@/components/ClientOnly";
 
 const NewProductLayout = async ({
   children,
@@ -31,16 +32,18 @@ const NewProductLayout = async ({
 
   return (
     <html lang="en">
+      <ClientOnly >
       <body>
         <Navbar
           authenticatedUser={authenticatedUser}
           products={products}
-         notifications={notifications}
-        />
+          notifications={notifications}
+          />
         
         {children}
         
         </body>
+          </ClientOnly>
     </html>
   );
 };

@@ -75,10 +75,13 @@ const Search = () => {
   return (
     <div
       className="
+      mt-3
         rounded-full 
         flex items-center
          text-gray-500 
-         ml-4 
+         ml-4
+         w-[42vw]
+          border-[2px] border-green-500  
          bg-[#f5f8ff]
           relative"
     >
