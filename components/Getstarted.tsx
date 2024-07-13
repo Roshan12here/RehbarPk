@@ -15,7 +15,7 @@ import ModalChoose from "./ui/modals/authModal";
 interface ProductItemProps {
   product?: any;
   authenticatedUser?: any;
-}
+}   
 
 const ProductItem: React.FC<ProductItemProps> = ({
   product,
