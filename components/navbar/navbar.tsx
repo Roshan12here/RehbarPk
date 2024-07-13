@@ -22,6 +22,7 @@ const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [authModalVisible, setAuthModalVisible] = useState(false);
 
+
   const handleButtonClick = () => {
     setAuthModalVisible(true);
   };
@@ -37,7 +38,7 @@ const Navbar: React.FC<NavbarProps> = ({
         <div className="flex items-center text-sm space-x-6 cursor-pointer">
           {authenticatedUser ? (
             <>
-              <Submit products={products} authenticatedUser={authenticatedUser} />
+            <Submit products={products} authenticatedUser={authenticatedUser} />
               <NotificationIcon  notifications={notifications} />
               <Avatar authenticatedUser={authenticatedUser} />
             </>
@@ -46,7 +47,7 @@ const Navbar: React.FC<NavbarProps> = ({
               onClick={handleButtonClick}
               className="flex items-center space-x-6 cursor-pointer text-sm"
             >
-              <Button className="bg-[#D1F4E0] text-[#0E793C] hover:bg-[#0E793C] hover:text-[#D1F4E0] ">Sign Into Rehar</Button>
+              <Button className="bg-[#D1F4E0] text-[#0E793C] hover:bg-[#0E793C] hover:text-[#D1F4E0] ">Sign In To Get Started</Button>
             </div>
           )}
         </div>
