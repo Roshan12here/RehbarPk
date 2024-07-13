@@ -1,6 +1,5 @@
 import React from 'react'
-import { Button } from './ui/button'
-import Link from 'next/link'
+
 
 const Hero = () => {
   return (
@@ -14,6 +13,7 @@ const Hero = () => {
           Explore Pakistan's vibrant destinations and thriving businesses. Discover, review, and connect with the best spots and services across the country, all in one place.
         </h3>
         <div className='mt-6 flex flex-col sm:flex-row items-center'>
+        
         </div>
         
       </div>

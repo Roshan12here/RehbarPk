@@ -5,11 +5,12 @@ import AuthContent from "./navbar/auth-content";
 import Link from "next/link";
 import { upvoteProduct } from "@/lib/server-actions";
 import { motion } from "framer-motion";
-import ProductModalContent from "./ui/modals/CommentModal";
 import { Button } from "./ui/button";
 import Modal from "./ui/modals/authModal";
 import ModalComment from "./ui/modals/CommentModalUI";
+import { useRouter } from "next/router";
 import AuthContentChoose from "./ChooseContent";
+import ModalChoose from "./ui/modals/authModal";
 
 interface ProductItemProps {
   product?: any;
@@ -85,12 +86,14 @@ const ProductItem: React.FC<ProductItemProps> = ({
    <Button className="Rounded-lg text-[#ffffff] bg-[#0E793C] hover:bg-gradient-to-bl
     from-[#0E793C]
     via-[#86efac]
-    to-[#0E793C] " >Commment</Button>
+    to-[#0E793C] 
+    border border-2px border-emerald-400
+    " >Get Started</Button>
       </div>
 
-      <ModalComment visible={showProductModal} setVisible={setShowProductModal}>
-      <AuthContentChoose/>
-      </ModalComment>
+      <ModalChoose visible={showProductModal} setVisible={setShowProductModal}>
+        <AuthContentChoose />
+      </ModalChoose>
 
       <Modal visible={showLoginModal} setVisible={setShowLoginModal}>
         <AuthContent />

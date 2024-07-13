@@ -8,6 +8,7 @@ import NotificationIcon from "./notification-icon";
 import Submit from "./submit";
 import Modal from "../ui/modals/authModal";
 import { Button } from "../ui/button";
+import ProductItem from "../Getstarted";
 
 interface NavbarProps {
   authenticatedUser?: any;
@@ -36,9 +37,9 @@ const Navbar: React.FC<NavbarProps> = ({
 
 
         <div className="flex items-center text-sm space-x-6 cursor-pointer">
+         <ProductItem authenticatedUser={authenticatedUser} product={products} />
           {authenticatedUser ? (
             <>
-            <Submit products={products} authenticatedUser={authenticatedUser} />
               <NotificationIcon  notifications={notifications} />
               <Avatar authenticatedUser={authenticatedUser} />
             </>
