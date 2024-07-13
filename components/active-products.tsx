@@ -1,17 +1,30 @@
-import { auth } from "@/auth";
+// components/active-products.tsx
+"use client";
+
+import { useState } from "react";
 import ProductItem from "./product-item";
 import Search from "./navbar/search";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import Modal from "./ui/modals/authModal";
+import AuthContent from "./navbar/auth-content";
 
 interface ActiveProductsProps {
   activeProducts: any;
+  authenticatedUser: any;
 }
 
-const ActiveProducts: React.FC<ActiveProductsProps> = async ({
+const ActiveProducts: React.FC<ActiveProductsProps> = ({
   activeProducts,
+  authenticatedUser,
 }) => {
-  const authenticatedUser = await auth();
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const handleProductItemClick = () => {
+    if (!authenticatedUser) {
+      setShowLoginModal(true);
+    }
+  };
 
   const formattedActiveProducts = activeProducts?.map((product: any) => {
     const {
@@ -34,8 +47,6 @@ const ActiveProducts: React.FC<ActiveProductsProps> = async ({
       upvotes
     } = product;
 
-
-
     const imageUrls = images.map((image: any) => image.url);
     const categoryNames = categories.map((category: any) => category.name);
     const commentsCount = comments ? comments.length : 0;
@@ -51,9 +62,8 @@ const ActiveProducts: React.FC<ActiveProductsProps> = async ({
 
     })) : [];
 
-
     const upvotesCount = upvotes ? upvotes.length : 0;
-    const upvotesData = upvotes.map((upvote: any) => upvote.user.id)
+    const upvotesData = upvotes.map((upvote: any) => upvote.user.id);
 
     return {
       id,
@@ -80,7 +90,6 @@ const ActiveProducts: React.FC<ActiveProductsProps> = async ({
 
   console.log(formattedActiveProducts, 'formattedActiveProducts')
 
-
   return (
     <div className="w-full h-[100vh] flex flex-col">
       {/* Header */}
@@ -94,7 +103,7 @@ const ActiveProducts: React.FC<ActiveProductsProps> = async ({
           Browse By Categories
           </Link>
           </Button>
-        <Button className="mt-2 bg-green-600 text-white ml-[1vw] sm:flex sm:flex-col">
+        <Button onClick={handleProductItemClick} className="mt-2 bg-green-600 text-white ml-[1vw] sm:flex sm:flex-col">
           <Link href="/new-product">
           Create new Destination
           </Link>
@@ -112,9 +121,11 @@ const ActiveProducts: React.FC<ActiveProductsProps> = async ({
           />
         ))}
       </div>
+      {showLoginModal && <Modal visible={showLoginModal} setVisible={setShowLoginModal}>
+        <AuthContent />
+      </Modal>}
     </div>
   );
 };
-
 
 export default ActiveProducts;
