@@ -96,11 +96,6 @@ const ActiveProducts: React.FC<ActiveProductsProps> = async ({
           Browse By Categories
           </Link>
           </Button>
-        <Button className="mt-2 bg-green-600 text-white ml-[1vw]">
-          <Link href="/new-business">
-          Create a new Business
-          </Link>
-          </Button>
         </div>
       </div>
 

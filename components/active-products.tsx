@@ -1,7 +1,6 @@
 // components/active-products.tsx
 "use client";
 
-import { useState } from "react";
 import ProductItem from "./product-item";
 import Search from "./navbar/search";
 import { Button } from "./ui/button";
@@ -18,13 +17,6 @@ const ActiveProducts: React.FC<ActiveProductsProps> = ({
   activeProducts,
   authenticatedUser,
 }) => {
-  const [showLoginModal, setShowLoginModal] = useState(false);
-
-  const handleProductItemClick = () => {
-    if (!authenticatedUser) {
-      setShowLoginModal(true);
-    }
-  };
 
   const formattedActiveProducts = activeProducts?.map((product: any) => {
     const {
@@ -103,11 +95,6 @@ const ActiveProducts: React.FC<ActiveProductsProps> = ({
           Browse By Categories
           </Link>
           </Button>
-        <Button onClick={handleProductItemClick} className="mt-2 bg-green-600 text-white ml-[1vw] sm:flex sm:flex-col">
-          <Link href="/new-product">
-          Create new Destination
-          </Link>
-          </Button>
         </div>
       </div>
 
@@ -121,9 +108,6 @@ const ActiveProducts: React.FC<ActiveProductsProps> = ({
           />
         ))}
       </div>
-      {showLoginModal && <Modal visible={showLoginModal} setVisible={setShowLoginModal}>
-        <AuthContent />
-      </Modal>}
     </div>
   );
 };
