@@ -9,12 +9,23 @@ interface BusinessData {
   headline: string;
   description: string;
   logo: string;
+  BusinessEmail: string;
+  BusinessPhone: string;
+  BusinessHours?: string; // Make this optional
+  YearsInBusiness: string;
+  OwnerName: string;
+  NumofEmployees: string;
+  ServicesOffered: string;
+  Arminities: string;
+  AboutTheBusiness: string;
   website: string;
   twitter: string;
+  discord?: string;
   images: string[];
   category: string[];
   rank?: number;
 }
+
 
 export const createProduct = async ({
   name,
@@ -22,8 +33,18 @@ export const createProduct = async ({
   headline,
   description,
   logo,
+  BusinessPhone,
+  BusinessEmail,
+  BusinessHours,
+  YearsInBusiness,
+  OwnerName,
+  NumofEmployees,
+  ServicesOffered,
+  Arminities,
+  AboutTheBusiness,
   website,
   twitter,
+  discord,
   images,
   category,
 }: BusinessData): Promise<any> => {
@@ -44,8 +65,18 @@ export const createProduct = async ({
         headline,
         description,
         logo,
+        BusinessPhone,
+        BusinessEmail,
+        BusinessHours,
+        YearsInBusiness,
+        OwnerName,
+        NumofEmployees,
+        ServicesOffered,
+        Arminities,
+        AboutTheBusiness,
         website,
         twitter,
+        discord,
         status: "PENDING",
         categories: {
           connectOrCreate: category.map((name) => ({
@@ -62,7 +93,6 @@ export const createProduct = async ({
             data: images.map((image) => ({ url: image })),
           },
         },
-
         user: {
           connect: {
             id: userId,
@@ -86,53 +116,74 @@ export const updateProduct = async (
     headline,
     description,
     logo,
+    BusinessPhone,
+    BusinessEmail,
+    YearsInBusiness,
+    OwnerName,
+    NumofEmployees,
+    ServicesOffered,
+    Arminities,
+    AboutTheBusiness,
     website,
     twitter,
+    discord,
     images,
-  }: BusinessData
+    imagesChanged
+  }: BusinessData & { imagesChanged: boolean }
 ) => {
   const authenticatedUser = await auth();
-
   if (!authenticatedUser) {
     throw new Error("You must be signed in to update a product");
   }
-
   const product = await db.business.findUnique({
     where: {
       id: productId,
     },
   });
-
   if (!product) {
     throw new Error("Product not found");
+  }
+  
+  let updateData: any = {
+    name,
+    slug,
+    headline,
+    description,
+    logo,
+    BusinessPhone,
+    YearsInBusiness: YearsInBusiness.toString(), // Convert to string
+    OwnerName,
+    BusinessEmail,
+    NumofEmployees,
+    ServicesOffered,
+    Arminities,
+    AboutTheBusiness,
+    website,
+    twitter,
+    discord,
+    status: "PENDING",
+  };
+
+  if (imagesChanged) {
+    updateData.images = {
+      deleteMany: {
+        productId,
+      },
+      createMany: {
+        data: images.map((image) => ({ url: image })),
+      },
+    };
   }
 
   await db.business.update({
     where: {
       id: productId,
     },
-    data: {
-      name,
-      slug,
-      headline,
-      description,
-      logo,
-      website,
-      twitter,
-      images: {
-        deleteMany: {
-          productId,
-        },
-        createMany: {
-          data: images.map((image) => ({ url: image })),
-        },
-      },
-      status: "PENDING",
-    },
+    data: updateData,
   });
+
   return product;
 };
-
 export const deleteProduct = async (productId: string) => {
   const authenticatedUser = await auth();
 
@@ -167,6 +218,47 @@ export const deleteProduct = async (productId: string) => {
   return true;
 };
 
+export const getAllCities = async () => {
+  const products = await db.business.findMany({
+    where: {
+      status: "ACTIVE",
+    },
+    select: {
+      twitter: true,
+    },
+  });
+
+  // Extract unique cities
+  const cities = Array.from(new Set(products.map((product) => product.twitter)));
+
+  return cities;
+};
+
+export const getProductsByCity = async (city: string) => {
+  try {
+    const products = await db.business.findMany({
+      where: {
+        twitter: city,
+        status: "ACTIVE",
+      },
+    });
+    return products;
+  } catch (error) {
+    console.error("Error getting products by city:", error);
+    return [];
+  }
+};
+
+export const getProductsByCityName = async (city: string) => {
+  const products = await db.business.findMany({
+    where: {
+      twitter: city,
+      status: "ACTIVE",
+    },
+  });
+  return products;
+};
+
 export const getOwnerProducts = async () => {
   const authenticatedUser = await auth();
 
@@ -195,6 +287,11 @@ export const getProductById = async (productId: string) => {
         categories: true,
         images: true,
         comments: {
+          include: {
+            user: true,
+          },
+        },
+        ratings: {
           include: {
             user: true,
           },
@@ -264,6 +361,105 @@ export const activateProduct = async (productId: string) => {
   } catch (error) {
     console.error(error);
     return null;
+  }
+};
+
+
+export const uploadProductRating = async (
+  businessId: string,
+  score: number,
+  comment?: string
+) => {
+  try {
+    const authenticatedUser = await auth();
+
+    if (
+      !authenticatedUser ||
+      !authenticatedUser.user ||
+      !authenticatedUser.user.id
+    ) {
+      throw new Error("User ID is missing or invalid");
+    }
+
+    const userId = authenticatedUser.user.id;
+
+    // Find the product
+    const product = await db.business.findUnique({
+      where: {
+        id: businessId,
+      },
+    });
+
+    if (!product) {
+      throw new Error("Product not found");
+    }
+
+    // Create the rating
+    const rating = await db.rating.create({
+      data: {
+        score,
+        comment,
+        userId,
+        businessId,
+      },
+    });
+
+    return rating;
+  } catch (error) {
+    console.error("Error uploading product rating:", error);
+    throw error;
+  }
+};
+
+
+
+export const getProductRating = async (businessId: string) => {
+  try {
+    const ratings = await db.rating.findMany({
+      where: {
+        businessId,
+      },
+    });
+
+    if (ratings.length === 0) {
+      return { averageRating: 0, ratingsCount: 0 };
+    }
+
+    const totalRating = ratings.reduce((sum, rating) => sum + rating.score, 0);
+    const averageRating = totalRating / ratings.length;
+    
+    return { averageRating, ratingsCount: ratings.length };
+  } catch (error) {
+    console.error("Error fetching product rating:", error);
+    throw error;
+  }
+};
+
+export const getProductRatings = async (businessId: string) => {
+  try {
+    const ratings = await db.rating.findMany({
+      where: {
+        businessId,
+      },
+      include: {
+        user: true, // Include user profile
+      },
+    });
+
+    return ratings.map((rating) => ({
+      score: rating.score,
+      comment: rating.comment,
+      user: {
+        id: rating.user.id,
+        name: rating.user.name,
+        email: rating.user.email,
+        profilePicture: rating.user.image || "", // Assuming user profile picture is stored in `image` field
+      },
+      createdAt: rating.createdAt,
+    }));
+  } catch (error) {
+    console.error("Error fetching product ratings:", error);
+    throw error;
   }
 };
 
@@ -528,6 +724,11 @@ export const getProductBySlug = async (slug: string) => {
         images: true,
         categories: true,
         comments: {
+          include: {
+            user: true,
+          },
+        },
+        ratings: { // Include ratings with user details
           include: {
             user: true,
           },

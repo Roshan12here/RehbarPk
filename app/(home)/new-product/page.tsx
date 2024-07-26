@@ -6,13 +6,6 @@ import Image from "next/image";
 import React, { useCallback, useState } from "react";
 import { FcIdea } from "react-icons/fc";
 
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -27,6 +20,9 @@ import { Separator } from "@/components/ui/separator";
 import { createProduct } from "@/lib/server-actions";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import { Input } from "@headlessui/react";
+import { Card, CardTitle } from "@/components/ui/card";
+import  ComboboxDemo  from "@/components/EnterCity";
 
 const categories = [
   "Town",
@@ -52,12 +48,58 @@ const categories = [
   "Shrines",
 ];
 
+const cities = [
+  { value: "islamabad", label: "Islamabad" },
+  { value: "karachi", label: "Karachi" },
+  { value: "lahore", label: "Lahore" },
+  { value: "rawalpindi", label: "Rawalpindi" },
+  { value: "peshawar", label: "Peshawar" },
+  { value: "quetta", label: "Quetta" },
+  { value: "multan", label: "Multan" },
+  { value: "faisalabad", label: "Faisalabad" },
+  { value: "gujranwala", label: "Gujranwala" },
+  { value: "gujrat", label: "Gujrat" },
+  { value: "sialkot", label: "Sialkot" },
+  { value: "bahawalpur", label: "Bahawalpur" },
+  { value: "okara", label: "Okara" },
+  { value: "jhelum", label: "Jhelum" },
+  { value: "chakwal", label: "Chakwal" },
+  { value: "sargodha", label: "Sargodha" },
+  { value: "rahim-yar-khan", label: "Rahim Yar Khan" },
+  { value: "jhang", label: "Jhang" },
+  { value: "hyderabad", label: "Hyderabad" },
+  { value: "sukkur", label: "Sukkur" },
+  { value: "khairpur", label: "Khairpur" },
+  { value: "nawabshah", label: "Nawabshah" },
+  { value: "mardan", label: "Mardan" },
+  { value: "nowshera", label: "Nowshera" },
+  { value: "mansehra", label: "Mansehra" },
+  { value: "abbottabad", label: "Abbottabad" },
+  { value: "swabi", label: "Swabi" },
+  { value: "charsadda", label: "Charsadda" },
+  { value: "kohat", label: "Kohat" },
+  { value: "gwadar", label: "Gwadar" },
+  { value: "khuzdar", label: "Khuzdar" },
+  { value: "pakpattan", label: "Pakpattan" },
+]
+
 
 const NewProduct = () => {
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
+  const [Unique , SetUnique] = useState("");
+  const [VisitorsExpect , SetVisitorsExpect] = useState("");
+  const [Amenities , SetAmenities] = useState("");
+  const [Historical , SetHistorical] = useState("");
+  const [InterestStories , SetInterestStories] = useState("");
+  const [WhatBringing , SetWhatBringing] = useState("");
+  const [ScenicSpots , SetScenicSpots] = useState("");
+  const [MemorableExperiences , SetMemorableExperiences] = useState("");
+  const [BestTimetoVisit , SetBestTimetoVisit] = useState("");
+  const [KidsFriendly , SetKidsFriendly] = useState("");
+  const [AnyMessageForVisitors , SetAnyMessageForVisitors] = useState("");
   const [headline, setHeadline] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [website, setWebsite] = useState("");
@@ -85,6 +127,51 @@ const NewProduct = () => {
   const handleTwitterChange = (e: any) => {
     setTwitter(e.target.value);
   };
+
+  const handleUniqueChange = (e: any) => {
+    SetUnique(e.target.value);
+  };
+
+  const handleVisitorsExpectChange = (e: any) => {
+    SetVisitorsExpect(e.target.value);
+  };
+
+  const handleAmenitiesChange = (e: any) => {
+    SetAmenities(e.target.value);
+  };
+
+  const handleHistoricalChange = (e: any) => {
+    SetHistorical(e.target.value);
+  };
+
+  const handleInterestStoriesChange = (e: any) => {
+    SetInterestStories(e.target.value);
+  };
+
+  const handleWhatBringingChange = (e: any) => {
+    SetWhatBringing(e.target.value);
+  };
+
+  const handleScenicSpotsChange = (e: any) => {
+    SetScenicSpots(e.target.value);
+  };
+
+  const handleMemorableExperiencesChange = (e: any) => {
+    SetMemorableExperiences(e.target.value);
+  };
+
+  const handleBestTimetoVisitChange = (e: any) => {
+    SetBestTimetoVisit(e.target.value);
+  };  
+
+  const handleKidsFriendlyChange = (e: any) => {
+    SetKidsFriendly(e.target.value);
+  };
+
+  const handleAnyMessageForVisitorsChange = (e: any) => {
+    SetAnyMessageForVisitors(e.target.value);
+  };
+
 
   const handleDiscordChange = (e: any) => {
     setDiscord(e.target.value);
@@ -179,7 +266,7 @@ const NewProduct = () => {
       return;
     }
 
-    if (step === 4 && !uploadedLogoUrl) {
+    if (step === 5 && !uploadedLogoUrl) {
       toast(
         <>
           <div className="flex items-center gap-4  mx-auto">
@@ -196,7 +283,7 @@ const NewProduct = () => {
       return;
     }
 
-    if (step === 4 && uploadedProductImages.length < 1) {
+    if (step === 5 && uploadedProductImages.length < 1) {
       toast(
         <>
           <div className="flex items-center gap-4  mx-auto">
@@ -213,7 +300,7 @@ const NewProduct = () => {
       return;
     }
 
-    if (step == 6 && !website && !twitter && !discord) {
+    if (step == 7 && !website && !twitter && !discord) {
       toast(
         <>
           <div className="flex items-center gap-4  mx-auto">
@@ -236,6 +323,17 @@ const NewProduct = () => {
     name,
     selectedCategories,
     headline,
+    Unique,
+VisitorsExpect,
+Amenities,
+Historical,
+InterestStories,
+WhatBringing,
+ScenicSpots,
+MemorableExperiences,
+BestTimetoVisit,
+KidsFriendly,
+AnyMessageForVisitors,
     shortDescription,
     uploadedLogoUrl,
     uploadedProductImages,
@@ -264,6 +362,19 @@ const NewProduct = () => {
     setShortDescription("");
     setDate(new Date());
     setWebsite("");
+    SetUnique("")
+    SetVisitorsExpect("")
+    SetAmenities("")
+    SetHistorical("")
+    SetInterestStories("")
+    SetWhatBringing("")
+    SetScenicSpots("")
+    SetMemorableExperiences("")
+    SetBestTimetoVisit("")
+    SetKidsFriendly("")
+    SetAnyMessageForVisitors("")
+    setHeadline("")
+    setShortDescription("")
     setTwitter("");
     setDiscord("");
     setSelectedCategories([]);
@@ -281,6 +392,17 @@ const NewProduct = () => {
         slug,
         headline,
         website,
+        Unique,
+        VisitorsExpect,
+        Amenities,
+        Historical,
+        InterestStories,
+        WhatBringing,
+        ScenicSpots,
+        MemorableExperiences,
+        BestTimetoVisit,
+        KidsFriendly,
+        AnyMessageForVisitors,
         twitter,
         discord,
         description: shortDescription,
@@ -289,7 +411,7 @@ const NewProduct = () => {
         images: uploadedProductImages,
         category: selectedCategories,
       });
-      setStep(7);
+      setStep(8);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -463,7 +585,119 @@ Note: Define your Destination in one Line Try to make Eye-catchinh
           </motion.div>
         )}
 
-        {step === 4 && (
+{
+  step === 4 && (
+    <motion.div
+    initial={{ opacity: 0, x: "100%" }} // Slide in from the right
+    animate={{ opacity: 1, x: 0 }} // Slide to the center
+    exit={{ opacity: 0, x: "-100%" }} // Slide out to the left
+    transition={{ duration: 0.5 }}
+    className="space-y-10">
+
+    <h1 className="text-4xl font-semibold">Answer these Questions</h1>
+<Card className="flex flex-col items-center">
+  <CardTitle>What makes this spot special or unique?</CardTitle>
+<Input
+     type="text"
+     value={Unique}
+     className="p-2 w-full focus:outline-none mt-4 border-[#0E793C] rounded-xl border-[0.5px]"
+     placeholder="e.g Food, picnicking, bird-watching, sightseeing"
+     onChange={handleUniqueChange}
+/>
+</Card>
+<Card className="flex flex-col items-center">
+  <CardTitle>What can visitors expect to see or do there</CardTitle>
+<Input
+     type="text"
+     value={VisitorsExpect}
+     className="p-2 w-full focus:outline-none mt-4 border-[#0E793C] rounded-xl border-[0.5px]"
+     placeholder="Water bottles camera etc"
+     onChange={handleVisitorsExpectChange}
+/>
+</Card>
+<Card className="flex flex-col items-center">
+  <CardTitle> What amenities are available? </CardTitle>
+<Input
+     type="text"
+     value={Amenities}
+     className="p-2 w-full focus:outline-none mt-4 border-[#0E793C] rounded-xl border-[0.5px]"
+     placeholder="e.g., restrooms, picnic tables, playgrounds, parking"
+     onChange={handleAmenitiesChange}
+/>
+</Card>
+<Card className="flex flex-col items-center">
+  <CardTitle>Does it has any historical or cultural significance?</CardTitle>
+<Input
+     type="text"
+     value={Historical}
+     className="p-2 w-full focus:outline-none mt-4 border-[#0E793C] rounded-xl border-[0.5px]"
+     onChange={handleHistoricalChange}
+/>
+</Card>
+<Card className="flex flex-col items-center">
+  <CardTitle>Are there any interesting facts about the location?</CardTitle>
+<Input
+     type="text"
+     value={InterestStories}
+     className="p-2 w-full focus:outline-none mt-4 border-[#0E793C] rounded-xl border-[0.5px]"
+     onChange={handleInterestStoriesChange}
+/>
+</Card>
+<Card className="flex flex-col items-center">
+  <CardTitle>What should visitors bring with them?</CardTitle>
+<Input
+     type="text"
+     value={WhatBringing}
+     className="p-2 w-full focus:outline-none mt-4 border-[#0E793C] rounded-xl border-[0.5px]"
+  placeholder="e.g., water bottles, camera, etc."
+  onChange={handleWhatBringingChange}
+/>
+</Card>
+<Card className="flex flex-col items-center">
+  <CardTitle>Have you or others had memorable experiences at this location? If so, what were they?</CardTitle>
+<Input
+     type="text"
+     value={MemorableExperiences}
+     className="p-2 w-full focus:outline-none mt-4 border-[#0E793C] rounded-xl border-[0.5px]"
+    onChange={handleMemorableExperiencesChange}
+/>
+</Card>
+<Card className="flex flex-col items-center">
+  <CardTitle>What is the best time of day or year to visit?*</CardTitle>
+<Input
+     type="text"
+     value={BestTimetoVisit}
+     className="p-2 w-full focus:outline-none mt-4 border-[#0E793C] rounded-xl border-[0.5px]"
+  placeholder="e.g., water bottles, camera, etc."
+  onChange={handleBestTimetoVisitChange}
+/>
+</Card>
+<Card className="flex flex-col items-center">
+  <CardTitle>Is this place kids friendly?</CardTitle>
+<Input
+     type="text"
+     value={KidsFriendly}
+     className="p-2 w-full focus:outline-none mt-4 border-[#0E793C] rounded-xl border-[0.5px]"
+  placeholder="e.g., water bottles, camera, etc."
+  onChange={handleKidsFriendlyChange}
+/>
+</Card>
+<Card className="flex flex-col items-center">
+  <CardTitle>Any message for visitors before they visit</CardTitle>
+<Input
+     type="text"
+     value={AnyMessageForVisitors}
+     className="p-2 w-full focus:outline-none mt-4 border-[#0E793C] rounded-xl border-[0.5px]"
+  placeholder="e.g., water bottles, camera, etc."
+  onChange={handleAnyMessageForVisitorsChange}
+/>
+</Card>
+
+    </motion.div>
+  )
+}
+
+        {step === 5 && (
           <motion.div
           initial={{ opacity: 0, x: "100%" }} // Slide in from the right
           animate={{ opacity: 1, x: 0 }} // Slide to the center
@@ -539,7 +773,7 @@ Note: Define your Destination in one Line Try to make Eye-catchinh
           </motion.div>
         )}
 
-{step === 5 && (
+{step === 6 && (
   <motion.div
     initial={{ opacity: 0, x: "100%" }} // Slide in from the right
     animate={{ opacity: 1, x: 0 }} // Slide to the center
@@ -570,16 +804,22 @@ Note: Define your Destination in one Line Try to make Eye-catchinh
     </div>
 
     <div className="mt-10">
-      <div className="font-medium flex items-center gap-x-2">
-        <div>City</div>
+      <div>
+        <h1>City</h1>
+        <select
+          value={twitter}
+          onChange={handleTwitterChange}
+          className="p-2 w-full mt-2 focus:outline-none border-[#0E793C] rounded-xl border-[0.5px]"
+        >
+          <option value="">Select a city</option>
+          {cities.map((city) => (
+            <option key={city.label} value={city.label}>
+              {city.label}
+            </option>
+          ))}
+        </select>
       </div>
-      <input
-        placeholder="Lahore"
-        type="text"
-        className="p-2 w-full mt-2 focus:outline-none border-[#0E793C] rounded-xl border-[0.5px]"
-        value={twitter}
-        onChange={handleTwitterChange}
-      />
+
       <div className="w-full rounded-md p-3 bg-[#0E793C] mt-4 md:flex items-center gap-x-4">
         <FcIdea className="text-5xl text-[#ffffff] mb-4 md:mb-0" />
         <div className="text-[#ffffffff]">
@@ -609,7 +849,7 @@ Note: Define your Destination in one Line Try to make Eye-catchinh
   </motion.div>
 )}
 
-        {step === 6 && (
+        {step === 7 && (
           <motion.div 
           initial={{ opacity: 0, x: "100%" }} // Slide in from the right
           animate={{ opacity: 1, x: 0 }} // Slide to the center
@@ -694,11 +934,13 @@ Note: Define your Destination in one Line Try to make Eye-catchinh
                   ))}
                 </div>
               </div>
+              <div>
+              </div>
             </div>
           </motion.div>
         )}
 
-        {step === 7 && (
+        {step === 8 && (
           <div className="space-y-10">
             <div className="text-4xl font-semibold"> Congratulations 🎉 </div>
             <div className="text-xl font-light mt-4 leading-8 ">
@@ -728,7 +970,7 @@ Note: Define your Destination in one Line Try to make Eye-catchinh
           </div>
         )}
 
-        {step !== 7 && (
+        {step !== 8 && (
           <>
             <div className="flex justify-between items-center mt-10">
               {step !== 1 && (
@@ -738,7 +980,7 @@ Note: Define your Destination in one Line Try to make Eye-catchinh
               )}
 
               <div className="flex items-center">
-                {step === 6 ? (
+                {step === 7 ? (
                   <button
                     onClick={submitProduct}
                     className="bg-[#0E793C] text-white py-2 px-4 rounded-md mt-4 items-end"
@@ -750,7 +992,7 @@ Note: Define your Destination in one Line Try to make Eye-catchinh
                     onClick={nextStep}
                     className="bg-[#0E793C] text-white py-2 px-4 rounded-md mt-4 items-end"
                   >
-                    {step === 6 ? "Submit" : "Continue"}
+                    {step === 7 ? "Submit" : "Continue"}
                   </button>
                 )}
               </div>

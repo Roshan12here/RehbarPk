@@ -17,9 +17,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product }) => {
   const [isEditingLogo, setIsEditingLogo] = useState(false);
   const [uploadedLogoUrl, setUploadedLogoUrl] = useState("");
   const [isEditingProductImages, setIsEditingProductImages] = useState(false);
-  const [uploadedProductImages, setUploadedProductImages] = useState<string[]>(
-    []
-  );
+  const [uploadedProductImages, setUploadedProductImages] = useState<string[]>([]);
 
   const router = useRouter();
 
@@ -30,6 +28,17 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product }) => {
   const [twitter, setTwitter] = useState(product.twitter);
   const [categories, setCategories] = useState(product.categories);
   const [slug, setSlug] = useState(product.slug);
+  const [BusinessEmail, setBusinessEmail] = useState(product.BusinessEmail);
+  const [BusinessHours, setBusinessHours] = useState(product.BusinessHours);
+  const [OwnerName, setOwnerName] = useState(product.OwnerName);
+  const [NumofEmployees, setNumofEmployees] = useState(product.NumofEmployees);
+  const [ServicesOffered, setServicesOffered] = useState(product.ServicesOffered);
+  const [Arminities, setArminities] = useState(product.Arminities);
+  const [BusinessPhone, setBusinessPhone] = useState(product.BusinessPhone);
+  const [YearsInBusiness, setYearsInBusiness] = useState(product.YearsInBusiness);
+  const [AboutTheBusiness, setAboutTheBusiness] = useState(product.AboutTheBusiness);
+  const [discord, setDiscord] = useState(product.discord);
+const [imagesChanged, setImagesChanged] = useState(false);
 
   const handleLogoUpload = (url?: string) => {
     if (url) {
@@ -70,10 +79,19 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product }) => {
         website,
         slug,
         twitter,
+        BusinessEmail,
+        OwnerName,
+        NumofEmployees,
+        ServicesOffered,
+        Arminities,
+        BusinessPhone,
+        imagesChanged,
+        YearsInBusiness, // Pass as string        
+        AboutTheBusiness,
+        discord,
         category: categories,
         logo: uploadedLogoUrl || product.logo,
-        images:
-          uploadedProductImages.length > 0
+        images: uploadedProductImages.length > 0
             ? uploadedProductImages
             : product.images.map((image: any) => image.url),
       });
@@ -189,14 +207,24 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product }) => {
         <div>
           <div className="font-medium">Short Description</div>
           <textarea
-            className="border w-full focus:outline-none h-28vh mt-6 p-4 rounded-xl"
+            className="border w-full focus:outline-none h-[44vh] mt-6 p-4 rounded-xl"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
 
         <div>
-          <div className="font-medium">Adreess</div>
+          <div className="font-medium">Address</div>
+          <input
+            type="text"
+            className="border w-full focus:outline-none mt-6 p-4 rounded-xl"
+            value={discord}
+            onChange={(e) => setDiscord(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <div className="font-medium">City</div>
           <input
             type="text"
             className="border w-full focus:outline-none mt-6 p-4 rounded-xl"
@@ -204,6 +232,86 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product }) => {
             onChange={(e) => setTwitter(e.target.value)}
           />
         </div>
+
+        <div>
+          <div className="font-medium">Business Email</div>
+          <input
+            type="text"
+            className="border w-full focus:outline-none mt-6 p-4 rounded-xl"
+            value={BusinessEmail}
+            onChange={(e) => setBusinessEmail(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <div className="font-medium">Owner Name</div>
+          <input
+            type="text"
+            className="border w-full focus:outline-none mt-6 p-4 rounded-xl"
+            value={OwnerName}
+            onChange={(e) => setOwnerName(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <div className="font-medium">Number of Employees</div>
+          <input
+            type="text"
+            className="border w-full focus:outline-none mt-6 p-4 rounded-xl"
+            value={NumofEmployees}
+            onChange={(e) => setNumofEmployees(String(e.target.value))}
+          />
+        </div>
+
+        <div>
+          <div className="font-medium">Services Offered</div>
+          <textarea
+            className="border w-full focus:outline-none mt-6 p-4 rounded-xl"
+            value={ServicesOffered}
+            onChange={(e) => setServicesOffered(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <div className="font-medium">Amenities</div>
+          <textarea
+            className="border w-full focus:outline-none mt-6 p-4 rounded-xl"
+            value={Arminities}
+            onChange={(e) => setArminities(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <div className="font-medium">Business Phone</div>
+          <input
+            type="text"
+            className="border w-full focus:outline-none mt-6 p-4 rounded-xl"
+            value={BusinessPhone}
+            onChange={(e) => setBusinessPhone(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <div className="font-medium">Years in Business</div>
+          <input
+            type="text"
+            className="border w-full focus:outline-none mt-6 p-4 rounded-xl"
+            value={YearsInBusiness}
+            onChange={(e) => setYearsInBusiness(Number(e.target.value))}
+          />
+        </div>
+
+        <div>
+          <div className="font-medium">Discord</div>
+          <input
+            type="text"
+            className="border w-full focus:outline-none mt-6 p-4 rounded-xl"
+            value={discord}
+            onChange={(e) => setDiscord(e.target.value)}
+          />
+        </div>
+
+      
 
 
         <div className="col-span-2">

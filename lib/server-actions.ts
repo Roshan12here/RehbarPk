@@ -9,6 +9,17 @@ interface ProductData {
   headline: string;
   description: string;
   logo: string;
+  Unique: string;
+  VisitorsExpect: string;
+  Amenities: string;
+  Historical: string;
+  InterestStories: string;
+  WhatBringing: string;
+  ScenicSpots: string;
+  MemorableExperiences: string;
+  BestTimetoVisit: string;
+  KidsFriendly: string;
+  AnyMessageForVisitors: string;
   releaseDate: string;
   website: string;
   twitter: string;
@@ -25,6 +36,17 @@ export const createProduct = async ({
   description,
   logo,
   releaseDate,
+  Unique,
+  VisitorsExpect,
+  Amenities,
+  Historical,
+  InterestStories,
+  WhatBringing,
+  ScenicSpots,
+  MemorableExperiences,
+  BestTimetoVisit,
+  KidsFriendly,
+  AnyMessageForVisitors,
   website,
   twitter,
   discord,
@@ -49,6 +71,17 @@ export const createProduct = async ({
         description,
         logo,
         releaseDate,
+        Unique,
+  VisitorsExpect,
+  Amenities,
+  Historical,
+  InterestStories,
+  WhatBringing,
+  ScenicSpots,
+  MemorableExperiences,
+  BestTimetoVisit,
+  KidsFriendly,
+  AnyMessageForVisitors,
         website,
         twitter,
         discord,
@@ -177,6 +210,39 @@ export const deleteProduct = async (productId: string) => {
   return true;
 };
 
+export const getAllCities = async () => {
+  const products = await db.product.findMany({
+    where: {
+      status: "ACTIVE",
+    },
+    select: {
+      twitter: true,
+    },
+  });
+
+  // Extract unique cities
+  const cities = Array.from(new Set(products.map((product) => product.twitter)));
+
+  return cities;
+};
+
+export const getProductsByCity = async (city: string) => {
+  try {
+    const products = await db.product.findMany({
+      where: {
+        twitter: city,
+        status: "ACTIVE",
+      },
+    });
+    return products;
+  } catch (error) {
+    console.error("Error getting products by city:", error);
+    return [];
+  }
+};
+
+
+
 export const getOwnerProducts = async () => {
   const authenticatedUser = await auth();
 
@@ -223,6 +289,29 @@ export const getProductById = async (productId: string) => {
     return null;
   }
 };
+
+export const getProductRating = async (productId: string) => {
+  try {
+    const ratings = await db.rating.findMany({
+      where: {
+        productId,
+      },
+    });
+
+    if (ratings.length === 0) {
+      return { averageRating: 0, ratingsCount: 0 };
+    }
+
+    const totalRating = ratings.reduce((sum, rating) => sum + rating.score, 0);
+    const averageRating = totalRating / ratings.length;
+
+    return { averageRating, ratingsCount: ratings.length };
+  } catch (error) {
+    console.error("Error fetching product rating:", error);
+    throw error;
+  }
+};
+
 
 export const getPendingProducts = async () => {
   const products = await db.product.findMany({
@@ -407,6 +496,40 @@ export const commentOnProduct = async (
   }
 };
 
+export const getProductRatings = async (productId: string) => {
+  try {
+    const ratings = await db.rating.findMany({
+      where: {
+        productId,
+      },
+      include: {
+        user: true, // Include user profile
+        photos: true, // Include photos
+      },
+    });
+
+    return ratings.map((rating) => ({
+      score: rating.score,
+      comment: rating.comment,
+      selectedDate: rating.selectedDate,
+      reviewType: rating.reviewType,
+      HeadLine: rating.HeadLine,
+      photos: rating.photos.map((photo) => photo.url),
+      user: {
+        id: rating.user.id,
+        name: rating.user.name,
+        email: rating.user.email,
+        profilePicture: rating.user.image || "", // Assuming user profile picture is stored in `image` field
+      },
+      createdAt: rating.createdAt,
+    }));
+  } catch (error) {
+    console.error("Error fetching product ratings:", error);
+    throw error;
+  }
+};
+
+
 export const deleteComment = async (commentId: string) => {
   try {
     await db.comment.delete({
@@ -519,6 +642,72 @@ export const getUpvotedProducts = async () => {
   }
 };
 
+export const uploadProductRating = async (
+  productId: string,
+  score: number,
+  comment: string,
+  HeadLine: string,
+  selectedDate: string,
+  reviewType: "BUSINESS" | "COUPLES" | "FAMILY" | "FRIENDS" | "SOLO",
+  photos: string[] // Assuming photos are passed as URLs or base64 strings
+) => {
+  try {
+    const authenticatedUser = await auth();
+
+    if (
+      !authenticatedUser ||
+      !authenticatedUser.user ||
+      !authenticatedUser.user.id
+    ) {
+      throw new Error("User ID is missing or invalid");
+    }
+
+    const userId = authenticatedUser.user.id;
+
+    // Find the product
+    const product = await db.product.findUnique({
+      where: {
+        id: productId,
+      },
+    });
+
+    if (!product) {
+      throw new Error("Product not found");
+    }
+
+    // Create the rating
+    const rating = await db.rating.create({
+      data: {
+        score,
+        comment,
+        HeadLine,
+        selectedDate,
+        reviewType,
+        userId,
+        productId,
+      },
+    });
+
+    // Upload photos and link them to the rating
+    if (photos && photos.length > 0) {
+      const photoPromises = photos.map((photoUrl) =>
+        db.image.create({
+          data: {
+            url: photoUrl,
+            ratingId: rating.id,
+          },
+        })
+      );
+      await Promise.all(photoPromises);
+    }
+
+    return rating;
+  } catch (error) {
+    console.error("Error uploading product rating:", error);
+    throw error;
+  }
+};
+
 export const getProductBySlug = async (slug: string) => {
   try {
     const product = await db.product.findUnique({
@@ -531,6 +720,12 @@ export const getProductBySlug = async (slug: string) => {
         comments: {
           include: {
             user: true,
+          },
+        },
+        ratings: { // Include ratings with user details
+          include: {
+            user: true,
+            photos: true,
           },
         },
         upvotes: {
@@ -546,6 +741,7 @@ export const getProductBySlug = async (slug: string) => {
     return null;
   }
 };
+
 
 export const getCategories = async () => {
   const categories = await db.category.findMany({
@@ -569,6 +765,15 @@ export const getProductsByCategoryName = async (category: string) => {
           name: category,
         },
       },
+      status: "ACTIVE",
+    },
+  });
+  return products;
+};
+export const getProductsByCityName = async (city: string) => {
+  const products = await db.product.findMany({
+    where: {
+      twitter: city,
       status: "ACTIVE",
     },
   });
@@ -616,6 +821,42 @@ export const getRankById = async (): Promise<
 
   return productsWithRanks;
 };
+
+
+// Function to update the average rating for a product
+
+// Function to update the average rating for a product
+export const updateProductAverageRating = async (productId: string) => {
+  try {
+    // Fetch all ratings for the given product
+    const ratings = await db.rating.findMany({
+      where: { productId },
+    });
+
+    // Calculate the average rating
+    if (ratings.length === 0) {
+      // No ratings available, set average rating to null
+      return await db.product.update({
+        where: { id: productId },
+        data: { AverageRating: null },
+      });
+    }
+
+    const totalRating = ratings.reduce((sum, rating) => sum + rating.score, 0);
+    const averageRating = totalRating / ratings.length;
+
+    // Update the product with the calculated average rating
+    return await db.product.update({
+      where: { id: productId },
+      data: { AverageRating: averageRating },
+    });
+  } catch (error) {
+    console.error("Error updating product average rating:", error);
+    throw error;
+  }
+};
+
+
 
 export const getNotifications = async () => {
   try {

@@ -91,10 +91,10 @@ const ProductIDPage = async ({ params }: { params: IParams }) => {
             className="flex flex-row items-center 
           justify-between space-y-0 pb-2"
           >
-            <CardTitle>Comments </CardTitle> 💬
+            <CardTitle>Ratings</CardTitle> 💬
           </CardHeader>
           <CardContent>
-            <div className="text-2xl">{product.comments.length}</div>
+            <div className="text-2xl">{product.ratings.length}</div>
           </CardContent>
         </Card>
 

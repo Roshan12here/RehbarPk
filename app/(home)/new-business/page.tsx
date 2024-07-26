@@ -3,8 +3,9 @@
 import { ImagesUploader } from "@/components/images-uploader";
 import { LogoUploader } from "@/components/logo-uploader";
 import Image from "next/image";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { FcIdea } from "react-icons/fc";
+import { Radio } from "lucide-react";
 
 import {
   PiPlanet,
@@ -15,6 +16,7 @@ import { Separator } from "@/components/ui/separator";
 import { createProduct } from "@/lib/Business-server-action";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import { Input } from "@headlessui/react";
 
 const categories = [
   "Shopping-Malls",
@@ -79,24 +81,100 @@ const categories = [
   "Hotels",
   "Home-Services",];
 
+  const cities = [
+    { value: "islamabad", label: "Islamabad" },
+    { value: "karachi", label: "Karachi" },
+    { value: "lahore", label: "Lahore" },
+    { value: "rawalpindi", label: "Rawalpindi" },
+    { value: "peshawar", label: "Peshawar" },
+    { value: "quetta", label: "Quetta" },
+    { value: "multan", label: "Multan" },
+    { value: "faisalabad", label: "Faisalabad" },
+    { value: "gujranwala", label: "Gujranwala" },
+    { value: "gujrat", label: "Gujrat" },
+    { value: "sialkot", label: "Sialkot" },
+    { value: "bahawalpur", label: "Bahawalpur" },
+    { value: "okara", label: "Okara" },
+    { value: "jhelum", label: "Jhelum" },
+    { value: "chakwal", label: "Chakwal" },
+    { value: "sargodha", label: "Sargodha" },
+    { value: "rahim-yar-khan", label: "Rahim Yar Khan" },
+    { value: "jhang", label: "Jhang" },
+    { value: "hyderabad", label: "Hyderabad" },
+    { value: "sukkur", label: "Sukkur" },
+    { value: "khairpur", label: "Khairpur" },
+    { value: "nawabshah", label: "Nawabshah" },
+    { value: "mardan", label: "Mardan" },
+    { value: "nowshera", label: "Nowshera" },
+    { value: "mansehra", label: "Mansehra" },
+    { value: "abbottabad", label: "Abbottabad" },
+    { value: "swabi", label: "Swabi" },
+    { value: "charsadda", label: "Charsadda" },
+    { value: "kohat", label: "Kohat" },
+    { value: "gwadar", label: "Gwadar" },
+    { value: "khuzdar", label: "Khuzdar" },
+    { value: "pakpattan", label: "Pakpattan" },
+  ]
+  
 
-const NewProduct = () => {
+  
+  type WorkingHours = {
+    openAllDay: boolean;
+    closeAllDay: boolean;
+    hours: string;
+  };
+  
+  type WorkingHoursState = {
+    Monday: WorkingHours;
+    Tuesday: WorkingHours;
+    Wednesday: WorkingHours;
+    Thursday: WorkingHours;
+    Friday: WorkingHours;
+    Saturday: WorkingHours;
+    Sunday: WorkingHours;
+  };
+
+const NewProduct = () => {  
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
-  const [name, setName] = useState("");
-  const [slug, setSlug] = useState("");
-  const [headline, setHeadline] = useState("");
-  const [shortDescription, setShortDescription] = useState("");
-  const [website, setWebsite] = useState("");
-  const [twitter, setTwitter] = useState("");
-
-
+  const [name, setName] = useState<string>("");
+  const [slug, setSlug] = useState<string>("");
+  const [headline, setHeadline] = useState<string>("");
+  const [shortDescription, setShortDescription] = useState<string>("");
+  const [website, setWebsite] = useState<string>("");
+  const [twitter, setTwitter] = useState<string>("");
+  const [discord, setDiscord] = useState<string>("");
+  const [BusinessPhone, setBusinessPhone] = useState<string>("");
+  const [BusinessHours, setBusinessHours] = useState<string>(JSON.stringify({
+    Monday: { openAllDay: false, closeAllDay: false, hours: '' },
+    Tuesday: { openAllDay: false, closeAllDay: false, hours: '' },
+    Wednesday: { openAllDay: false, closeAllDay: false, hours: '' },
+    Thursday: { openAllDay: false, closeAllDay: false, hours: '' },
+    Friday: { openAllDay: false, closeAllDay: false, hours: '' },
+    Saturday: { openAllDay: false, closeAllDay: false, hours: '' },
+    Sunday: { openAllDay: false, closeAllDay: false, hours: '' },
+  }));
+  const [YearsInBusiness, setYearsInBusiness] = useState<string>("");
+  const [OwnerName, setOwnerName] = useState<string>("");
+  const [NumofEmployees, setNumofEmployees] = useState<string>("");
+  const [ServicesOffered, setServicesOffered] = useState<string>("");
+  const [Arminities, setArminities] = useState<string>("");
+  const [AboutTheBusiness, setAboutTheBusiness] = useState<string>("");
+  const [BusinessEmail, setEmail] = useState<string>("");
   const [uploadedLogoUrl, setUploadedLogoUrl] = useState<string>("");
-
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [uploadedProductImages, setUploadedProductImages] = useState<string[]>(
-    []
-  );
+  const [uploadedProductImages, setUploadedProductImages] = useState<string[]>([]);
+
+    // **Change**: Format Business Hours
+    const formatHours = (hours: string): string => {
+      const parsedHours: WorkingHoursState = JSON.parse(hours);
+      return Object.entries(parsedHours).map(([day, { openAllDay, closeAllDay, hours }]) => {
+        if (openAllDay) return `${day}: Open All Day`;
+        if (closeAllDay) return `${day}: Closed All Day`;
+        return `${day}: ${hours || "Closed"}`;
+      }).join(', ');
+    };
+
 
   const handleHeadlineChange = (e: any) => {
     const headlineText = e.target.value.slice(0, 70);
@@ -111,10 +189,55 @@ const NewProduct = () => {
     setTwitter(e.target.value);
   };
 
+  const handleDiscordChange = (e: any) => {
+    setDiscord(e.target.value);
+  };
+
 
   const handleShortDescriptionChange = (e: any) => {
     setShortDescription(e.target.value.slice(0, 1000));
   };
+
+  const handleShortEmailChange = (e: any) => {
+    setEmail(e.target.value.slice(0, 1000));
+  };
+
+  const handleShortBusinessPhoneChange = (e: any) => {
+    setBusinessPhone(e.target.value.slice(0, 1000));
+  };
+
+ const handleWorkingHoursChange = (
+    day: keyof WorkingHoursState,
+    field: keyof WorkingHours,
+    value: boolean | string
+  ) => {
+    const parsedHours: WorkingHoursState = JSON.parse(BusinessHours);
+    parsedHours[day] = { ...parsedHours[day], [field]: value };
+    setBusinessHours(JSON.stringify(parsedHours));
+  };
+  
+  const deserializedBusinessHours: WorkingHoursState = JSON.parse(BusinessHours);
+
+  const handleShortYearsInBusinessChange = (e: any) => {
+    setYearsInBusiness(e.target.value.slice(0, 1000));
+  };
+
+  const handleShortOwnerNameChange = (e: any) => {
+    setOwnerName(e.target.value.slice(0, 1000));
+  };
+
+  const handleShortNumofEmployeesChange = (e: any) => {
+    setNumofEmployees(e.target.value.slice(0, 1000));   
+  }
+
+  const handleShortServicesOfferedChange = (e: any) => {
+    setServicesOffered(e.target.value.slice(0, 1000));
+  }
+
+  const handleShortArminitiesChange = (e: any) => {
+    setArminities(e.target.value.slice(0, 1000));
+  }
+  
 
   const handleNameChange = (e: any) => {
     const productName = e.target.value;
@@ -237,7 +360,7 @@ const NewProduct = () => {
     }
 
    
-    if (step == 5 && !website && !twitter ) {
+    if (step == 5 && !website && !twitter && !discord ) {
       toast(
         <>
           <div className="flex items-center gap-4  mx-auto">
@@ -260,11 +383,20 @@ const NewProduct = () => {
     name,
     selectedCategories,
     headline,
+    BusinessPhone,
+    BusinessEmail,
+    BusinessHours, // Serialize BusinessHours to a JSON stringYearsInBusiness,
+OwnerName,
+NumofEmployees,
+ServicesOffered,
+Arminities,
+AboutTheBusiness ,
     shortDescription,
     uploadedLogoUrl,
     uploadedProductImages,
     website,
     twitter,
+    discord
   ]);
 
 
@@ -284,8 +416,18 @@ const NewProduct = () => {
     setSlug("");
     setHeadline("");
     setShortDescription("");
+    setEmail("");
+    setArminities("");
+    setAboutTheBusiness("");
+    setBusinessHours("")
+    setBusinessPhone("")
+    setNumofEmployees("")
+setOwnerName("")
+setServicesOffered("")
+setYearsInBusiness("")
     setWebsite("");
     setTwitter("");
+    setDiscord("");
     setSelectedCategories([]);
     setUploadedProductImages([]);
     setUploadedLogoUrl("");
@@ -301,6 +443,15 @@ const NewProduct = () => {
         headline,
         website,
         twitter,
+        BusinessPhone,
+        BusinessHours: JSON.stringify(BusinessHours), // Serialize BusinessHours to a JSON string        BusinessEmail,
+        YearsInBusiness,
+        OwnerName,
+        NumofEmployees,
+        ServicesOffered,
+        Arminities,
+        AboutTheBusiness ,
+        discord,
         description: shortDescription,
         logo: uploadedLogoUrl,
         images: uploadedProductImages,
@@ -308,11 +459,12 @@ const NewProduct = () => {
       });
       setStep(7);
     } catch (error) {
-      console.log(error);
+      console.log(error);;''
       setLoading(false);
     }
   };
 
+  const formattedBusinessHours = useMemo(() => formatHours(BusinessHours), [BusinessHours]);
   return (
     <div className="flex items-center justify-center py-8 md:py-20">
       <div className="px-8 md:w-3/5 md:mx-auto">
@@ -324,7 +476,7 @@ const NewProduct = () => {
           transition={{ duration: 0.3 }}
 
 
-          
+
           className="space-y-10">
             <h1 className="text-4xl font-semibold"> New Business</h1>
             <p className="text-xl font-light mt-4 leading-8">
@@ -419,6 +571,7 @@ Simply enter the name of your Business. This will be used to create a unique URL
           </motion.div>
         )}
 
+
         {step === 3 && (
           <motion.div
           initial={{ opacity: 0, x: "100%" }} // Slide in from the right
@@ -479,6 +632,7 @@ Devsinc's team comprises highly skilled developers, designers, and IT profession
             </div>
           </motion.div>
         )}
+
 
         {step === 4 && (
           <motion.div
@@ -574,7 +728,6 @@ Devsinc's team comprises highly skilled developers, designers, and IT profession
 
             <div className="mt-10">
               <div className="font-medium flex items-center gap-x-2">
-                <PiPlanet className="text-2xl text-gray-600" />
                 <span>Website</span>
               </div>
 
@@ -587,20 +740,182 @@ Devsinc's team comprises highly skilled developers, designers, and IT profession
               />
             </div>
 
+      <div>
+        <h1>City</h1>
+        <select
+          value={twitter}
+          onChange={handleTwitterChange}
+          className="p-2 w-full mt-2 focus:outline-none border-[#0E793C] rounded-xl border-[0.5px]"
+        >
+          <option value="">Select a city</option>
+          {cities.map((city) => (
+            <option key={city.label} value={city.label}>
+              {city.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+            <div className="mt-10">
+      <div className="font-medium flex items-center gap-x-2">
+        <div>Address</div>
+      </div>
+      <input
+        type="text"
+        className="border-[1px] border-[#0E793C] rounded-xl p-2 w-full mt-2 focus:outline-none"
+        value={discord}
+        onChange={handleDiscordChange}
+      />
+     </div>
+
             <div className="mt-10">
               <div className="font-medium flex items-center gap-x-2">
-              <PiPlanet className="text-2xl text-gray-600" />
-                <div>Location</div>
+                <div>Business Email</div>
               </div>
 
               <input
-                placeholder="HeadMarala,Sialkot"
                 type="text"
                 className="rounded-xl p-2 w-full mt-2 focus:outline-none border-[#0E793C] border-[1px]"
-                value={twitter}
-                onChange={handleTwitterChange}
+                value={BusinessEmail}
+                onChange={handleShortEmailChange}
               />
             </div>
+
+            
+            <div className="mt-10">
+              <div className="font-medium flex items-center gap-x-2">
+                <div>Business Phone</div>
+              </div>
+
+              <input
+                type="text"
+                className="rounded-xl p-2 w-full mt-2 focus:outline-none border-[#0E793C] border-[1px]"
+                value={BusinessPhone}
+                onChange={handleShortBusinessPhoneChange}
+              />
+            </div>
+
+            
+            <div className="mt-10">
+        <div className="font-medium flex items-center gap-x-2">
+          <div>Working Hours</div>
+        </div>
+        {Object.keys(deserializedBusinessHours).map((day) => (
+  <div key={day} className="mt-4 flex flex-col items-start gap-y-2 p-4 border rounded-lg shadow-sm">
+    <div className="text-lg font-semibold text-gray-800">{day}</div>
+    <div className="flex flex-col gap-y-2 w-full">
+      <div className="flex items-center gap-x-2">
+        <Input
+          type="checkbox"
+          checked={deserializedBusinessHours[day as keyof WorkingHoursState].openAllDay}
+          onChange={(e) =>
+            handleWorkingHoursChange(day as keyof WorkingHoursState, 'openAllDay', e.target.checked)
+          }
+          className="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+        />
+        <label className="text-sm text-gray-700">Open all day</label>
+      </div>
+      <div className="flex items-center gap-x-2">
+        <input
+          type="checkbox"
+          checked={deserializedBusinessHours[day as keyof WorkingHoursState].closeAllDay}
+          onChange={(e) =>
+            handleWorkingHoursChange(day as keyof WorkingHoursState, 'closeAllDay', e.target.checked)
+          }
+          className="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+        />
+        <label className="text-sm text-gray-700">Close all day</label>
+      </div>
+      <div className="flex flex-col w-full">
+        <input
+          type="text"
+          className="rounded-xl p-2 mt-2 w-full focus:outline-none border-gray-300 border-[1px] focus:border-green-500"
+          value={deserializedBusinessHours[day as keyof WorkingHoursState].hours}
+          placeholder="e.g., 9:00 AM - 5:00 PM"
+          onChange={(e) =>
+            handleWorkingHoursChange(day as keyof WorkingHoursState, 'hours', e.target.value)
+          }
+          disabled={
+            deserializedBusinessHours[day as keyof WorkingHoursState].openAllDay ||
+            deserializedBusinessHours[day as keyof WorkingHoursState].closeAllDay
+          }
+        />
+      </div>
+    </div>
+  </div>
+))}
+
+  </div>
+
+            
+            <div className="mt-10">
+              <div className="font-medium flex items-center gap-x-2">
+                <div>Years in Business</div>
+              </div>
+
+              <input
+                type="text"
+                className="rounded-xl p-2 w-full mt-2 focus:outline-none border-[#0E793C] border-[1px]"
+                value={YearsInBusiness}
+                onChange={handleShortYearsInBusinessChange}
+              />
+            </div>
+
+           
+
+    <div className="mt-10">
+              <div className="font-medium flex items-center gap-x-2">
+                <div>Owner Name</div>
+              </div>
+
+              <input
+                type="text"
+                className="rounded-xl p-2 w-full mt-2 focus:outline-none border-[#0E793C] border-[1px]"
+                value={OwnerName}
+                onChange={handleShortOwnerNameChange}
+              />
+            </div>
+
+    <div className="mt-10">
+              <div className="font-medium flex items-center gap-x-2">
+                <div>Number Of Employees</div>
+              </div>
+
+              <input
+                type="text"
+                className="rounded-xl p-2 w-full mt-2 focus:outline-none border-[#0E793C] border-[1px]"
+                value={NumofEmployees}
+                onChange={handleShortNumofEmployeesChange}
+              />
+            </div>
+
+
+    <div className="mt-10">
+              <div className="font-medium flex items-center gap-x-2">
+                <div>Services Offered</div>
+              </div>
+
+              <input
+                type="text"
+                className="rounded-xl p-2 w-full mt-2 focus:outline-none border-[#0E793C] border-[1px]"
+                value={ServicesOffered}
+                onChange={handleShortServicesOfferedChange}
+              />
+            </div>
+
+            <div className="mt-10">
+              <div className="font-medium flex items-center gap-x-2">
+                <div>Aminities</div>
+              </div>
+
+              <input
+                type="text"
+                className="rounded-xl p-2 w-full mt-2 focus:outline-none border-[#0E793C] border-[1px]"
+                value={Arminities}
+                onChange={handleShortArminitiesChange}
+              />
+            </div>
+
           </motion.div>
         )}
 
@@ -646,6 +961,34 @@ Devsinc's team comprises highly skilled developers, designers, and IT profession
                 <div className="font-semibold">Headline</div>
                 <div className="  mt-2 text-gray-600">{headline}</div>
               </div>
+<div className="flex flex-col justify-start items-start p-2 m-4">
+  <h1 className="text-2xl font-semibold mt-4">Busness Details </h1>
+<h1 className="text-lg font-semibold">
+  Business Email: {BusinessEmail}
+</h1>
+<h1 className="text-lg font-semibold">
+Business Phone :{BusinessPhone}
+</h1>
+<h1 className="text-lg font-semibold">
+Years In Business : {YearsInBusiness}
+</h1>
+<h1 className="text-lg font-semibold">
+Owner Name : {OwnerName}
+</h1>
+<h1 className="text-lg font-semibold">
+Number Of Employees : {NumofEmployees}
+</h1>
+<h1 className="text-lg font-semibold">
+Services Offered : {ServicesOffered}
+</h1>
+<h1 className="text-lg font-semibold">
+Arminities : {Arminities}
+</h1>
+<h1 className="text-lg font-semibold">
+Work Hours : {formattedBusinessHours}
+</h1>
+</div>
+
               <div className="">
                 <div className="font-semibold">Short description</div>
                 <div className=" mt-2 text-gray-600 ">{shortDescription}</div>
@@ -742,3 +1085,4 @@ Devsinc's team comprises highly skilled developers, designers, and IT profession
 };
 
 export default NewProduct;
+

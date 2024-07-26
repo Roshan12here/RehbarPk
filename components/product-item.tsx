@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   PiArrowBendDoubleUpRight,
   PiCaretUpFill,
@@ -11,7 +11,7 @@ import ProductModal from "./ui/modals/product-modal";
 import ProductModalContent from "./product-modal-content";
 import AuthContent from "./navbar/auth-content";
 import Link from "next/link";
-import { upvoteProduct } from "@/lib/server-actions";
+import { upvoteProduct, updateProductAverageRating } from "@/lib/server-actions";
 import { motion } from "framer-motion";
 import Modal from "./ui/modals/authModal";
 
@@ -29,6 +29,8 @@ const ProductItem: React.FC<ProductItemProps> = ({
   const [showProductModal, setShowProductModal] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<any>(null);
 
+
+
   const [hasUpvoted, setHasUpvoted] = useState(
     product.upvoters?.includes(authenticatedUser?.user.id)
   );
@@ -36,6 +38,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
   const [totalUpvotes, setTotalUpvotes] = useState(product.upvotes || 0);
 
   
+
 
   const handleArrowClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -102,6 +105,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
           <div className="ml-4">
             <div className="md:flex items-center gap-x-2">
               <h1 className="text-sm font-semibold">{product.name}</h1>
+
               <p className="hidden md:flex text-xs">-</p>
               <p className="text-gray-600 font-extrabold text-xs md:text-sm pr-2">
                 {product.headline}
@@ -135,6 +139,9 @@ const ProductItem: React.FC<ProductItemProps> = ({
         </div>
 
         <div className="text-sm">
+          <div className="flex gap-x-2 items-center">
+<h2>{product.rating}</h2>
+          </div>
           <motion.div
           onClick={handleUpvoteClick}
           variants={variants}

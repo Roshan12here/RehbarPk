@@ -87,12 +87,17 @@ const ActiveProducts: React.FC<ActiveProductsProps> = ({
       {/* Header */}
       <div className="mt-[6vh] flex flex-col justify-center items-center border-b pb-3 px-4">
         <h1 className="text-4xl sm:2xl md:3xl lg:4xl xl:4xl font-extrabold text-green-600 ">Destinations</h1>
-        <h3 className="text-2xl sm:xl md:2xl lg:2xl xl:2xl font-extrabold text-gray-600 mt-2">Discover the amazing Destinations of Pakistan</h3>
+        <h2 className="text-2xl sm:xl md:2xl lg:2xl xl:2xl font-extrabold text-gray-600 mt-2">Discover the amazing Destination of Pakistan</h2>
         <Search  />
         <div className="flex justify-center">
         <Button className="mt-2 bg-green-600 text-white">
           <Link href="/categories">
           Browse By Categories
+          </Link>
+          </Button>
+        <Button className="mt-2 ml-2 bg-green-600 text-white">
+          <Link href="/destinationcities">
+          Browse By Cities
           </Link>
           </Button>
         </div>
