@@ -346,7 +346,9 @@ const RatingComponent: React.FC<RatingComponentProps> = ({ className, product, p
             </CardContent>
           </>
         ) : (
-          <RatingButton />
+          <div className="flex justify-center mt-[12vh]">
+            <RatingButton />
+          </div>
         )}
       </Card>
     </div>
