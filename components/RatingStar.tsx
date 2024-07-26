@@ -37,7 +37,7 @@ interface RatingComponentProps {
   className?: string;
   productId: string;
   authenticatedUser?: any;
-  product: any;
+  product?: any;
 }
 
 const RatingComponent: React.FC<RatingComponentProps> = ({ className, product, productId, authenticatedUser }) => {
