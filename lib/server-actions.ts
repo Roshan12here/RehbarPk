@@ -28,6 +28,20 @@ interface ProductData {
   category: string[];
   rank?: number;
 }
+interface ProductDataedit {
+  name: string;
+  slug: string;
+  headline: string;
+  description: string;
+  logo: string;
+  releaseDate: string;
+  website: string;
+  twitter: string;
+  discord: string;
+  images: string[];
+  category: string[];
+  rank?: number;
+}
 
 export const createProduct = async ({
   name,
@@ -130,7 +144,7 @@ export const updateProduct = async (
     twitter,
     discord,
     images,
-  }: ProductData
+  }: ProductDataedit
 ) => {
   const authenticatedUser = await auth();
 
