@@ -16,7 +16,7 @@ interface Product {
   logo: string;
   website: string;
   twitter: string;
-  discord: string;
+  discord: string | null;  
   createdAt: Date;
   updatedAt: Date;
   userId: string;
