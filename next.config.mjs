@@ -51,6 +51,10 @@ const nextConfig = {
         destination: '/Cities',
       },
       {
+        source: '/my-products',
+        destination: '/My-Destinations',
+      },
+      {
         source: '/new-destination',
         destination: '/new-product',
       },

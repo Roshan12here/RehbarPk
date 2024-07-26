@@ -234,6 +234,34 @@ export const getAllCities = async () => {
   return cities;
 };
 
+export const getUserStatsa = async () => {
+  const authenticatedUser = await auth();
+
+  if (!authenticatedUser) {
+    throw new Error("User not authenticated");
+  }
+
+  const userId = authenticatedUser.user?.id;
+
+  const userProductsCount = await db.business.count({
+    where: {
+      userId,
+    },
+  });
+
+  const userRatingsCount = await db.rating.count({
+    where: {
+      userId,
+    },
+  });
+
+  return {
+    productsPosted: userProductsCount,
+    ratingsMade: userRatingsCount,
+  };
+};
+
+
 export const getProductsByCity = async (city: string) => {
   try {
     const products = await db.business.findMany({

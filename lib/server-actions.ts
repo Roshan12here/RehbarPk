@@ -327,6 +327,33 @@ export const getProductRating = async (productId: string) => {
 };
 
 
+export const getUserStats = async () => {
+  const authenticatedUser = await auth();
+
+  if (!authenticatedUser) {
+    throw new Error("User not authenticated");
+  }
+
+  const userId = authenticatedUser.user?.id;
+
+  const userProductsCount = await db.product.count({
+    where: {
+      userId,
+    },
+  });
+
+  const userRatingsCount = await db.rating.count({
+    where: {
+      userId,
+    },
+  });
+
+  return {
+    productsPosted: userProductsCount,
+    ratingsMade: userRatingsCount,
+  };
+};
+
 export const getPendingProducts = async () => {
   const products = await db.product.findMany({
     where: {

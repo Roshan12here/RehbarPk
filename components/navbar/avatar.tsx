@@ -41,38 +41,11 @@ const Avatar: React.FC<AvatarProps> = ({ authenticatedUser }) => {
         <DropdownMenuContent className="w-40 space-y-1 p-2 text-gray-600">
           <DropdownMenuItem>
             <Link
-              href="/my-products"
+              href="/DashBoard"
               className="flex gap-x-2 rounded-sm w-full cursor-pointer"
             >
               <PiPackage className="text-xl" />
-              My Destinations 
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link
-              href="/my-businesses"
-              className="flex gap-x-2 rounded-sm w-full cursor-pointer"
-            >
-              <PiPackage className="text-xl" />
-              My Businesses 
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <div 
-            onClick={handleMyUpvotes}
-            
-            className="flex gap-x-2 rounded-sm w-full cursor-pointer">
-              <PiHeart className="text-xl" />
-              Upvoted
-            </div>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link
-              href="/settings"
-              className="flex gap-x-2 rounded-sm w-full cursor-pointer"
-            >
-              <PiGear className="text-xl" />
-              Settings
+              Dashboard
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
