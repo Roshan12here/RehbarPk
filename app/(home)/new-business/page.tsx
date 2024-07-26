@@ -446,6 +446,7 @@ setYearsInBusiness("")
         BusinessPhone,
         BusinessHours: JSON.stringify(BusinessHours), // Serialize BusinessHours to a JSON string        BusinessEmail,
         YearsInBusiness,
+        BusinessEmail,
         OwnerName,
         NumofEmployees,
         ServicesOffered,

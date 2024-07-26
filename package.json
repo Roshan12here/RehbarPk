@@ -7,6 +7,7 @@
     "build": "next build",
     "postinstall": "prisma generate",
     "start": "next start",
+   "deploy": "next build --no-lint && next export",
     "lint": "next lint"
   },
   "dependencies": {
