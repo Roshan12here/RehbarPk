@@ -24,10 +24,12 @@ interface ProductData {
   website: string;
   twitter: string;
   discord: string;
+  views?: number;
   images: string[];
   category: string[];
   rank?: number;
 }
+
 interface ProductDataedit {
   name: string;
   slug: string;
@@ -190,6 +192,28 @@ export const updateProduct = async (
   return product;
 };
 
+export const getProductViews = async (productId: string): Promise<number | null> => {
+  try {
+    const product = await db.product.findUnique({
+      where: {
+        id: productId,
+      },
+      select: {
+        views: true,
+      },
+    });
+
+    if (!product) {
+      throw new Error("Product not found");
+    }
+
+    return product.views;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
 export const deleteProduct = async (productId: string) => {
   const authenticatedUser = await auth();
 
@@ -223,6 +247,7 @@ export const deleteProduct = async (productId: string) => {
   });
   return true;
 };
+
 
 export const getAllCities = async () => {
   const products = await db.product.findMany({

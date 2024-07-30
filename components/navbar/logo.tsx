@@ -21,11 +21,8 @@ const Logo = () => {
         alt="logo"
         width={64}
         height={64}
-        className="  border-gray-200 bg-[#17C964] rounded-md  hover:cursor-pointer"
         />
      </Link>
-
-
 
     </div> );
 }

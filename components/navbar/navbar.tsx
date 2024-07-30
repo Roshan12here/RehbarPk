@@ -29,7 +29,8 @@ const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <div className="border-b py-2 md:py-0 px-4 md:px-6 bg-[#0E793C] ">
+    <div
+    className="border-b py-2 md:py-0 px-4 md:px-6 bg-transparent">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <Logo  />

@@ -88,6 +88,7 @@ model Product {
   twitter     String
   discord     String?
   notification Notification[] 
+    views                  Int?          @default(0)
   comments    Comment[]
   upvotes     Upvote[]
   images      Image[]

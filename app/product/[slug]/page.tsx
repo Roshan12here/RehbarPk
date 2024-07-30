@@ -1,4 +1,4 @@
-import { getProductBySlug } from "@/lib/server-actions";
+import { getProductBySlug, getProductViews  } from "@/lib/server-actions";
 import Image from "next/image";
 import Link from "next/link";
 import CarouselComponent from "@/components/carousel-component";
@@ -14,7 +14,7 @@ interface IParams {
 }
 
 const ProductPage = async ({ params }: { params: IParams }) => {
-  const product = await getProductBySlug(params.slug);
+  const product = await getProductBySlug(params.slug || "");
 
   if (!product) {
     return <div>Product not found</div>;
