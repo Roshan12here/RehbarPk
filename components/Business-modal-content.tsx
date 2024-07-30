@@ -191,14 +191,7 @@ const ProductModalContent: React.FC<ProductModalContentProps> = ({
 
           <div>
             <div className="w-full flex gap-4 mt-4">
-              <Image
-                src={authenticatedUser.user.image}
-                alt="profile"
-                width={50}
-                height={50}
-                className="rounded-full h-12 w-12"
-              />
-
+      
               <textarea
                 value={commentText}
                 onChange={handleCommentChange}
