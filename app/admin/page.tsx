@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PiBell, PiGear } from "react-icons/pi";
+import PendingBusinesses from "./pending-Business";
 
 import {
   Card,
@@ -20,6 +21,12 @@ import {
   getTotalUpvotes, 
   getUsers
  } from "@/lib/server-actions";
+import { 
+  getActiveBusiness, 
+  getAdminDataBusiness, 
+  getPendingBusiness, 
+  getRejectedBusiness, 
+ } from "@/lib/Business-server-action";
 import OverviewChart from "@/components/overview-chart";
 import RecentActivity from "@/components/recent-activity";
 
@@ -32,6 +39,11 @@ const Admin = async () => {
   const rejectedProducts = await getRejectedProducts();
   const totalUpvotes = await getTotalUpvotes();
   const data = await getAdminData();
+const PendingBusinesse = await getPendingBusiness();
+const activeBusiness = await getActiveBusiness();
+const rejectedBusiness = await getRejectedBusiness();
+const dataBusiness = await getAdminDataBusiness();
+
 
   const premiumUsers = users.filter((user) => user.isPremium);
 
@@ -42,17 +54,6 @@ const Admin = async () => {
       <div>
         <div className="flex justify-between items-center">
           <div className="flex gap-x-6 items-center py-10">
-            <Link href={"/"}>
-              <Image
-                src={"/logo/logo.png"}
-                alt="logo"
-                width={500}
-                height={500}
-                className="w-20 h-20 md:w-40
-                         md:h-40 border rounded-md cursor-pointer"
-              />
-            </Link>
-
             <div className="hidden md:block">
               <h1 className="text-3xl font-bold">Welcome back admin</h1>
               <p className="text-gray-500">
@@ -97,6 +98,17 @@ const Admin = async () => {
             {activeProducts.length}
             </CardContent>
           </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center juify-between space-y-0 pb-2">
+              <CardTitle className="text-md font-bold">
+                Active Business
+              </CardTitle>{" "}
+              📦
+            </CardHeader>
+            <CardContent>
+            {activeBusiness.length}
+            </CardContent>
+          </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -121,25 +133,25 @@ const Admin = async () => {
               {rejectedProducts.length}
             </CardContent>
           </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-md font-bold">Upvotes</CardTitle> 🔺
-            </CardHeader>
-            <CardContent>
-              {totalUpvotes}
-            </CardContent>
-          </Card>
         </div>
 
 
         <div className="grid md:grid-cols-2 lg:grid-cols-7 my-4 gap-4">
           <Card className="col-span-4">
             <CardHeader>
-              <CardTitle className="pb-10">Overview</CardTitle>
+              <CardTitle className="pb-10">Overview Destinations</CardTitle>
             </CardHeader>
             <CardContent className="pl-2">
               <OverviewChart data={data} />
+            </CardContent>
+          </Card>
+
+          <Card className="col-span-4">
+            <CardHeader>
+              <CardTitle className="pb-10">Overview  Businesses</CardTitle>
+            </CardHeader>
+            <CardContent className="pl-2">
+              <OverviewChart data={dataBusiness} />
             </CardContent>
           </Card>
 
@@ -162,6 +174,13 @@ const Admin = async () => {
           <h1 className="text-2xl font-bold">Pending Products</h1>
           <PendingProducts
             pendingProducts={pendingProducts}
+            authenticatedUser={authenticatedUser}
+          />
+        </div>
+        <div className="pb-10 space-y-10">
+          <h1 className="text-2xl font-bold">Pending Businesses</h1>
+          <PendingBusinesses
+            pendingProducts={PendingBusinesse}
             authenticatedUser={authenticatedUser}
           />
         </div>
