@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PiBell, PiGear } from "react-icons/pi";
-import PendingBusinesses from "./pending-Business";
 
 import {
   Card,
@@ -21,15 +20,8 @@ import {
   getTotalUpvotes, 
   getUsers
  } from "@/lib/server-actions";
-import { 
-  getActiveBusiness, 
-  getAdminDataBusiness, 
-  getPendingBusiness, 
-  getRejectedBusiness, 
- } from "@/lib/Business-server-action";
 import OverviewChart from "@/components/overview-chart";
 import RecentActivity from "@/components/recent-activity";
-
 
 const Admin = async () => {
   const users = await getUsers();
@@ -39,13 +31,11 @@ const Admin = async () => {
   const rejectedProducts = await getRejectedProducts();
   const totalUpvotes = await getTotalUpvotes();
   const data = await getAdminData();
-const PendingBusinesse = await getPendingBusiness();
-const activeBusiness = await getActiveBusiness();
-const rejectedBusiness = await getRejectedBusiness();
-const dataBusiness = await getAdminDataBusiness();
-
 
   const premiumUsers = users.filter((user) => user.isPremium);
+
+
+
 
   console.log(pendingProducts, "pending products here");
 
@@ -99,7 +89,7 @@ const dataBusiness = await getAdminDataBusiness();
           </Card>
 
           <Card>
-            <CardHeader className="flex flex-row items-center juify-between space-y-0 pb-2">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-md font-bold">
                 Active Products
               </CardTitle>{" "}
@@ -174,13 +164,6 @@ const dataBusiness = await getAdminDataBusiness();
           <h1 className="text-2xl font-bold">Pending Products</h1>
           <PendingProducts
             pendingProducts={pendingProducts}
-            authenticatedUser={authenticatedUser}
-          />
-        </div>
-        <div className="pb-10 space-y-10">
-          <h1 className="text-2xl font-bold">Pending Businesses</h1>
-          <PendingBusinesses
-            pendingProducts={PendingBusinesse}
             authenticatedUser={authenticatedUser}
           />
         </div>
