@@ -23,6 +23,7 @@ import {
 import OverviewChart from "@/components/overview-chart";
 import RecentActivity from "@/components/recent-activity";
 
+
 const Admin = async () => {
   const users = await getUsers();
   const pendingProducts = await getPendingProducts();
@@ -33,9 +34,6 @@ const Admin = async () => {
   const data = await getAdminData();
 
   const premiumUsers = users.filter((user) => user.isPremium);
-
-
-
 
   console.log(pendingProducts, "pending products here");
 
@@ -89,7 +87,7 @@ const Admin = async () => {
           </Card>
 
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardHeader className="flex flex-row items-center juify-between space-y-0 pb-2">
               <CardTitle className="text-md font-bold">
                 Active Products
               </CardTitle>{" "}
