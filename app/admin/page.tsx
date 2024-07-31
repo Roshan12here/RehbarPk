@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PiBell, PiGear } from "react-icons/pi";
+import PendingProductsa from "./pending-Business";
+
 
 import {
   Card,
@@ -20,6 +22,8 @@ import {
   getTotalUpvotes, 
   getUsers
  } from "@/lib/server-actions";
+import { getPendingBusiness } from "@/lib/Business-server-action";
+
 import OverviewChart from "@/components/overview-chart";
 import RecentActivity from "@/components/recent-activity";
 
@@ -31,6 +35,7 @@ const Admin = async () => {
   const rejectedProducts = await getRejectedProducts();
   const totalUpvotes = await getTotalUpvotes();
   const data = await getAdminData();
+  const getPendingBusines = await getPendingBusiness();
 
   const premiumUsers = users.filter((user) => user.isPremium);
 
@@ -166,7 +171,12 @@ const Admin = async () => {
             pendingProducts={pendingProducts}
             authenticatedUser={authenticatedUser}
           />
-        </div>
+          <h1 className="text-2xl font-bold">Pending Business</h1>
+          <PendingProducts
+            pendingProducts={getPendingBusines}
+            authenticatedUser={authenticatedUser}
+          />
+          </div>
       </div>
     </div>
   );
