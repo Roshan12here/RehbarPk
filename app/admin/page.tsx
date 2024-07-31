@@ -1,3 +1,5 @@
+import Image from "next/image";
+import Link from "next/link";
 import { PiBell, PiGear } from "react-icons/pi";
 import PendingBusinesses from "./pending-Business";
 
@@ -52,6 +54,17 @@ const dataBusiness = await getAdminDataBusiness();
       <div>
         <div className="flex justify-between items-center">
           <div className="flex gap-x-6 items-center py-10">
+            <Link href={"/"}>
+              <Image
+                src={"/logo/logo.png"}
+                alt="logo"
+                width={500}
+                height={500}
+                className="w-20 h-20 md:w-40
+                         md:h-40 border rounded-md cursor-pointer"
+              />
+            </Link>
+
             <div className="hidden md:block">
               <h1 className="text-3xl font-bold">Welcome back admin</h1>
               <p className="text-gray-500">
@@ -96,17 +109,6 @@ const dataBusiness = await getAdminDataBusiness();
             {activeProducts.length}
             </CardContent>
           </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center juify-between space-y-0 pb-2">
-              <CardTitle className="text-md font-bold">
-                Active Business
-              </CardTitle>{" "}
-              📦
-            </CardHeader>
-            <CardContent>
-            {activeBusiness.length}
-            </CardContent>
-          </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -131,25 +133,25 @@ const dataBusiness = await getAdminDataBusiness();
               {rejectedProducts.length}
             </CardContent>
           </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-md font-bold">Upvotes</CardTitle> 🔺
+            </CardHeader>
+            <CardContent>
+              {totalUpvotes}
+            </CardContent>
+          </Card>
         </div>
 
 
         <div className="grid md:grid-cols-2 lg:grid-cols-7 my-4 gap-4">
           <Card className="col-span-4">
             <CardHeader>
-              <CardTitle className="pb-10">Overview Destinations</CardTitle>
+              <CardTitle className="pb-10">Overview</CardTitle>
             </CardHeader>
             <CardContent className="pl-2">
               <OverviewChart data={data} />
-            </CardContent>
-          </Card>
-
-          <Card className="col-span-4">
-            <CardHeader>
-              <CardTitle className="pb-10">Overview  Businesses</CardTitle>
-            </CardHeader>
-            <CardContent className="pl-2">
-              <OverviewChart data={dataBusiness} />
             </CardContent>
           </Card>
 
