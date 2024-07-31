@@ -2,8 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { PiBell, PiGear } from "react-icons/pi";
 import PendingProductsa from "./pending-Business";
-
-
 import {
   Card,
   CardContent,
@@ -172,7 +170,7 @@ const Admin = async () => {
             authenticatedUser={authenticatedUser}
           />
           <h1 className="text-2xl font-bold">Pending Business</h1>
-          <PendingProducts
+          <PendingProductsa
             pendingProducts={getPendingBusines}
             authenticatedUser={authenticatedUser}
           />
