@@ -1,5 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
 import { PiBell, PiGear } from "react-icons/pi";
 import PendingBusinesses from "./pending-Business";
 
