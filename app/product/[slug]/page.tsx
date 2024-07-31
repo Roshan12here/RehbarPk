@@ -1,4 +1,4 @@
-import { getProductBySlug, getProductViews  } from "@/lib/server-actions";
+import { getProductBySlug,updateProduct   } from "@/lib/server-actions";
 import Image from "next/image";
 import Link from "next/link";
 import CarouselComponent from "@/components/carousel-component";
@@ -8,6 +8,8 @@ import { StarIcon } from "lucide-react";
 import CommentModel from "@/components/CommentModel";
 import OpenQA from "@/components/OpenQ&A";
 import QandAs from "@/components/ui/QandAs";
+import { UpvoteProduct } from "@/components/ui/UpvoteProduct";
+
 
 interface IParams {
   slug: string;
@@ -19,6 +21,7 @@ const ProductPage = async ({ params }: { params: IParams }) => {
   if (!product) {
     return <div>Product not found</div>;
   }
+
 
   const authenticatedUser = await auth();
 

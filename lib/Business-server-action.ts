@@ -920,16 +920,27 @@ export const markAllNotificationsAsRead = async () => {
 export const searchProducts = async (query: string) => {
   const products = await db.business.findMany({
     where: {
-      name: {
-        contains: query,
-        mode: "insensitive",
-      },
+      OR: [
+        {
+          name: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+        {
+          twitter: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+      ],
       status: "ACTIVE",
     },
   });
 
   return products;
 };
+
 
 export const getProductsByUserId = async (userId: string) => {
   const products = await db.business.findMany({

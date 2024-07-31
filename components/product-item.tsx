@@ -146,7 +146,6 @@ const ProductItem: React.FC<ProductItemProps> = ({
           onClick={handleUpvoteClick}
           variants={variants}
           animate={hasUpvoted ? "upvoted" : "initital"}
-          
           >
             {hasUpvoted ? (
               <div

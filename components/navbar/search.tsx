@@ -22,12 +22,12 @@ interface Product {
   userId: string;
   status: string;
 }
-
 const Search = () => {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Product[]>([]);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const [displayedCities, setDisplayedCities] = useState(new Set<string>());
 
   const router = useRouter();
 
@@ -48,10 +48,42 @@ const Search = () => {
     }
   };
 
+  const groupedResults = searchResults.reduce((acc, product) => {
+    if (!acc[product.twitter]) {
+      acc[product.twitter] = [];
+    }
+    acc[product.twitter].push(product);
+    return acc;
+  }, {} as Record<string, Product[]>);
+
+
   const handleItemClick = (slug: string, productName: string) => {
     setQuery(productName);
     setIsDropdownVisible(false);
     router.push(`/product/${slug}`);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchInputRef.current &&
+        !searchInputRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownVisible(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  const handleItemClickCity = (twitter : string) => {
+    setQuery(twitter);
+    setIsDropdownVisible(false);
+    router.push(`/Destinations/${twitter}`);
   };
 
   useEffect(() => {
@@ -94,30 +126,37 @@ const Search = () => {
         onChange={handleSearch}
         ref={searchInputRef}
       />
-      {isDropdownVisible && searchResults.length > 0 && (
-        <ul className="absolute top-full bg-white rounded-md border mt-2 w-full">
-          {searchResults.map((product) => (
-            <li
-              key={product.id}
-              className="p-2 hover:bg-gray-100 
-            cursor-pointer text-sm 
-            flex items-center gap-x-2"
-                onClick={() => handleItemClick(product.slug, product.name)}
-            >
-              <Image
-                src={product.logo}
-                alt="logo"
-                width={50}
-                height={50}
-                className="rounded-md h-8 w-8"
-              />
-              {product.name}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
+          {isDropdownVisible && searchResults.length > 0 && (
+     <ul className="absolute top-full bg-white rounded-md border mt-2 w-full">
+     {Object.entries(groupedResults).map(([city, products]) => (
+       <div key={city} className="flex flex-col p-4">
+         <li
+           className="p-2 hover:bg-gray-100 cursor-pointer text-sm flex items-center gap-x-2 font-bold"
+           onClick={() => handleItemClickCity(city)}
+         >
+           <h1>{city}</h1>
+         </li>
+         {products.map((product) => (
+           <li
+             key={product.id}
+             className="p-2 hover:bg-gray-100 cursor-pointer text-sm flex items-center gap-x-2 ml-4"
+             onClick={() => handleItemClick(product.slug, product.name)}
+           >
+             <Image
+               src={product.logo}
+               alt="logo"
+               width={50}
+               height={50}
+               className="rounded-md h-8 w-8"
+             />
+             {product.name}
+           </li>
+         ))}
+       </div>
+     ))}
+   </ul>
+ )}
+</div>
+);
 };
-
 export default Search;
