@@ -986,7 +986,7 @@ export const markAllNotificationsAsRead = async () => {
   }
 };
 
-export const searchProducts = async (query: string) => {
+export const searchProductsBusiness = async (query: string) => {
   const products = await db.product.findMany({
     where: {
       OR: [

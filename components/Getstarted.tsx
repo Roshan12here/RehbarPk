@@ -83,12 +83,8 @@ const ProductItem: React.FC<ProductItemProps> = ({
     "
     >
       <div onClick={handleProductItemClick} className="">
-   <Button className="Rounded-lg text-[#ffffff] bg-[#0E793C] hover:bg-gradient-to-bl
-    from-[#0E793C]
-    via-[#86efac]
-    to-[#0E793C] 
-    border border-2px border-emerald-400
-    " >Get Started</Button>
+   <Button className="Rounded-lg text-[#ffffff] bg-[#006837] hover:text-[#ffffff] hover:bg-[#0E793C]
+    " >Add Listing</Button>
       </div>
 
       <ModalChoose visible={showProductModal} setVisible={setShowProductModal}>

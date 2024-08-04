@@ -1,8 +1,7 @@
 "use client";
 
-import { searchProducts } from "@/lib/server-actions";
+import { searchProducts } from "@/lib/Business-server-action";
 import Image from "next/image";
-
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { PiMagnifyingGlass } from "react-icons/pi";
@@ -16,12 +15,12 @@ interface Product {
   logo: string;
   website: string;
   twitter: string;
-  discord: string | null;  
   createdAt: Date;
   updatedAt: Date;
   userId: string;
   status: string;
 }
+
 const Search = () => {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Product[]>([]);
@@ -59,7 +58,7 @@ const Search = () => {
 
   const handleItemClick = (slug: string, productName: string) => {
     setQuery(productName);
-    setIsDropdownVisible(false);
+    setIsDropdownVisible(false); 
     router.push(`/product/${slug}`);
   };
 
@@ -104,59 +103,53 @@ const Search = () => {
   }, []);
 
   return (
-    <div
-      className="
-      mt-3
-        rounded-full 
-        flex items-center
-         text-gray-500 
-         ml-4
-         w-[42vw]
-          border-[2px] border-green-500  
-         bg-[#f5f8ff]
-          relative"
-    >
-      <PiMagnifyingGlass className="ml-2" />
+    <div className=" max-w-3xl mx-auto">
+      <div className="relative">
+        <input
+          type="text"
+          placeholder="Search destinations, experiences, or local businesses..."
+          className="w-[80%] py-4 px-6 pr-12 text-lg bg-white border-2 border-green-500 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-green-300 transition duration-300"
+          value={query}
+          onChange={handleSearch}
+          ref={searchInputRef}
+        />
+        <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+          <PiMagnifyingGlass className="text-2xl text-green-500" />
+        </div>
+      </div>
 
-      <input
-        type="text"
-        placeholder="Search..."
-        className="p-2 rounded-full text-xs focus:outline-none bg-[#f5f8ff]"
-        value={query}
-        onChange={handleSearch}
-        ref={searchInputRef}
-      />
-          {isDropdownVisible && searchResults.length > 0 && (
-     <ul className="absolute top-full bg-white rounded-md border mt-2 w-full">
-     {Object.entries(groupedResults).map(([city, products]) => (
-       <div key={city} className="flex flex-col p-4">
-         <li
-           className="p-2 hover:bg-gray-100 cursor-pointer text-sm flex items-center gap-x-2 font-bold"
-           onClick={() => handleItemClickCity(city)}
-         >
-           <h1>{city}</h1>
-         </li>
-         {products.map((product) => (
-           <li
-             key={product.id}
-             className="p-2 hover:bg-gray-100 cursor-pointer text-sm flex items-center gap-x-2 ml-4"
-             onClick={() => handleItemClick(product.slug, product.name)}
-           >
-             <Image
-               src={product.logo}
-               alt="logo"
-               width={50}
-               height={50}
-               className="rounded-md h-8 w-8"
-             />
-             {product.name}
-           </li>
-         ))}
-       </div>
-     ))}
-   </ul>
- )}
-</div>
-);
+      {isDropdownVisible && searchResults.length > 0 && (
+        <ul className="mt-2 bg-white rounded-lg shadow-xl border border-gray-200 max-h-96 overflow-y-auto">
+          {Object.entries(groupedResults).map(([city, products]) => (
+            <div key={city} className="p-4 border-b border-gray-100 last:border-b-0">
+              <li
+                className="p-2 hover:bg-gray-50 cursor-pointer text-base font-semibold flex items-center gap-x-2 text-green-600"
+                onClick={() => handleItemClickCity(city)}
+              >
+                <h2>{city}</h2>
+              </li>
+              {products.map((product) => (
+                <li
+                  key={product.id}
+                  className="ml-4 p-2 hover:bg-gray-50 cursor-pointer text-sm flex items-center gap-x-3 transition duration-200"
+                  onClick={() => handleItemClick(product.slug, product.name)}
+                >
+                  <Image
+                    src={product.logo}
+                    alt={product.name}
+                    width={40}
+                    height={40}
+                    className="rounded-full h-10 w-10 object-cover"
+                  />
+                  <span className="font-medium">{product.name}</span>
+                </li>
+              ))}
+            </div>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 };
+
 export default Search;

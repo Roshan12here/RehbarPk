@@ -10,6 +10,8 @@ import {
 import { getProductsByCityName } from "@/lib/server-actions";
 import Image from "next/image";
 import Link from "next/link";
+import CarouselComponent from "@/components/carousel-component";
+
 
 interface IParams {
   city: string;

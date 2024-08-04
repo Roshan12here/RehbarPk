@@ -5,6 +5,7 @@ import { getActiveProducts } from "@/lib/server-actions";
 import ActiveBusiness from "@/components/active-Business";
 import { getActiveBusiness } from "@/lib/Business-server-action";
 import {auth} from "@/auth";
+import Component from "@/components/ui/Features";
 
 const Home = async () => {
 
@@ -20,6 +21,7 @@ const activeBusiness = await getActiveBusiness();
    <>
    <div className="">
    <Hero/>
+   <Component/>
     <ActiveProducts
     activeProducts={activeProducts}
     authenticatedUser={authenticatedUser}
