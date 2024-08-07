@@ -88,8 +88,11 @@ const ProductPage = async ({ params }: { params: IParams }) => {
         <div className="space-y-4">
           {product.ratings.map((rating: any) => (
             <div key={rating.id} className="border p-4 rounded-lg">
-              {/* Display individual ratings */}
-              {/* ... */}
+              <div className="flex items-center space-x-2">
+                <StarIcon className="text-yellow-500 h-5 w-5" />
+                <h2 className="font-semibold">{rating.title}</h2>
+              </div>
+              <p className="text-gray-600">{rating.description}</p>
             </div>
           ))}
         </div>

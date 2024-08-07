@@ -76,15 +76,15 @@ const Searchs = () => {
   const handleItemClick = (slug: string, productName: string) => {
     setQuery(productName);
     setIsDropdownVisible(false);
-    router.push(`/Business/${slug}`);
+    router.push(`/Destination/${slug}`);
   };
 
   const handleItemClickBusiness = (slug: string, productName: string) => {
     setQuery(productName);
     setIsDropdownVisibleb(false);
-    router.push(`/Destination/${slug}`);
+    router.push(`/Business/${slug}`);
   };
-
+  
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (

@@ -8,6 +8,14 @@
 
 
 
+.right-8 {
+  right: 2rem; /* Adjust as needed */
+}
+
+.right-16 {
+  right: 4rem; /* Adjust as needed */
+}
+
 
 .modal-toggle {
   display: none;

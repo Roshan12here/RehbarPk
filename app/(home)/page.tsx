@@ -1,11 +1,13 @@
 
 import Hero from "@/components/Hero";
-import ActiveProducts from "@/components/active-products";
 import { getActiveProducts } from "@/lib/server-actions";
-import ActiveBusiness from "@/components/active-Business";
 import { getActiveBusiness } from "@/lib/Business-server-action";
 import {auth} from "@/auth";
-import Component from "@/components/ui/Features";
+import DestinationsTitle from "@/components/ui/DestActui";
+import Box from "@/components/ui/DestinationSection";
+import Aboutus from "@/components/ui/Aboutus";
+import Steps from "@/components/ui/HowItWorks";
+import Cities from "@/components/ui/Cities";
 
 const Home = async () => {
 
@@ -19,16 +21,13 @@ const activeBusiness = await getActiveBusiness();
 
   return (
    <>
-   <div className="">
-   <Hero/>
-   <Component/>
-    <ActiveProducts
-    activeProducts={activeProducts}
-    authenticatedUser={authenticatedUser}
-    />
-    <ActiveBusiness
-    activeProducts={activeBusiness}
-    />
+    <div >
+         <Hero/>
+         <Box/>
+   <DestinationsTitle/>
+   <Aboutus/>
+   <Cities/>
+   <Steps/>
    </div>
    </>
   );

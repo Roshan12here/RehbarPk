@@ -1,120 +1,172 @@
-// components/active-products.tsx
-"use client";
+"use client"
 
+import { auth } from "@/auth";
+import { useState, useRef, useEffect } from "react";
 import ProductItem from "./product-item";
-import Search from "./navbar/search";
-import { Button } from "./ui/button";
-import Link from "next/link";
-import Modal from "./ui/modals/authModal";
-import AuthContent from "./navbar/auth-content";
 
 interface ActiveProductsProps {
   activeProducts: any;
-  authenticatedUser: any;
 }
 
-const ActiveProducts: React.FC<ActiveProductsProps> = ({
-  activeProducts,
-  authenticatedUser,
-}) => {
+const ActiveProducts: React.FC<ActiveProductsProps> = ({ activeProducts }) => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [formattedActiveProducts, setFormattedActiveProducts] = useState<any[]>([]);
 
-  const formattedActiveProducts = activeProducts?.map((product: any) => {
-    const {
-      id,
-      name,
-      slug,
-      headline,
-      description,
-      logo,
-      website,
-      twitter,
-      discord,
-      createdAt,
-      updatedAt,
-      userId,
-      status,
-      images,
-      categories,
-      comments,
-      upvotes
-    } = product;
+  useEffect(() => {
+    const formatProducts = () => {
+      const formatted = activeProducts?.map((product: any) => {
+        const {
+          id,
+          name,
+          slug,
+          headline,
+          description,
+          logo,
+          releaseDate,
+          website,
+          twitter,
+          discord,
+          createdAt,
+          updatedAt,
+          userId,
+          status,
+          images,
+          categories,
+          comments,
+          upvotes
+        } = product;
 
-    const imageUrls = images.map((image: any) => image.url);
-    const categoryNames = categories.map((category: any) => category.name);
-    const commentsCount = comments ? comments.length : 0;
+        const imageUrls = images.map((image: any) => image.url);
+        const categoryNames = categories.map((category: any) => category.name);
+        const commentsCount = comments ? comments.length : 0;
 
-    const commentText = comments ? comments.map((comment: any) => ({
-        id: comment.id,
-        profile: comment.profilePicture,
-        body : comment.body,
-        user : comment.user.name,
-        timestamp : comment.createdAt,
-        userId : comment.user.id,
-        name: comment.user.name.toLowerCase().replace(/\s/g, '_'),
+        const commentText = comments ? comments.map((comment: any) => ({
+          id: comment.id,
+          profile: comment.profilePicture,
+          body: comment.body,
+          user: comment.user.name,
+          timestamp: comment.createdAt,
+          userId: comment.user.id,
+          name: comment.user.name.toLowerCase().replace(/\s/g, '_'),
+        })) : [];
 
-    })) : [];
+        const upvotesCount = upvotes ? upvotes.length : 0;
+        const upvotesData = upvotes.map((upvote: any) => upvote.user.id);
 
-    const upvotesCount = upvotes ? upvotes.length : 0;
-    const upvotesData = upvotes.map((upvote: any) => upvote.user.id);
+        return {
+          id,
+          name,
+          slug,
+          headline,
+          description,
+          logo,
+          releaseDate,
+          website,
+          twitter,
+          discord,
+          createdAt,
+          updatedAt,
+          userId,
+          status,
+          images: imageUrls,
+          categories: categoryNames,
+          commentsLength: commentsCount,
+          commentData: commentText,
+          upvoters: upvotesData,
+          upvotes: upvotesCount,
+        };
+      });
 
-    return {
-      id,
-      name,
-      slug,
-      headline,
-      description,
-      logo,
-      website,
-      twitter,
-      discord,
-      createdAt,
-      updatedAt,
-      userId,
-      status,
-      images: imageUrls,
-      categories: categoryNames,
-      commentsLength: commentsCount,
-      commentData : commentText,
-      upvoters: upvotesData,
-      upvotes: upvotesCount,
+      setFormattedActiveProducts(formatted);
     };
-  });
 
-  console.log(formattedActiveProducts, 'formattedActiveProducts')
+    formatProducts();
+  }, [activeProducts]);
+
+  const handlePrevClick = () => {
+    if (scrollContainerRef.current) {
+      const newPosition = Math.max(scrollPosition - scrollContainerRef.current.clientWidth, 0);
+      scrollContainerRef.current.scrollTo({
+        left: newPosition,
+        behavior: 'smooth',
+      });
+      setScrollPosition(newPosition);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (scrollContainerRef.current) {
+      const newPosition = Math.min(
+        scrollPosition + scrollContainerRef.current.clientWidth,
+        scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth
+      );
+      scrollContainerRef.current.scrollTo({
+        left: newPosition,
+        behavior: 'smooth',
+      });
+      setScrollPosition(newPosition);
+    }
+  };
 
   return (
-    <div className="w-full h-[100vh] flex flex-col">
-      {/* Header */}
-      <div className="mt-[6vh] flex flex-col justify-center items-center border-b pb-3 px-4">
-        <h1 className="text-4xl sm:2xl md:3xl lg:4xl xl:4xl font-extrabold text-green-600 ">Destinations</h1>
-        <h2 className="text-2xl sm:xl md:2xl lg:2xl xl:2xl font-extrabold text-gray-600 mt-2">Discover the amazing Destination of Pakistan</h2>
-        <Search  />
-        <div className="flex justify-center">
-        <Button className="mt-2 bg-green-600 text-white">
-          <Link href="/categories">
-          Browse By Categories
-          </Link>
-          </Button>
-        <Button className="mt-2 ml-2 bg-green-600 text-white">
-          <Link href="/destinationcities">
-          Browse By Cities
-          </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="space-y-2 py-6 px-4 overflow-y-auto flex-1">
+    <div className="w-full h-[110vh] ml-12 flex flex-col relative">
+    {/* Content */}
+    <div className="relative flex items-center">
+      <div ref={scrollContainerRef} className="flex overflow-x-auto snap-x gap-8 snap-mandatory">
         {formattedActiveProducts?.map((product: any) => (
-          <ProductItem
-            key={product.id}
-            product={product}
-            authenticatedUser={authenticatedUser}
-          />
+          <ProductItem key={product.id} product={product} />
         ))}
       </div>
     </div>
-  );
+    <div className="mt-6 flex justify-end pr-8 space-x-4">
+        <button onClick={handlePrevClick} className="relative z-10 p-2 bg-gray-300 rounded-full">
+          <ChevronLeftIcon className="w-6 h-6" />
+        </button>
+        <button onClick={handleNextClick} className="relative z-10 p-2 bg-gray-300 rounded-full">
+          <ChevronRightIcon className="w-6 h-6" />
+        </button>
+      </div>
+  </div>
+  )
 };
+
+function ChevronLeftIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m15 18-6-6 6-6" />
+    </svg>
+  );
+}
+
+function ChevronRightIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  );
+}
 
 export default ActiveProducts;

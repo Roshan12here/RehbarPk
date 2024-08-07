@@ -13,6 +13,7 @@ interface BusinessData {
   BusinessPhone: string;
   BusinessHours?: string; // Make this optional
   YearsInBusiness: string;
+  AverageRating?: Float32Array;
   OwnerName: string;
   NumofEmployees: string;
   ServicesOffered: string;
