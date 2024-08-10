@@ -28,8 +28,6 @@ const activeBusiness = await getActiveBusiness();
    <>
     <div >
          <Hero/>
-         <Box/>
-   <DestinationsTitle/>
    <Aboutus/>
    <Cities/>
    <Steps/>
