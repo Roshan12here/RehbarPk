@@ -6,7 +6,7 @@ import { FaUsers } from "react-icons/fa";
 export default function Component() {
   return (
     <>
-      <section className="w-full mt-8">
+      <section className="w-full mt-8 mb-8">
         <div className="container flex flex-col items-center justify-center gap-4 px-4 text-center md:px-6">
         <div className="flex flex-col ">
         <div className="text-lg font-normal text-[#afafaf]">How it Works</div>

@@ -61,7 +61,6 @@ const Navbar: React.FC<NavbarProps> = ({
       <div className="flex items-center gap-4">
         {authenticatedUser ? (
           <>
-            <Avatar authenticatedUser={authenticatedUser} />
           </>
         ) : (
           <Button

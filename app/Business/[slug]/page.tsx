@@ -45,7 +45,7 @@ const ProductPage = async ({ params }: { params: IParams }) => {
                 key={category.id}
                 className="bg-[#0E793C] text-[#ffffff] px-4 py-2 rounded-md cursor-pointer"
               >
-                <h2 className="text-xs text-center">{category.name}</h2>
+                <h2 className="text-xs text-center">{category.comment}</h2>
               </Link>
             ))}
           </div>
@@ -86,15 +86,41 @@ const ProductPage = async ({ params }: { params: IParams }) => {
       {/* Ratings */}
       {product.ratings.length > 0 ? (
         <div className="space-y-4">
-          {product.ratings.map((rating: any) => (
-            <div key={rating.id} className="border p-4 rounded-lg">
-              <div className="flex items-center space-x-2">
-                <StarIcon className="text-yellow-500 h-5 w-5" />
-                <h2 className="font-semibold">{rating.title}</h2>
+          {product.ratings.map((rating: any) => {
+            // Convert the date to a readable format
+            const formattedDate = new Date(rating.selectedDate).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            });
+
+            return (
+              <div key={rating.id} className="border p-4 rounded-lg">
+                <div className="flex gap-x-4 items-start">
+                  <Image
+                    src={rating.user.image}
+                    alt="profile"
+                    width={60}
+                    height={60}
+                    className="rounded-full h-14 w-14"
+                  />
+                  <div className="flex-1">
+                    <div className="flex justify-between items-center">
+                      <h2 className="font-semibold text-lg">{rating.user.name}</h2>
+                      <span className="flex items-center">
+                        {[...Array(rating.score)].map((_, i) => (
+                          <StarIcon key={i} className="w-5 h-5 text-[#0E793C] fill-[#0E793C]" />
+                        ))}
+                      </span>
+                    </div>
+                    <p className="text-gray-500 text-sm mb-2">Rated this Destination</p>
+                    <p className="text-gray-500 text-base">{rating.comment}</p>
+                    {/* Display rating images */}
+                               </div>
+                </div>
               </div>
-              <p className="text-gray-600">{rating.description}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ) : (
         <div className="mt-6">
@@ -102,7 +128,7 @@ const ProductPage = async ({ params }: { params: IParams }) => {
           <p className="text-gray-500 mt-2">Be the first to Review on this Destination</p>
         </div>
       )}
-    </div>
+         </div>
   );
 };
 

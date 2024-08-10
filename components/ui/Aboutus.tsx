@@ -14,8 +14,7 @@ export default function Component() {
               alt="Hero Image"
               width={800}
               height={600}
-              className="rounded-lg object-cover"
-              style={{ aspectRatio: "600/400", objectFit: "cover" }}
+              className="rounded-lg object-cover w-full h-auto sm:max-w-[400px] md:max-w-[600px] lg:max-w-none"
             />
           </div>
           <div className="space-y-4">
@@ -30,7 +29,7 @@ export default function Component() {
               Our mission is to provide a comprehensive platform for users to discover, explore, and review destinations
               and businesses across Pakistan, empowering them to make informed decisions.
             </p>
-            <div className="grid gap-4">
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-1">
               <div className="flex items-center gap-4">
                 <div className="bg-white rounded-md p-3 flex items-center justify-center">
                   <MapPinIcon className="w-6 h-6" style={{ color: '#006837' }} />
@@ -49,17 +48,17 @@ export default function Component() {
                   <p className="text-muted-foreground">Find and review businesses across Pakistan.</p>
                 </div>
               </div>
-              <Separator className="my-4" />
+              <Separator className="my-4 col-span-full" />
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row justify-between items-center gap-4">
               <Link
                 href="#"
-                className="inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-medium text-[#ffffff] bg-[#006837] transition-colors hover:bg-[#005127] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                className="inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-medium text-[#ffffff] bg-[#006837] transition-colors hover:bg-[#005127] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 w-full sm:w-auto md:w-full lg:w-auto"
                 prefetch={false}
               >
                 Learn More
               </Link>
-              <div className="bg-muted rounded-md p-4 text-center inline-flex h-10 items-center justify-center">
+              <div className="bg-muted rounded-md p-4 text-center inline-flex items-center justify-center w-full sm:w-auto md:w-full lg:w-auto">
                 <h3 className="text-2xl font-bold">230K+</h3>
                 <p className="text-muted-foreground ml-2">Customers</p>
               </div>

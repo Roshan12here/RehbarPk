@@ -123,7 +123,7 @@ const ActiveProducts: React.FC<ActiveProductsProps> = ({ activeProducts }) => {
         <button onClick={handlePrevClick} className="relative z-10 p-2 bg-gray-300 rounded-full">
           <ChevronLeftIcon className="w-6 h-6" />
         </button>
-        <button onClick={handleNextClick} className="relative z-10 p-2 bg-gray-300 rounded-full">
+        <button onClick={handleNextClick} className="relative z-10 p-2 bg-[#000000] text-[#ffffff] rounded-full">
           <ChevronRightIcon className="w-6 h-6" />
         </button>
       </div>
