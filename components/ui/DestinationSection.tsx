@@ -5,8 +5,11 @@ import ActiveProducts from "../active-products";
 import { getActiveProducts } from "@/lib/server-actions";
 import { Button } from "./button";
 
-const Box = async () => {
-  const active = await getActiveProducts();
+interface Props {
+  activeProducts : any;
+}
+
+const Box : React.FC<Props> = async ({ activeProducts}) => {
   return (
     <div className="h-[112vh] w-full bg-cover bg-center mt-12">
       <div className="flex flex-col items-center h-full bg-cover bg-center">
@@ -29,7 +32,7 @@ const Box = async () => {
             </div>
           </div>
           <Categories />
-          <ActiveProducts activeProducts={active} />
+          <ActiveProducts activeProducts={activeProducts} />
           <div className="flex flex-row gap-2 sm:gap-4 mb-8 px-4 sm:px-8">
             <Button className="flex items-center justify-center bg-green-600 rounded-md cursor-pointer text-[#ffffff]">Find a Place</Button>
             <Button className="flex items-center justify-center bg-white border border-solid border-gray-200 text-gray-600 rounded-md">List your Place</Button>

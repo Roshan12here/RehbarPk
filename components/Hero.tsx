@@ -35,8 +35,6 @@ const HeroSection = () => {
         </div>
       </div>
     </div>
-    <Box/>
-    <DestinationsTitle/>
     </>
   );
 };
