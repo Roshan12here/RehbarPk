@@ -2,6 +2,7 @@ import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
 import HunzaValleyCard from "./DestinationCard"
 import Image from "next/image"
+import { Button } from "./button"
 
 export default function Component() {
   return (
@@ -48,20 +49,30 @@ export default function Component() {
                   <p className="text-muted-foreground">Find and review businesses across Pakistan.</p>
                 </div>
               </div>
-              <Separator className="my-4 col-span-full" />
+              <Separator className="my-4 h-[2px] bg-[#afafaf] col-span-full" />
             </div>
-            <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row justify-between items-center gap-4">
-              <Link
-                href="#"
-                className="inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-medium text-[#ffffff] bg-[#006837] transition-colors hover:bg-[#005127] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 w-full sm:w-auto md:w-full lg:w-auto"
-                prefetch={false}
-              >
-                Learn More
-              </Link>
-              <div className="bg-muted rounded-md p-4 text-center inline-flex items-center justify-center w-full sm:w-auto md:w-full lg:w-auto">
-                <h3 className="text-2xl font-bold">230K+</h3>
-                <p className="text-muted-foreground ml-2">Customers</p>
-              </div>
+            <div className="flex justify-between  ">
+  <Button className=" bg-[#006837] text-white  hover:bg-[#ffffff] hover:text-[#006837] ">Get Started</Button>
+<div className="flex items-center space-x-4 -mt-6">
+<div className="relative h-24 w-20 rounded-full">
+        <Image
+          src="/plus.svg"
+          alt="Plus icon"
+          fill
+          className="object-contain invert"
+        />
+      </div>
+
+<div className="flex flex-col ">
+<h1 className="text-xl font-extrabold">
+230K+ 
+</h1>
+<h3 className="text-green-500 text-md font-bold">
+Customers
+</h3>
+</div>
+
+    </div>
             </div>
           </div>
         </div>

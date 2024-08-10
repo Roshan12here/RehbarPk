@@ -3,6 +3,7 @@
 import { auth } from "@/auth";
 import { useState, useRef, useEffect } from "react";
 import ProductItem from "./ui/BusinessCompItem";
+import { Button } from "./ui/button";
 
 interface ActiveProductsProps {
   activeProducts: any;
@@ -111,24 +112,34 @@ const ActiveProducts: React.FC<ActiveProductsProps> = ({ activeProducts }) => {
 
   return (
     <div className="w-full h-[110vh] ml-12 flex flex-col relative">
-    {/* Content */}
-    <div className="relative flex items-center">
-      <div ref={scrollContainerRef} className="flex overflow-x-auto snap-x gap-8 snap-mandatory">
-        {formattedActiveProducts?.map((product: any) => (
-          <ProductItem key={product.id} product={product} />
-        ))}
+      {/* Content */}
+      <div className="relative flex items-center">
+        <div ref={scrollContainerRef} className="flex overflow-x-auto snap-x gap-8 snap-mandatory">
+          {formattedActiveProducts?.map((product: any) => (
+            <ProductItem key={product.id} product={product} />
+          ))}
+        </div>
+      </div>
+      <div className="mt-6 flex justify-between pr-8 space-x-4 items-center w-[60%]  ml-auto">
+        <div className="flex flex-row gap-4">
+          <Button className="flex items-center justify-center bg-[#006837] rounded-md cursor-pointer text-[#ffffff]">
+            Find a Place
+          </Button>
+          <Button className="flex items-center justify-center bg-white border border-solid border-gray-200 text-gray-600 rounded-md">
+            List your Place
+          </Button>
+        </div>
+        <div className="flex gap-2">
+          <button onClick={handlePrevClick} className="p-2 bg-gray-300 rounded-full">
+            <ChevronLeftIcon className="w-6 h-6" />
+          </button>
+          <button onClick={handleNextClick} className="p-2 bg-[#000000] text-[#ffffff] rounded-full">
+            <ChevronRightIcon className="w-6 h-6" />
+          </button>
+        </div>
       </div>
     </div>
-    <div className="mt-6 flex justify-end pr-8 space-x-4">
-        <button onClick={handlePrevClick} className="relative z-10 p-2 bg-gray-300 rounded-full">
-          <ChevronLeftIcon className="w-6 h-6" />
-        </button>
-        <button onClick={handleNextClick} className="relative z-10 p-2 bg-[#000000] text-[#ffffff] rounded-full">
-          <ChevronRightIcon className="w-6 h-6" />
-        </button>
-      </div>
-  </div>
-  )
+  );
 };
 
 function ChevronLeftIcon(props: any) {

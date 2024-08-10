@@ -12,7 +12,7 @@ interface Props {
 
 const Box : React.FC<Props> = async ({ ActivEPr}) =>  {
   return (
-    <div className="h-[112vh] w-full bg-cover bg-center mt-12">
+    <div className="h-screen w-full bg-cover bg-center mt-12">
     <div className="flex flex-col items-center h-full bg-cover bg-center">
       <div className="relative flex flex-col items-center w-full h-full bg-[#f5f3f3]">
         <div className="flex flex-row justify-between w-full px-4 sm:px-8"> 
@@ -31,10 +31,7 @@ const Box : React.FC<Props> = async ({ ActivEPr}) =>  {
         </div>
         <Categories />
         <ActiveProducts activeProducts={ActivEPr} />
-        <div className="flex flex-row gap-2 sm:gap-4 mb-8 px-4 sm:px-8">
-          <Button className="flex items-center justify-center bg-[#006837] rounded-md cursor-pointer text-[#ffffff]">Find a Place</Button>
-          <Button className="flex items-center justify-center bg-white border border-solid border-gray-200 text-gray-600 rounded-md">List your Place</Button>
-        </div>
+      
       </div>
     </div>
   </div>  );

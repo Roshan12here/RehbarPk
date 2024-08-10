@@ -15,7 +15,6 @@ export default function Component() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Dark overlay */}
       <div className="absolute inset-0 bg-black opacity-70"></div>
       <div className="relative grid grid-cols-1 md:grid-cols-2 justify-between items-start gap-4 px-4 md:px-6">
         <div className="space-y-4 lg:max-w-[500px]">
