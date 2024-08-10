@@ -29,6 +29,7 @@ const activeBusiness = await getActiveBusiness();
     <div >
          <Hero/>
          <Box  activeProducts={activeProducts}/>
+         <DestinationsTitle ActivEPr={activeBusiness} />
    <Aboutus/>
    <Cities/>
    <Steps/>

@@ -34,7 +34,7 @@ const Box : React.FC<Props> = async ({ activeProducts}) => {
           <Categories />
           <ActiveProducts activeProducts={activeProducts} />
           <div className="flex flex-row gap-2 sm:gap-4 mb-8 px-4 sm:px-8">
-            <Button className="flex items-center justify-center bg-green-600 rounded-md cursor-pointer text-[#ffffff]">Find a Place</Button>
+            <Button className="flex items-center justify-center bg-[#006837] rounded-md cursor-pointer text-[#ffffff]">Find a Place</Button>
             <Button className="flex items-center justify-center bg-white border border-solid border-gray-200 text-gray-600 rounded-md">List your Place</Button>
           </div>
         </div>
