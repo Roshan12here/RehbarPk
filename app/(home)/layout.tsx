@@ -4,9 +4,7 @@ import Spinner from "@/components/spinner";
 import { getNotifications, getProductsByUserId } from "@/lib/server-actions";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-
-
-
+import ClientOnly from "@/components/ClientOnly";
 
 
 const HomeLayout = async ({
@@ -22,22 +20,22 @@ const HomeLayout = async ({
 
 
   return (
+    <ClientOnly>
     <html 
-    suppressHydrationWarning={true}
-    
     lang="en">
       <body>
       <Navbar
           authenticatedUser={authenticatedUser}
           products={products}
-         notifications={notifications}
-        />
+          notifications={notifications}
+          />
   
         <Suspense fallback={<Spinner />}>
           {children}
         </Suspense>
       </body>
     </html>
+          </ClientOnly>
   );
 };
 
