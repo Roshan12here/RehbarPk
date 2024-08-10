@@ -10,7 +10,7 @@ export default function Component() {
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
           <div className="flex items-center justify-center">
             <Image
-              src="/sola.jpg"
+              src="/sol.png"
               alt="Hero Image"
               width={800}
               height={600}
