@@ -31,15 +31,15 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/Destination/:slug',
+        source: '/destination/:slug',
         destination: '/product/:slug',
       },
       {
-        source: '/Destinations/:city',
+        source: '/destinations/:city',
         destination: '/City/:city',
       },
       {
-        source: '/Businesses/:city',
+        source: '/businesses/:city',
         destination: '/CtiyBusiness/:city',
       },
       {
