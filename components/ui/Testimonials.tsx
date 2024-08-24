@@ -1,238 +1,134 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { FaStar } from 'react-icons/fa'
-import { MdVerified } from "react-icons/md";
+import { useEffect, useState, useRef } from "react";
+import { StarIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { getAllRatings } from "@/lib/server-actions";
+import Image from "next/image";
 
 export default function Component() {
-  const [currentSlide, setCurrentSlide] = useState(0)
+  const [ratings, setRatings] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const fetchRatings = async () => {
+      try {
+        const data = await getAllRatings();
+        setRatings(data);
+      } catch (error) {
+        console.error("Error fetching ratings:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRatings();
+  }, []);
+
   const handlePrev = () => {
-    setCurrentSlide((prevSlide) => (prevSlide === 0 ? 2 : prevSlide - 1))
-  }
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1);
+    }
+    clearAutoSlide();
+  };
+
   const handleNext = () => {
-    setCurrentSlide((prevSlide) => (prevSlide === 2 ? 0 : prevSlide + 1))
-  }
+    if (currentIndex < ratings.length - 1) {
+      setCurrentIndex((prev) => prev + 1);
+    }
+    clearAutoSlide();
+  };
+
+  const startAutoSlide = () => {
+    intervalRef.current = setInterval(() => {
+      setCurrentIndex((prev) => {
+        if (prev < ratings.length - 1) {
+          return prev + 1;
+        } else {
+          clearAutoSlide();
+          return prev;
+        }
+      });
+    }, 3000); // Adjust the interval time for slower or faster sliding
+  };
+
+  const clearAutoSlide = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    if (ratings.length > 0 && !isHovered) {
+      startAutoSlide();
+    } else {
+      clearAutoSlide();
+    }
+
+    return () => clearAutoSlide();
+  }, [isHovered, ratings.length]);
+
+  if (loading) return <div>Loading...</div>;
+
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32">
-      <div className="container grid max-w-5xl gap-8 px-4 md:px-6">
-        <div className="flex flex-col mt-6 items-center justify-center ">
-              <div className="text-lg font-normal text-[#afafaf]">Hear What others Said</div>
-              <div className="w-[11rem] h-px bg-[#afafaf] mt-1"></div>
-            </div>     
-        <div className="space-y-4 text-center">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-2xl md:text-3xl">          
-          Hear from our Satisfied travellers about their amazing <br/> experience. Discover why Rehbar.pk is their top  <br/> choice  for exploring Pakistan
-          </h2>
-      
+    <div className="w-full bg-white text-gray-800 py-16">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex flex-col mt-6 items-center justify-center">
+          <div className="text-lg font-normal text-[#afafaf]">Hear What Others Said</div>
+          <div className="w-[11rem] h-px bg-[#afafaf] mt-1"></div>
         </div>
-        <div className="relative">
-          <div
-            className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 transition-transform duration-500 ease-in-out"
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-          >
-            <div className="rounded-lg border bg-background p-6 shadow-sm transition-all duration-300 hover:shadow-lg max-w-2xl mx-auto">
-  <div className="flex justify-between items-center mb-4">
-    <div>
-      <h3 className="text-xl font-semibold text-primary">McDonald</h3>
-      <p className="text-sm text-[#006837]">Lahore , Pakistan</p>
-    </div>
-    <div className="flex items-center">
-      {[...Array(5)].map((star, index) => (
-        <FaStar
-          key={index}
-          className={`w-5 h-5 ${index < 4 ? 'text-[#006837]' : 'text-gray-300'}`}
-        />
-      ))}
-      <span className="ml-2 text-sm text-muted-foreground">4.5</span>
-    </div>
-  </div>
-  <div className="border-b my-3"></div>
-  <div className="mt-2 text-sm leading-relaxed text-muted-foreground">
-    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-  </div>
-  <div className="flex items-center mt-4">
-    <Avatar className="shrink-0">
-      <AvatarImage src="/avatar.jpg" alt="Customer 1" />
-      <AvatarFallback>AR</AvatarFallback>
-    </Avatar>
-    <div className="ml-3">
-      <span className="font-semibold">Abdur Rehman</span>
-      <br />
-      <span className="text-sm text-[#006837]">Lahore, Pakistan</span>
-    </div>
-    <MdVerified className="ml-auto text-blue-600"/>
-  </div>
-</div>
-            <div className="rounded-lg border bg-background p-6 shadow-sm transition-all duration-300 hover:shadow-lg max-w-2xl mx-auto">
-  <div className="flex justify-between items-center mb-4">
-    <div>
-      <h3 className="text-xl font-semibold text-primary">McDonald</h3>
-      <p className="text-sm text-[#006837]">Lahore , Pakistan</p>
-    </div>
-    <div className="flex items-center">
-      {[...Array(5)].map((star, index) => (
-        <FaStar
-          key={index}
-          className={`w-5 h-5 ${index < 4 ? 'text-[#006837]' : 'text-gray-300'}`}
-        />
-      ))}
-      <span className="ml-2 text-sm text-muted-foreground">4.5</span>
-    </div>
-  </div>
-  <div className="border-b my-3"></div>
-  <div className="mt-2 text-sm leading-relaxed text-muted-foreground">
-    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-  </div>
-  <div className="flex items-center mt-4">
-    <Avatar className="shrink-0">
-      <AvatarImage src="/avatar.jpg" alt="Customer 1" />
-      <AvatarFallback>AR</AvatarFallback>
-    </Avatar>
-    <div className="ml-3">
-      <span className="font-semibold">Abdur Rehman</span>
-      <br />
-      <span className="text-sm text-[#006837]">Lahore, Pakistan</span>
-    </div>
-    <MdVerified className="ml-auto text-blue-600"/>
-  </div>
-</div>
-            <div className="rounded-lg border bg-background p-6 shadow-sm transition-all duration-300 hover:shadow-lg max-w-2xl mx-auto">
-  <div className="flex justify-between items-center mb-4">
-    <div>
-      <h3 className="text-xl font-semibold text-primary">McDonald</h3>
-      <p className="text-sm text-[#006837]">Lahore , Pakistan</p>
-    </div>
-    <div className="flex items-center">
-      {[...Array(5)].map((star, index) => (
-        <FaStar
-          key={index}
-          className={`w-5 h-5 ${index < 4 ? 'text-[#006837]' : 'text-gray-300'}`}
-        />
-      ))}
-      <span className="ml-2 text-sm text-muted-foreground">4.5</span>
-    </div>
-  </div>
-  <div className="border-b my-3"></div>
-  <div className="mt-2 text-sm leading-relaxed text-muted-foreground">
-    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-  </div>
-  <div className="flex items-center mt-4">
-    <Avatar className="shrink-0">
-      <AvatarImage src="/avatar.jpg" alt="Customer 1" />
-      <AvatarFallback>AR</AvatarFallback>
-    </Avatar>
-    <div className="ml-3">
-      <span className="font-semibold">Abdur Rehman</span>
-      <br />
-      <span className="text-sm text-[#006837]">Lahore, Pakistan</span>
-    </div>
-    <MdVerified className="ml-auto text-blue-600"/>
-  </div>
-</div>
-            <div className="rounded-lg border bg-background p-6 shadow-sm transition-all duration-300 hover:shadow-lg max-w-2xl mx-auto">
-  <div className="flex justify-between items-center mb-4">
-    <div>
-      <h3 className="text-xl font-semibold text-primary">McDonald</h3>
-      <p className="text-sm text-[#006837]">Lahore , Pakistan</p>
-    </div>
-    <div className="flex items-center">
-      {[...Array(5)].map((star, index) => (
-        <FaStar
-          key={index}
-          className={`w-5 h-5 ${index < 4 ? 'text-[#006837]' : 'text-gray-300'}`}
-        />
-      ))}
-      <span className="ml-2 text-sm text-muted-foreground">4.5</span>
-    </div>
-  </div>
-  <div className="border-b my-3"></div>
-  <div className="mt-2 text-sm leading-relaxed text-muted-foreground">
-    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-  </div>
-  <div className="flex items-center mt-4">
-    <Avatar className="shrink-0">
-      <AvatarImage src="/avatar.jpg" alt="Customer 1" />
-      <AvatarFallback>AR</AvatarFallback>
-    </Avatar>
-    <div className="ml-3">
-      <span className="font-semibold">Abdur Rehman</span>
-      <br />
-      <span className="text-sm text-[#006837]">Lahore, Pakistan</span>
-    </div>
-    <MdVerified className="ml-auto text-blue-600"/>
-  </div>
-</div>
-            <div className="rounded-lg border bg-background p-6 shadow-sm transition-all duration-300 hover:shadow-lg max-w-2xl mx-auto">
-  <div className="flex justify-between items-center mb-4">
-    <div>
-      <h3 className="text-xl font-semibold text-primary">McDonald</h3>
-      <p className="text-sm text-[#006837]">Lahore , Pakistan</p>
-    </div>
-    <div className="flex items-center">
-      {[...Array(5)].map((star, index) => (
-        <FaStar
-          key={index}
-          className={`w-5 h-5 ${index < 4 ? 'text-[#006837]' : 'text-gray-300'}`}
-        />
-      ))}
-      <span className="ml-2 text-sm text-muted-foreground">4.5</span>
-    </div>
-  </div>
-  <div className="border-b my-3"></div>
-  <div className="mt-2 text-sm leading-relaxed text-muted-foreground">
-    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-  </div>
-  <div className="flex items-center mt-4">
-    <Avatar className="shrink-0">
-      <AvatarImage src="/avatar.jpg" alt="Customer 1" />
-      <AvatarFallback>AR</AvatarFallback>
-    </Avatar>
-    <div className="ml-3">
-      <span className="font-semibold">Abdur Rehman</span>
-      <br />
-      <span className="text-sm text-[#006837]">Lahore, Pakistan</span>
-    </div>
-    <MdVerified className="ml-auto text-blue-600"/>
-  </div>
-</div>
-            <div className="rounded-lg border bg-background p-6 shadow-sm transition-all duration-300 hover:shadow-lg max-w-2xl mx-auto">
-  <div className="flex justify-between items-center mb-4">
-    <div>
-      <h3 className="text-xl font-semibold text-primary">McDonald</h3>
-      <p className="text-sm text-[#006837]">Lahore , Pakistan</p>
-    </div>
-    <div className="flex items-center">
-      {[...Array(5)].map((star, index) => (
-        <FaStar
-          key={index}
-          className={`w-5 h-5 ${index < 4 ? 'text-[#006837]' : 'text-gray-300'}`}
-        />
-      ))}
-      <span className="ml-2 text-sm text-muted-foreground">4.5</span>
-    </div>
-  </div>
-  <div className="border-b my-3"></div>
-  <div className="mt-2 text-sm leading-relaxed text-muted-foreground">
-    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-  </div>
-  <div className="flex items-center mt-4">
-    <Avatar className="shrink-0">
-      <AvatarImage src="/avatar.jpg" alt="Customer 1" />
-      <AvatarFallback>AR</AvatarFallback>
-    </Avatar>
-    <div className="ml-3">
-      <span className="font-semibold">Abdur Rehman</span>
-      <br />
-      <span className="text-sm text-[#006837]">Lahore, Pakistan</span>
-    </div>
-    <MdVerified className="ml-auto text-blue-600"/>
-  </div>
-</div>
-            
+        <div className="space-y-4 text-center mt-4">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-2xl md:text-3xl">
+            Hear from our Satisfied travellers about their amazing <br /> experience. Discover why Rehbar.pk is their top <br /> choice for exploring Pakistan
+          </h2>
+        </div>
+        {/* Overflow hidden container with gradient masking */}
+        <div className="overflow-x-auto relative">
+          {/* Scrolling container */}
+          <div className="flex space-x-6">
+            {ratings.map((rating, index) => (
+              <div key={index} className="flex-shrink-0 w-80 p-4">
+                <div className="rounded-lg border bg-background p-6 shadow-sm transition-all duration-300 hover:shadow-lg flex flex-col h-full">
+                  <div className="flex justify-between items-center mb-4">
+                    <div>
+                      <h3 className="text-xl font-semibold text-primary"> {rating.product ? rating.product.name : 'Destinatio in Rehbar'}  </h3>
+                    </div>
+                    <div className="flex items-center">
+                      {[...Array(5)].map((_, i) => (
+                        <StarIcon
+                          key={i}
+                          className={`w-5 h-5 ${
+                            i < Math.floor(rating.score) ? 'text-[#006837]' : 'text-gray-300'
+                          }`}
+                        />
+                      ))}
+                      <span className="ml-2 text-sm text-muted-foreground">{rating.score}</span>
+                    </div>
+                  </div>
+                  <div className="border-b my-3"></div>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground flex-grow">{rating.comment}</p>
+                  <div className="flex  mt-4">
+                    <Image
+                      src={rating.user.image}
+                      alt="profile"
+                      width={60}
+                      height={60}
+                      className="rounded-full h-14 w-14"
+                    />
+                    <div className='flex flex-col'>
+                      <span className="font-semibold ml-3">{rating.user?.name || 'Anonymous'}</span>
+                      <p className="  ml-3  text-sm leading-relaxed text-muted-foreground flex-grow">Commented on {rating.product ? rating.product.name : 'Destinatio in Rehbar'} </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
-    </section>
-  )
+    </div>
+  );
 }

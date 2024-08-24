@@ -120,24 +120,24 @@ const ActiveProducts: React.FC<ActiveProductsProps> = ({ activeProducts }) => {
         ))}
       </div>
     </div>
-    <div className="mt-6 flex justify-between pr-8 space-x-4 items-center w-[60%]  ml-auto">
-        <div className="flex flex-row gap-4">
+    <div className="mt-6 w-[100%] sm:w-[90%]   mx-auto flex justify-center  items-center ">
+        <div className="flex  justify-center items-center">
           <Button className="flex items-center justify-center bg-[#006837] rounded-md cursor-pointer text-[#ffffff]">
             Find a Place
           </Button>
-          <Button className="flex items-center justify-center bg-white border border-solid border-gray-200 text-gray-600 rounded-md">
+          <Button className="flex items-center justify-center bg-white border border-solid border-gray-200 text-gray-600 hover:bg-gray-100 hover:text-gray-700 rounded-md">
             List your Place
           </Button>
         </div>
-        <div className="flex gap-2">
-          <button onClick={handlePrevClick} className="p-2 bg-gray-300 rounded-full">
+      </div>
+        <div className="flex w-[90%] mr-[1vw] justify-end  items-end">
+          <button onClick={handlePrevClick} className="p-2 mr-3 bg-gray-300 rounded-full">
             <ChevronLeftIcon className="w-6 h-6" />
           </button>
           <button onClick={handleNextClick} className="p-2 bg-[#000000] text-[#ffffff] rounded-full">
             <ChevronRightIcon className="w-6 h-6" />
           </button>
         </div>
-      </div>
   </div>
   )
 };

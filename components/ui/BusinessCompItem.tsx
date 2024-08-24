@@ -11,7 +11,7 @@ interface ProductItemProps {
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   return (
     <Link href={`/Business/${product.slug}`}>  
-    <Card className="w-full bg-[#ffffff] border-[0px] mr-8 max-w-[250px] rounded-md overflow-hidden ">
+    <Card className="w-full bg-[#f5f3f3] border-[0px] mr-8 max-w-[250px] rounded-md overflow-hidden ">
       <div className="relative w-full h-1/2">  
         <Image 
           src={product.logo} 

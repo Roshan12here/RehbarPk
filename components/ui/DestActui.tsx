@@ -12,7 +12,7 @@ interface Props {
 
 const Box : React.FC<Props> = async ({ ActivEPr}) =>  {
   return (
-    <div className="h-screen w-full bg-cover bg-center mt-12">
+    <div className="h-[110vh] w-full bg-cover bg-center mt-12">
     <div className="flex flex-col items-center h-full bg-cover bg-center">
       <div className="relative flex flex-col items-center w-full h-full bg-[#f5f3f3]">
         <div className="flex flex-row justify-between w-full px-4 sm:px-8"> 

@@ -181,6 +181,8 @@ model Rating {
   @@index([businessId])
 }
 
+
+
 model Upvote {
   id         String   @id @default(cuid())
   productId  String?

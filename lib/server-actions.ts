@@ -432,6 +432,23 @@ export const activateProduct = async (productId: string) => {
   }
 };
 
+export const getAllRatings = async () => {
+  try {
+    const ratings = await db.rating.findMany({
+      include: {
+        product: true, // Including the related product data if needed
+        user: true, // Including the related user data if needed
+      },
+    });
+
+    return ratings;
+  } catch (error) {
+    console.error("Error fetching all ratings:", error);
+    return [];
+  }
+};
+
+
 export const rejectProduct = async (productId: string, reason: string) => {
   try {
     const product = await db.product.findUnique({
