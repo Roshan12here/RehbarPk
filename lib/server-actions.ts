@@ -435,9 +435,14 @@ export const activateProduct = async (productId: string) => {
 export const getAllRatings = async () => {
   try {
     const ratings = await db.rating.findMany({
+      where: {
+        productId: {
+          not: null, // Only include ratings where productId is not null
+        },
+      },
       include: {
-        product: true, // Including the related product data if needed
-        user: true, // Including the related user data if needed
+        product: true, // Including the related product data
+        user: true,    // Including the related user data
       },
     });
 

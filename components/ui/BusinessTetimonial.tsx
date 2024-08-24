@@ -1,12 +1,12 @@
 "use client";
 
+import React from 'react'
 import { useEffect, useState, useRef } from "react";
 import { StarIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { getAllRatings } from "@/lib/server-actions";
+import { getAllRatings } from "@/lib/Business-server-action";
 import Image from "next/image";
-import BusinessTetimonial from "./BusinessTetimonial";
 
-export default function Component() {
+const BusinessTetimonial = () => {
   const [ratings, setRatings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -28,19 +28,6 @@ export default function Component() {
     fetchRatings();
   }, []);
 
-  const handlePrev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
-    }
-    clearAutoSlide();
-  };
-
-  const handleNext = () => {
-    if (currentIndex < ratings.length - 1) {
-      setCurrentIndex((prev) => prev + 1);
-    }
-    clearAutoSlide();
-  };
 
   const startAutoSlide = () => {
     intervalRef.current = setInterval(() => {
@@ -75,19 +62,7 @@ export default function Component() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="w-full bg-white text-gray-800 py-16">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex flex-col mt-6 items-center justify-center">
-          <div className="text-lg font-normal text-[#afafaf]">Hear What Others Said</div>
-          <div className="w-[11rem] h-px bg-[#afafaf] mt-1"></div>
-        </div>
-        <div className="space-y-4 text-center mt-4">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-2xl md:text-3xl">
-            Hear from our Satisfied travellers about their amazing <br /> experience. Discover why Rehbar.pk is their top <br /> choice for exploring Pakistan
-          </h2>
-        </div>
-        {/* Overflow hidden container with gradient masking */}
-        <div className="overflow-x-auto relative">
+     <div className="overflow-x-auto relative">
           {/* Scrolling container */}
           <div className="flex space-x-6">
             {ratings.map((rating, index) => (
@@ -95,7 +70,7 @@ export default function Component() {
                 <div className="rounded-lg border bg-background p-6 shadow-sm transition-all duration-300 hover:shadow-lg flex flex-col h-full">
                   <div className="flex justify-between items-center mb-4">
                     <div>
-                      <h3 className="text-xl font-semibold text-primary"> {rating.product ? rating.product.name : 'Destinatio in Rehbar'}  </h3>
+                      <h3 className="text-xl font-semibold text-primary"> {rating.business ? rating.business.name : 'Destinatio in Rehbar'}  </h3>
                     </div>
                     <div className="flex items-center">
                       {[...Array(5)].map((_, i) => (
@@ -110,7 +85,7 @@ export default function Component() {
                     </div>
                   </div>
                   <div className="border-b my-3"></div>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground flex-grow">{rating.comment}</p>
+                  <p className="mt-2 text-sm my-12 leading-relaxed text-muted-foreground flex-grow">{rating.comment}</p>
                   <div className="flex  mt-4">
                     <Image
                       src={rating.user.image}
@@ -121,7 +96,7 @@ export default function Component() {
                     />
                     <div className='flex flex-col'>
                       <span className="font-semibold ml-3">{rating.user?.name || 'Anonymous'}</span>
-                      <p className="  ml-3  text-sm leading-relaxed text-muted-foreground flex-grow">Commented on {rating.product ? rating.product.name : 'Destinatio in Rehbar'} </p>
+                      <p className="  ml-3  text-sm leading-relaxed text-muted-foreground flex-grow">Commented on {rating.business ? rating.business.name : 'Destinatio in Rehbar'} </p>
                     </div>
                   </div>
                 </div>
@@ -129,8 +104,9 @@ export default function Component() {
             ))}
           </div>
         </div>
-      </div>
-        <BusinessTetimonial />
-    </div>
-  );
+
+  )
 }
+
+export default BusinessTetimonial
+

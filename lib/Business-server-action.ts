@@ -682,6 +682,8 @@ export const upvoteProduct = async (businessId: string) => {
         },
       });
 
+
+      
       // notify the product owner about the upvote
 
       if (productOwner && productOwner.userId !== userId) {
@@ -703,6 +705,30 @@ export const upvoteProduct = async (businessId: string) => {
     throw error;
   }
 };
+
+export const getAllRatings = async () => {
+  try {
+    const ratings = await db.rating.findMany({
+      where: {
+        businessId: {
+          not: null, // Only include ratings where businessId is not null
+        },
+      },
+      include: {
+        business: true, // Including the related business data
+        user: true,     // Including the related user data
+      },
+    });
+
+    return ratings;
+  } catch (error) {
+    console.error("Error fetching all ratings:", error);
+    return [];
+  }
+};
+
+
+
 
 export const getUpvotedProducts = async () => {
   try {
