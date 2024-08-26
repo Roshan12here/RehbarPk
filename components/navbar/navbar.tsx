@@ -1,18 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import Logo from "./logo";
-import AuthContent from "./auth-content";
-import Avatar from "./avatar";
-import NotificationIcon from "./notification-icon";
-import Submit from "./submit";
-import Modal from "../ui/modals/authModal";
-import { Button } from "../ui/button";
-import ProductItem from "../Getstarted";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet"; // Import Sheet components
-import { MenuIcon } from "lucide-react";
+import { Button } from "../ui/button";
+import NotificationIcon from "./notification-icon";
+import { SearchIcon, MenuIcon } from "lucide-react";
+import Modal from "../ui/modals/authModal";
+import AuthContent from "./auth-content";
+import ProductItem from "../Getstarted";
+import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
+import Modalsearch from "../ui/modals/Modalofserach";
+import Searchmodal from "../ui/Searchmodal";
 
 interface NavbarProps {
   authenticatedUser?: any;
@@ -26,27 +25,58 @@ const Navbar: React.FC<NavbarProps> = ({
   products,
 }) => {
   const [authModalVisible, setAuthModalVisible] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const handleButtonClick = () => {
     setAuthModalVisible(true);
   };
 
+  // Scroll detection
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="flex items-center mx-[3vw] justify-between h-16 px-4 md:px-6 bg-white shadow">
+    <header
+      className={`${
+        scrolled
+          ? "fixed top-0 left-0 right-0 z-50 bg-white shadow"
+          : "bg-white shadow"
+      } flex items-center mx-[3vw] justify-between h-16 px-4 md:px-6`}
+    >
       <div className="flex items-center gap-2">
         <Link href="/" prefetch={false}>
           <Image
-            alt=""
+            alt="Logo"
             src="/rehbar-logo@2x.png"
             loading="lazy"
             width={100}
             height={100}
           />
         </Link>
+        <Button
+          onClick={() => setOpen(true)}
+          className="ml-8 bg-white px-4 text-[#0E793C] hover:bg-[#0E793C] hover:text-[#ffffff]"
+        >
+          <SearchIcon className="h-6 w-6" />
+          <span className="mx-2">Search</span>
+        </Button>
       </div>
       <nav className="flex-1 hidden md:flex items-center justify-center gap-6">
         <Link href="#" className="text-black font-bold hover:text-gray-800" prefetch={false}>
-          Home 
+          Home
         </Link>
         <Link href="#" className="text-black font-bold hover:text-gray-800" prefetch={false}>
           About
@@ -61,6 +91,7 @@ const Navbar: React.FC<NavbarProps> = ({
       <div className="flex items-center gap-4">
         {authenticatedUser ? (
           <>
+            {/* Add authenticated user content here */}
           </>
         ) : (
           <Button
@@ -70,8 +101,7 @@ const Navbar: React.FC<NavbarProps> = ({
             Sign In
           </Button>
         )}
-                    <ProductItem authenticatedUser={authenticatedUser} product={products} />
-
+        <ProductItem authenticatedUser={authenticatedUser} product={products} />
       </div>
       <div className="flex items-center sm:hidden">
         <Sheet>
@@ -96,7 +126,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 Contact
               </Link>
               <NotificationIcon notifications={notifications} />
-              <ProductItem authenticatedUser={authenticatedUser} product={products} />
+                            <ProductItem authenticatedUser={authenticatedUser} product={products} />
             </nav>
           </SheetContent>
         </Sheet>
@@ -104,6 +134,9 @@ const Navbar: React.FC<NavbarProps> = ({
       <Modal visible={authModalVisible} setVisible={setAuthModalVisible}>
         <AuthContent />
       </Modal>
+      <Modalsearch visible={open} setVisible={setOpen}>
+        <Searchmodal />
+      </Modalsearch>
     </header>
   );
 };
