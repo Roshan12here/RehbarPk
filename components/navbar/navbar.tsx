@@ -52,9 +52,9 @@ const Navbar: React.FC<NavbarProps> = ({
     <header
       className={`${
         scrolled
-          ? "fixed top-0 left-0 right-0 z-50 bg-white shadow"
+          ? "fixed top-0 left-0 right-0 z-50 bg-white shadow   "
           : "bg-white shadow"
-      } flex items-center mx-[3vw] justify-between h-16 px-4 md:px-6`}
+      } flex py-[6vh]  items-center mx-[3vw] justify-between h-16 px-4 md:px-6`}
     >
       <div className="flex items-center gap-2">
         <Link href="/" prefetch={false}>
@@ -74,7 +74,7 @@ const Navbar: React.FC<NavbarProps> = ({
           <span className="mx-2">Search</span>
         </Button>
       </div>
-      <nav className="flex-1 hidden md:flex items-center justify-center gap-6">
+      <nav className="flex-1 hidden md:flex items-center justify-center gap-12">
         <Link href="#" className="text-black font-bold hover:text-gray-800" prefetch={false}>
           Home
         </Link>

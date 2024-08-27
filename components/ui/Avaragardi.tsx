@@ -37,7 +37,7 @@ export default function Component() {
     <header
       className="h-screen relative w-full py-8 md:py-12 lg:py-16"
       style={{
-        backgroundImage: "url('/Awara.jpg')",
+        backgroundImage: "url('/as.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -81,7 +81,7 @@ export default function Component() {
             Book Now
           </Link>
         </div>
-        <div className="flex flex-col sm:flex-col md:flex-col gap-2 lg:gap-4 xl:gap-6 mt-4 lg:mt-0">
+        <div className="flex flex-col sm:flex-col md:flex-col gap-2 lg:gap-8 xl:gap-10 mt-4 lg:mt-0">
           {/* Honeymoon Card */}
           <motion.div
             className="flex items-start gap-2 lg:gap-4 xl:gap-6 rounded-lg bg-gray-900/50 p-4 lg:p-8 xl:p-10 transition-transform duration-300 ease-in-out"
@@ -91,7 +91,7 @@ export default function Component() {
             whileHover={{ scale: 1.05, backgroundColor: hoverStyles.honeymoon.backgroundColor, color: hoverStyles.honeymoon.color }}
 
           >
-            <div className="flex h-10 w-10 lg:h-12 lg:w-12 xl:h-14 xl:w-14 items-center justify-center rounded-md bg-yellow-500">
+            <div className="flex h-10 w-10 lg:h-12 lg:w-12 xl:h-14 xl:w-14 items-center justify-center rounded-md bg-[#FFD700]">
               <MdFavorite className="h-6 w-6 lg:h-8 lg:w-8 xl:h-10 xl:w-10 text-gray-900" />
             </div>
             <div>
@@ -102,7 +102,7 @@ export default function Component() {
 
           {/* Family Card */}
           <motion.div
-  className="flex items-start gap-2 lg:gap-4 xl:gap-6 rounded-lg bg-gray-900/50 p-4 lg:p-8 xl:p-10 transition-transform duration-300 ease-in-out"
+  className="flex items-start gap-2 lg:gap-4 xl:gap-6 rounded-lg   bg-gray-900/50 p-4 lg:p-8 xl:p-10 transition-transform duration-300 ease-in-out"
   style={{ cursor: cursorStyles.family }}
   onMouseEnter={() => setCursorStyle(cursorStyles.family)}
   onMouseLeave={() => setCursorStyle('')}

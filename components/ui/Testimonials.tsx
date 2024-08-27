@@ -81,7 +81,7 @@ export default function Component() {
           <div className="text-lg font-normal text-[#afafaf]">Hear What Others Said</div>
           <div className="w-[11rem] h-px bg-[#afafaf] mt-1"></div>
         </div>
-        <div className="space-y-4 text-center mt-4">
+        <div className="space-y-4 text-center mt-4 mb-8">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-2xl md:text-3xl">
             Hear from our Satisfied travellers about their amazing <br /> experience. Discover why Rehbar.pk is their top <br /> choice for exploring Pakistan
           </h2>
@@ -130,7 +130,9 @@ export default function Component() {
           </div>
         </div>
       </div>
+      <div className="mt-4">
         <BusinessTetimonial />
+      </div>
     </div>
   );
 }

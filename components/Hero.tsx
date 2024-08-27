@@ -6,7 +6,7 @@ import Box from "@/components/ui/DestinationSection";
 const HeroSection = () => {
   return (
     <>
-    <div className="relative w-full rounded-3xl lg:w-[85%] mt-2 xl:w-[86%] 2xl:w-[85%] h-[450px] bg-cover bg-center mx-auto" style={{ backgroundImage: "url('/fa.jpg')" }}>
+    <div className="relative w-full rounded-3xl lg:w-[90%] mt-2 xl:w-[90%] 2xl:w-[90%] h-[78vh] bg-cover bg-center mx-auto" style={{ backgroundImage: "url('/fa.jpg')" }}>
       <div className="absolute inset-0 bg-black opacity-50 rounded-3xl"></div> {/* Dark shadow overlay */}
       <div className="relative pt-12 z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-white text-center">
         <h1 className="text-xl sm:text-xl md:text-2xl lg:text-3xl font-poppins  mb-3 leading-tight">

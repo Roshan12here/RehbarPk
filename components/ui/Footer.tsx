@@ -7,10 +7,15 @@ import {
   FaTwitter,
   FaInstagram,
 } from "react-icons/fa";
+import { Button } from './button';
 
 const Footer = () => {
   return (
     <footer className="bg-black text-white py-10 px-4 md:px-12 lg:px-24">
+    <div className="bg-[#0E793C] p-4 w-full  mt-[-13vh] mb-10  sm:max-w-screen-md mx-auto rounded-lg flex justify-between gap-4">
+  <Button className="bg-[#0E793C] underline">Write Your Review</Button>
+  <Button className="bg-[#0E793C] underline">Add your Listing</Button>
+</div>
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-between">
         <div className="col-span-1 md:col-span-2 lg:col-span-2">
           <div className="flex mr-[6vw] flex-col items-center md:items-start">

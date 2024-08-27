@@ -75,10 +75,7 @@ export default function Component() {
           </p>
         </div>
       </div>
-      <div className="bg-[#0E793C] p-4 w-full sm:max-w-screen-md mx-auto rounded-lg flex justify-between gap-4">
-  <Button className="bg-[#0E793C] underline">Write Your Review</Button>
-  <Button className="bg-[#0E793C] underline">Add your Listing</Button>
-</div>
+
     </section>
   );
 }
