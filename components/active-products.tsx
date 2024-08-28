@@ -120,8 +120,16 @@ const ActiveProducts: React.FC<ActiveProductsProps> = ({ activeProducts }) => {
         ))}
       </div>
     </div>
-    <div className="mt-6 w-[100%] sm:w-[90%]   mx-auto flex justify-center  items-center ">
-        <div className="flex  justify-center items-center">
+        <div className="flex w-[90%] mr-[1vw] justify-end mt-6  items-end">
+          <button onClick={handlePrevClick} className="p-2 mr-3 bg-gray-300 rounded-full">
+            <ChevronLeftIcon className="w-6 h-6" />
+          </button>
+          <button onClick={handleNextClick} className="p-2 bg-[#000000] text-[#ffffff] rounded-full">
+            <ChevronRightIcon className="w-6 h-6" />
+          </button>
+        </div>
+        <div className=" w-[100%] sm:w-[90%]    mx-auto flex justify-center  items-center ">
+        <div className="flex mt-10  justify-center items-center">
           <Button className="flex items-center justify-center bg-[#006837] rounded-md cursor-pointer text-[#ffffff]">
             Find a Place
           </Button>
@@ -130,14 +138,6 @@ const ActiveProducts: React.FC<ActiveProductsProps> = ({ activeProducts }) => {
           </Button>
         </div>
       </div>
-        <div className="flex w-[90%] mr-[1vw] justify-end  items-end">
-          <button onClick={handlePrevClick} className="p-2 mr-3 bg-gray-300 rounded-full">
-            <ChevronLeftIcon className="w-6 h-6" />
-          </button>
-          <button onClick={handleNextClick} className="p-2 bg-[#000000] text-[#ffffff] rounded-full">
-            <ChevronRightIcon className="w-6 h-6" />
-          </button>
-        </div>
   </div>
   )
 };

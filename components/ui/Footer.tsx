@@ -11,12 +11,12 @@ import { Button } from './button';
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-white py-10 px-4 md:px-12 lg:px-24">
-    <div className="bg-[#0E793C] p-4 w-full  mt-[-13vh] mb-10  sm:max-w-screen-md mx-auto rounded-lg flex justify-between gap-4">
+    <footer className="bg-black text-white py-10 px-4 md:px-12 ]  lg:px-24">
+    <div className="bg-[#0E793C] p-4 w-full  mt-[-12vh] mb-10  sm:max-w-screen-md mx-auto rounded-lg flex justify-between gap-4">
   <Button className="bg-[#0E793C] underline">Write Your Review</Button>
   <Button className="bg-[#0E793C] underline">Add your Listing</Button>
 </div>
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-between">
+      <div className="container   mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-between">
         <div className="col-span-1 md:col-span-2 lg:col-span-2">
           <div className="flex mr-[6vw] flex-col items-center md:items-start">
             <Image
@@ -88,20 +88,17 @@ const Footer = () => {
         </div>
       </div>
       <div className="container mx-auto mt-10 pt-4 border-t border-gray-700">
-        <div className='flex justify-between w-[80%] mx-auto '>
-        <p className="text-center text-gray-400 text-sm">
-          2024 Rehbark.pk, All Rights Reserved.
-        </p>
-<div className='flex space-x-4'>
-<p className="text-center text-gray-400 text-sm">
-    Terms & Conditions
-        </p>
-<p className="text-center text-gray-400 text-sm">
-    Privacy Policy
-        </p>
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-[80%] mx-auto">
+    <p className="text-center text-gray-400 text-sm">
+      2024 Rehbark.pk, All Rights Reserved.
+    </p>
+    <div className="flex sm:justify-end space-x-4 justify-center">
+      <p className="text-center text-gray-400 text-sm">Terms & Conditions</p>
+      <p className="text-center text-gray-400 text-sm">Privacy Policy</p>
+    </div>
+  </div>
 </div>
-        </div>
-      </div>
+
     </footer>
   );
 };

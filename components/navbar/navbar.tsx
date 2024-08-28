@@ -12,6 +12,7 @@ import ProductItem from "../Getstarted";
 import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
 import Modalsearch from "../ui/modals/Modalofserach";
 import Searchmodal from "../ui/Searchmodal";
+import Avatar from "./avatar";
 
 interface NavbarProps {
   authenticatedUser?: any;
@@ -92,16 +93,18 @@ const Navbar: React.FC<NavbarProps> = ({
         {authenticatedUser ? (
           <>
             {/* Add authenticated user content here */}
+            <ProductItem authenticatedUser={authenticatedUser} product={products} />
           </>
         ) : (
+          <>
           <Button
             onClick={handleButtonClick}
-            className="bg-[#ffffff] border-2 text-[#000000] hover:bg-[#ffffff] hover:text-[#0E793C]"
-          >
+            className="bg-[#0E793C] border-2 text-[#ffffff] hover:bg-[#ffffff] hover:text-[#0E793C]"
+            >
             Sign In
           </Button>
+            </>
         )}
-        <ProductItem authenticatedUser={authenticatedUser} product={products} />
       </div>
       <div className="flex items-center sm:hidden">
         <Sheet>
@@ -125,8 +128,26 @@ const Navbar: React.FC<NavbarProps> = ({
               <Link href="#" className="relative font-bold text-[#000000] inline-block min-w-[48px]" prefetch={false}>
                 Contact
               </Link>
-              <NotificationIcon notifications={notifications} />
-                            <ProductItem authenticatedUser={authenticatedUser} product={products} />
+          
+
+{authenticatedUser ? (
+          <>
+    <div className="flex cursor-pointer "> 
+              <Avatar  authenticatedUser={authenticatedUser}  />
+              <h1 className=" font-bold ml-2 ">My Profile</h1>
+              </div>
+          </>
+        ) : (
+          <>
+          <Button
+            onClick={handleButtonClick}
+            className="bg-[#0E793C] border-2 text-[#ffffff] hover:bg-[#ffffff] hover:text-[#0E793C]"
+            >
+            Sign In
+          </Button>
+            </>
+        )}
+
             </nav>
           </SheetContent>
         </Sheet>

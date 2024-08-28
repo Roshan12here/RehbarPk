@@ -106,12 +106,12 @@ const Searchs = () => {
   return (
     <div className="relative w-full">
       <div className="w-full max-w-3xl mx-auto">
-      <div className="relative w-[75%] max-w-3xl mx-auto">
+      <div className="relative w-[85%] sm:w-[85%] md:w-[75%] max-w-3xl mx-auto">
   <div className="relative flex items-center">
     <input
       type="text"
       placeholder="Search Destinations or Businesses"
-      className="w-full text-black py-3 px-6 pr-12 text-base bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-300 transition duration-300"
+      className="w-full text-black py-3 sm:py-4 px-6 pr-12 text-base bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-300 transition duration-300"
       value={query}
       onChange={handleSearch}
       ref={searchInputRef}
@@ -128,7 +128,7 @@ const Searchs = () => {
         {(isDropdownVisible && searchResults.length > 0) || (isDropdownVisibleb && searchResultsb.length > 0) ? (
           <div className="absolute mt-2 flex gap-4 w-full">
             {isDropdownVisible && searchResults.length > 0 && (
-              <div className="flex-1 bg-white rounded-lg shadow-xl border border-gray-200 max-h-80 overflow-y-auto w-1/2">
+              <div className="flex-1 bg-white rounded-lg shadow-xl border border-gray-200 max-h-80 overflow-y-auto sm:w-[60%] md:w-[50%]">
                 <h1 className="text-xl font-semibold text-green-800 p-2 text-center">Destinations</h1>
                 <ul>
                   {Object.entries(groupedResults).map(([city, products]) => (
@@ -162,7 +162,7 @@ const Searchs = () => {
             )}
 
             {isDropdownVisibleb && searchResultsb.length > 0 && (
-              <div className="flex-1 bg-white rounded-lg shadow-xl border border-gray-200 max-h-80 overflow-y-auto w-1/2">
+              <div className="flex-1 bg-white rounded-lg shadow-xl border border-gray-200 max-h-80 overflow-y-auto sm:w-[60%] md:w-[50%]">
                 <h1 className="text-xl font-semibold text-[#0E793C] p-2 text-center">Businesses</h1>
                 <ul>
                   {Object.entries(groupedResultsBusinesses).map(([city, products]) => (
@@ -189,8 +189,7 @@ const Searchs = () => {
                           <span className="text-[#0E793C] font-medium ">{product.name}</span>
                         </li>
                       ))}
-                    </div>
-                  ))}
+                    </div>                  ))}
                 </ul>
               </div>
             )}

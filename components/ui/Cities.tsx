@@ -98,9 +98,9 @@ import Link from 'next/link';
 
 export default function Component() {
   return (
-    <div className="px-4 py-8 md:px-6 lg:px-8 bg-[#f5f3f3]">
+    <div className="px-4 py-8 md:px-6 mt-[-6vh] lg:px-8 bg-[#f5f3f3]">
       <div className="flex flex-col mb-5">
-          <h2 className="text-lg font-medium font-sans">Cities</h2>
+          <h2 className="text-xl font-medium font-sans">Cities</h2>
         <h2 className="text-lg  my-6 sm:text-xl md:text-2xl lg:text-3xl font-bold tracking-tighter">
               Search Top Destination and Businesses in your City
             </h2>
