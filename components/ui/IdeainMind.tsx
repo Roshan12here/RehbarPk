@@ -5,7 +5,7 @@ import { Button } from './button'
 const IdeanMind = () => {
   return (
     <section
-    className='w-full mt-8 h-[23vh] sm:h-[22vh] md:h-[22vh] lg:h-[30]  bg-[#0E793C] flex  '
+    className='w-full mt-8 h-[23vh] sm:h-[22vh] md:h-[22vh] lg:h-[33vh]  bg-[#0E793C] flex  '
     >
 <Image
 src={"/bgi.png"}
