@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card"
 import AverageRating from "./navbar/AverageDestinationRating";
 
+
 interface ProductItemProps {
   product: any;
 }

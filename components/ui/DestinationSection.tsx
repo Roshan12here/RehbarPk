@@ -4,6 +4,7 @@ import Categories from "../ActivedesCategories";
 import ActiveProducts from "../active-products";
 import { getActiveProducts } from "@/lib/server-actions";
 import { Button } from "./button";
+import RatingIcons from "./CustomratingIcons";
 
 interface Props {
   activeProducts : any;
@@ -31,10 +32,8 @@ const Box : React.FC<Props> = async ({ activeProducts}) => {
     </p>
   </div>
 </div>
-
    <Categories />
           <ActiveProducts activeProducts={activeProducts} />
-  
         </div>
       </div>
     </div>
