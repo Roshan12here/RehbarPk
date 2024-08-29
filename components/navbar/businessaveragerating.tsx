@@ -47,7 +47,7 @@ const AverageRating: React.FC<AverageRatingProps> = ({ productId }) => {
 
   return (
     <div className="flex  items-center space-x-1">
-      <div className="flex space-x-[0.5px]">
+      <div className="flex ">
         {renderStars()}
       </div>
       <span className="text-sm text-[#0E793C] font-medium ">{averageRating.toFixed(1)}</span>

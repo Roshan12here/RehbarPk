@@ -5,6 +5,7 @@ import { StarIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { getAllRatings } from "@/lib/server-actions";
 import Image from "next/image";
 import BusinessTetimonial from "./BusinessTetimonial";
+import { Square } from "lucide-react";
 
 export default function Component() {
   const [ratings, setRatings] = useState<any[]>([]);
@@ -99,7 +100,7 @@ export default function Component() {
                     </div>
                     <div className="flex items-center">
                       {[...Array(5)].map((_, i) => (
-                        <StarIcon
+                        <Square
                           key={i}
                           className={`w-5 h-5 ${
                             i < Math.floor(rating.score) ? 'text-[#006837] fill-[#006837]' : 'text-gray-300'

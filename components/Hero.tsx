@@ -13,7 +13,7 @@ const HeroSection = () => {
   We Help People Discover Best <span className="font-extrabold">Places</span>
   <br className='hidden lg:block' />  and <span className="font-extrabold">Businesses</span> in Pakistan
 </h1>
-        <p className="text-base sm:text-lg md:text-xl font-inter lg:text-2xl mb-8 max-w-2xl mt-2">
+        <p className="text-base sm:text-lg md:text-xl font-inter lg:text-2xl mb-8 max-w-2xl ">
           Search any spot or business and see what others say about us
         </p>
         <div className="w-full max-w-2xl flex flex-col sm:flex-row">
